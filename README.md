@@ -1,6 +1,6 @@
 # CustomAnnouncements
 
-| Commands        |
-| :------------- |
-| (MTFA / MTFANNOUNCEMENT) (SCPS LEFT) (MTF NUMBER) (MTF LETTER) |
-| (SCPA / SCPANNOUNCEMENT) (SCP NUMBER) |
+| Command        | Value Type | Value Type | Value Type |
+| :-------------: | :---------: | :---------: | :---------: |
+| MTFA / MTFANNOUNCEMENT | SCPS LEFT | MTF NUMBER | MTF LETTER |
+| SCPA / SCPANNOUNCEMENT SCP NUMBER | | |
