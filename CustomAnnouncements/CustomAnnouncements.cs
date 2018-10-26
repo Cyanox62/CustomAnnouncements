@@ -12,7 +12,7 @@ namespace CustomAnnouncements
     author = "Cyanox",
     name = "CustomAnnouncements",
     description = "Makes custom CASSIE announcements",
-    id = "cyan.customannouncements",
+    id = "cyan.custom.announcements",
     version = "0.1",
     SmodMajor = 3,
     SmodMinor = 0,
