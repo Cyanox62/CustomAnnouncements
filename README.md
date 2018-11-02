@@ -7,4 +7,4 @@ A plugin that allows anyone with access to the Remote Admin console ability to m
 | MTFA / MTFANNOUNCEMENT | SCPS LEFT | MTF NUMBER | MTF LETTER |
 | SCPA / SCPANNOUNCEMENT | SCP NUMBER | | |
 | TA / TEXTANNOUNCEMENT | TEXT | | |
-| MTFA / MTFANNOUNCEMENT | START | END | TEXT |
+| CDA / COUNTDOWNANNOUNCEMENT | START | END | TEXT |
