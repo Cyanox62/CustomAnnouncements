@@ -32,8 +32,8 @@ namespace CustomAnnouncements
 
         public override void Register()
         {
-            //this.AddEventHandlers(new EventHandler(this, this));
-            this.AddCommands(new string[] { "mtfannouncement", "mtfa" }, new NTFAnnouncementCommand(this));
+			this.AddCommands(new string[] { "textannouncement", "ta" }, new CustomTextCommand(this));
+			this.AddCommands(new string[] { "mtfannouncement", "mtfa" }, new NTFAnnouncementCommand(this));
             this.AddCommands(new string[] { "scpannouncement", "scpa" }, new SCPEliminationCommand(this));
         }
     }
