@@ -1,6 +1,7 @@
 ﻿using System;
 using Smod2;
 using Smod2.Commands;
+using Smod2.API;
 using System.IO;
 using System.Collections.Generic;
 
@@ -9,14 +10,14 @@ namespace CustomAnnouncements
 	class PresetAnnouncements : ICommandHandler
 	{
 		private Plugin plugin;
-		//private string[] whitelist;
+		private string[] whitelist;
 
 		public PresetAnnouncements(Plugin plugin)
 		{
 			this.plugin = plugin;
-			//whitelist = plugin.GetConfigList("ca_preset_whitelist");
-			//for (int i = 0; i < whitelist.Length; i++)
-			//	whitelist[i] = whitelist[i].Replace(" ", "");
+			whitelist = plugin.GetConfigList("ca_preset_whitelist");
+			for (int i = 0; i < whitelist.Length; i++)
+				whitelist[i] = whitelist[i].Replace(" ", "");
 		}
 
 		public string GetCommandDescription()
@@ -32,6 +33,14 @@ namespace CustomAnnouncements
 		public string[] OnCall(ICommandSender sender, string[] args)
 		{
 			CustomAnnouncements.ann = UnityEngine.Object.FindObjectOfType<NineTailedFoxAnnouncer>();
+			if (sender is Player)
+			{
+				Player player = (Player)sender;
+				if (!CustomAnnouncements.IsPlayerWhitelisted(player, whitelist))
+				{
+					return new string[] { "You are not allowed to run this command." };
+				}
+			}
 
 			if (args.Length > 0)
 			{
@@ -70,7 +79,7 @@ namespace CustomAnnouncements
 							}
 						}
 
-						File.AppendAllText("C:/Users/Infer/Desktop/savedAnnouncements.txt", name + ": " + saveText + Environment.NewLine);
+						File.AppendAllText(CustomAnnouncements.presetFilePath, name + ": " + saveText + Environment.NewLine);
 						return new string[] { "Saved preset \"" + name + "\"." };
 					}
 					else
@@ -131,12 +140,12 @@ namespace CustomAnnouncements
 								if (str.Split(':')[0].ToLower() != name.ToLower())
 								{
 									newText.Add(str);
-								}
+								} // FIXME : determine if the preset was actually found, and say 'preset not found' if not
 							}
 						}
 						else
 						{
-							return new string[] { "Error: couldn't find preset \"" + name + "\"." };
+							return new string[] { "Error: there are no saved presets." };
 						}
 
 						File.WriteAllText(CustomAnnouncements.presetFilePath, String.Empty);

@@ -19,14 +19,27 @@ namespace CustomAnnouncements
     public class CustomAnnouncements : Plugin
     {
 		public static NineTailedFoxAnnouncer ann;
-		public static string presetFilePath = "C:/Users/Infer/Desktop/savedAnnouncements.txt";
+		public static string configFolerFilePath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/SCP Secret Laboratory/CustomAnnouncements";
+		public static string presetFilePath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/SCP Secret Laboratory/CustomAnnouncements/presets.txt";
 
 		public override void OnDisable() {}
 
 		public override void OnEnable()
 		{
+			if (IsLinux)
+			{
+				configFolerFilePath = "/home/" + Environment.UserName + "/.config/SCP Secret Laboratory/CustomAnnouncements";
+				presetFilePath = "/home/" + Environment.UserName + "/.config/SCP Secret Laboratory/CustomAnnouncements/presets.txt";
+			}
+
+			if (!Directory.Exists(configFolerFilePath))
+			{
+				Directory.CreateDirectory(configFolerFilePath);
+			}
 			if (!File.Exists(presetFilePath))
+			{
 				using (new StreamWriter(File.Create(presetFilePath))) { }
+			}
 		}
 
         public override void Register()
@@ -35,8 +48,7 @@ namespace CustomAnnouncements
 			this.AddConfig(new Smod2.Config.ConfigSetting("ca_text_whitelist", new string[] { "owner", "admin" }, Smod2.Config.SettingType.LIST, true, "Defines what ranks are allowed to use the text command."));
 			this.AddConfig(new Smod2.Config.ConfigSetting("ca_mtf_whitelist", new string[] { "owner", "admin" }, Smod2.Config.SettingType.LIST, true, "Defines what ranks are allowed to use the mtf command."));
 			this.AddConfig(new Smod2.Config.ConfigSetting("ca_scp_whitelist", new string[] { "owner", "admin" }, Smod2.Config.SettingType.LIST, true, "Defines what ranks are allowed to use the scp command."));
-			//this.AddConfig(new Smod2.Config.ConfigSetting("ca_save_whitelist", new string[] { "owner", "admin" }, Smod2.Config.SettingType.LIST, true, "Defines what ranks are allowed to use the save command."));
-			//this.AddConfig(new Smod2.Config.ConfigSetting("ca_load_whitelist", new string[] { "owner", "admin" }, Smod2.Config.SettingType.LIST, true, "Defines what ranks are allowed to use the load command."));
+			this.AddConfig(new Smod2.Config.ConfigSetting("ca_preset_whitelist", new string[] { "owner", "admin" }, Smod2.Config.SettingType.LIST, true, "Defines what ranks are allowed to use the preset command."));
 
 			this.AddCommands(new string[] { "countdownannouncement", "cda" }, new CountdownCommand(this));
 			this.AddCommands(new string[] { "textannouncement", "ta" }, new CustomTextCommand(this));
@@ -65,6 +77,15 @@ namespace CustomAnnouncements
 					return true;
 			}
 			return false;
+		}
+
+		public static bool IsLinux
+		{
+			get
+			{
+				int p = (int)Environment.OSVersion.Platform;
+				return (p == 4) || (p == 6) || (p == 128);
+			}
 		}
 	}
 }
