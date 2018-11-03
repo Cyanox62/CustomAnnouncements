@@ -1,6 +1,6 @@
 # CustomAnnouncements
 
-A plugin that allows anyone with access to the Remote Admin console ability to make custom CASSIE announcements.
+A plugin that allows admins to make custom CASSIE announcements.
 
 | Command        | Value Type | Value Type | Value Type | Description |
 | :-------------: | :---------: | :---------: | :---------: | :------ |
