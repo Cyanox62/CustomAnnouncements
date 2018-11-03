@@ -1,10 +1,8 @@
 ﻿using System;
 using Smod2;
 using Smod2.API;
-using Smod2.EventHandlers;
-using Smod2.Events;
 using Smod2.Attributes;
-using System.Collections.Generic;
+using System.IO;
 
 namespace CustomAnnouncements
 {
@@ -21,10 +19,15 @@ namespace CustomAnnouncements
     public class CustomAnnouncements : Plugin
     {
 		public static NineTailedFoxAnnouncer ann;
+		public static string filePath = "C:/Users/Infer/Desktop/savedAnnouncements.txt";
 
 		public override void OnDisable() {}
 
-		public override void OnEnable() {}
+		public override void OnEnable()
+		{
+			if (!File.Exists(filePath))
+				using (new StreamWriter(File.Create(filePath))) { }
+		}
 
         public override void Register()
         {
@@ -32,11 +35,16 @@ namespace CustomAnnouncements
 			this.AddConfig(new Smod2.Config.ConfigSetting("ca_text_whitelist", new string[] { "owner", "admin" }, Smod2.Config.SettingType.LIST, true, "Defines what ranks are allowed to use the text command."));
 			this.AddConfig(new Smod2.Config.ConfigSetting("ca_mtf_whitelist", new string[] { "owner", "admin" }, Smod2.Config.SettingType.LIST, true, "Defines what ranks are allowed to use the mtf command."));
 			this.AddConfig(new Smod2.Config.ConfigSetting("ca_scp_whitelist", new string[] { "owner", "admin" }, Smod2.Config.SettingType.LIST, true, "Defines what ranks are allowed to use the scp command."));
+			//this.AddConfig(new Smod2.Config.ConfigSetting("ca_save_whitelist", new string[] { "owner", "admin" }, Smod2.Config.SettingType.LIST, true, "Defines what ranks are allowed to use the save command."));
+			//this.AddConfig(new Smod2.Config.ConfigSetting("ca_load_whitelist", new string[] { "owner", "admin" }, Smod2.Config.SettingType.LIST, true, "Defines what ranks are allowed to use the load command."));
 
 			this.AddCommands(new string[] { "countdownannouncement", "cda" }, new CountdownCommand(this));
 			this.AddCommands(new string[] { "textannouncement", "ta" }, new CustomTextCommand(this));
 			this.AddCommands(new string[] { "mtfannouncement", "mtfa" }, new NTFAnnouncementCommand(this));
-            this.AddCommands(new string[] { "scpannouncement", "scpa" }, new SCPEliminationCommand(this));
+			this.AddCommands(new string[] { "scpannouncement", "scpa" }, new SCPEliminationCommand(this));
+			this.AddCommands(new string[] { "saveannouncement", "sa" }, new SaveAnnouncement(this));
+			this.AddCommands(new string[] { "loadannouncement", "la" }, new LoadAnnouncement(this));
+			this.AddCommands(new string[] { "presetannouncement", "pa" }, new PresetAnnouncements(this));
 		}
 
 		public static bool IsPlayerWhitelisted(Player player, string[] whitelist)
