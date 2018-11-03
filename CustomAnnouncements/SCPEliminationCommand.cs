@@ -34,6 +34,7 @@ namespace CustomAnnouncements
 
         public string[] OnCall(ICommandSender sender, string[] args)
         {
+			CustomAnnouncements.ann = UnityEngine.Object.FindObjectOfType<NineTailedFoxAnnouncer>();
 			if (sender is Player)
 			{
 				Player player = (Player)sender;

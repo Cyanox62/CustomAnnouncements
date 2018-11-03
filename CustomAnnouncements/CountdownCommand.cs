@@ -27,7 +27,7 @@ namespace CustomAnnouncements
 				string[] num = new string[((start - end + 1) * 2) - 1];
 				for (int i = start; i >= end; i--)
 				{
-					num[count] = (i > 19) ? CustomAnnouncements.ann.ConvertNumber(i).ToString() : i.ToString();
+					num[count] = (i > 20) ? CustomAnnouncements.ann.ConvertNumber(i).ToString() : i.ToString();
 					if (i < 100)
 						if (i != end)
 							num[count + 1] = ".";
@@ -63,6 +63,7 @@ namespace CustomAnnouncements
 
 		public string[] OnCall(ICommandSender sender, string[] args)
 		{
+			CustomAnnouncements.ann = UnityEngine.Object.FindObjectOfType<NineTailedFoxAnnouncer>();
 			if (sender is Player)
 			{
 				Player player = (Player)sender;

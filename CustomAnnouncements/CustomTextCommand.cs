@@ -19,16 +19,6 @@ namespace CustomAnnouncements
 				whitelist[i] = whitelist[i].Replace(" ", "");
 		}
 
-		private bool IsVoiceLine(string str)
-		{
-			foreach (NineTailedFoxAnnouncer.VoiceLine vl in CustomAnnouncements.ann.voiceLines)
-			{
-				if (vl.apiName == str.ToUpper())
-					return true;
-			}
-			return false;
-		}
-
 		public string GetCommandDescription()
 		{
 			return "Creates custom CASSIE announcements.";
@@ -41,6 +31,7 @@ namespace CustomAnnouncements
 
 		public string[] OnCall(ICommandSender sender, string[] args)
 		{
+			CustomAnnouncements.ann = UnityEngine.Object.FindObjectOfType<NineTailedFoxAnnouncer>();
 			if (sender is Player)
 			{
 				Player player = (Player)sender;
@@ -54,7 +45,7 @@ namespace CustomAnnouncements
 			{
 				foreach (string str in args)
 				{
-					if (!IsVoiceLine(str))
+					if (!CustomAnnouncements.IsVoiceLine(str))
 					{
 						return new string[] { "Error: phrase \"" + str + "\" is not in text to speech." };
 					}

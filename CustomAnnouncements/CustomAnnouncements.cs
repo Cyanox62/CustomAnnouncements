@@ -20,7 +20,7 @@ namespace CustomAnnouncements
     )]
     public class CustomAnnouncements : Plugin
     {
-		public static NineTailedFoxAnnouncer ann = UnityEngine.Object.FindObjectOfType<NineTailedFoxAnnouncer>();
+		public static NineTailedFoxAnnouncer ann;
 
 		public override void OnDisable() {}
 
