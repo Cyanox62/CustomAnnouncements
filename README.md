@@ -11,7 +11,7 @@ A plugin that allows anyone with access to the Remote Admin console ability to m
 
 | Config        | Value Type | Default | Description |
 | :-------------: | :---------: | :---------: |:------ |
-| ca_mtf_whitelist | List | owner, admin | Determintes which ranks are allowed to use the `MTFA / MTFANNOUNCEMENT` command. |
-| ca_scp_whitelist | List | owner, admin | Determintes which ranks are allowed to use the `SCPA / SCPANNOUNCEMENT` command. |
-| ca_ta_whitelist | List | owner, admin | Determintes which ranks are allowed to use the `TA / TEXTANNOUNCEMENT` command. |
-| ca_cda_whitelist | List | owner, admin | Determintes which ranks are allowed to use the `CDA / COUNTDOWNANNOUNCEMENT` command. |
+| ca_mtf_whitelist | List | owner, admin | Determines which ranks are allowed to use the `MTFA / MTFANNOUNCEMENT` command. |
+| ca_scp_whitelist | List | owner, admin | Determines which ranks are allowed to use the `SCPA / SCPANNOUNCEMENT` command. |
+| ca_ta_whitelist | List | owner, admin | Determines which ranks are allowed to use the `TA / TEXTANNOUNCEMENT` command. |
+| ca_cda_whitelist | List | owner, admin | Determines which ranks are allowed to use the `CDA / COUNTDOWNANNOUNCEMENT` command. |
