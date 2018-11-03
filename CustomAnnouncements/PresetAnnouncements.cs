@@ -49,7 +49,7 @@ namespace CustomAnnouncements
 								saveText += " ";
 						}
 
-						string[] currentText = File.ReadAllLines(CustomAnnouncements.filePath);
+						string[] currentText = File.ReadAllLines(CustomAnnouncements.presetFilePath);
 
 						if (currentText.Length > 0)
 						{
@@ -85,7 +85,7 @@ namespace CustomAnnouncements
 						string text = null;
 						string name = args[1];
 
-						string[] currentText = File.ReadAllLines(CustomAnnouncements.filePath);
+						string[] currentText = File.ReadAllLines(CustomAnnouncements.presetFilePath);
 
 						if (currentText.Length > 0)
 						{
@@ -121,7 +121,7 @@ namespace CustomAnnouncements
 					{
 						string name = args[1];
 
-						string[] currentText = File.ReadAllLines(CustomAnnouncements.filePath);
+						string[] currentText = File.ReadAllLines(CustomAnnouncements.presetFilePath);
 						List<string> newText = new List<string>();
 
 						if (currentText.Length > 0)
@@ -139,11 +139,11 @@ namespace CustomAnnouncements
 							return new string[] { "Error: couldn't find preset \"" + name + "\"." };
 						}
 
-						File.WriteAllText(CustomAnnouncements.filePath, String.Empty);
+						File.WriteAllText(CustomAnnouncements.presetFilePath, String.Empty);
 
 						foreach (string str in newText.ToArray())
 						{
-							File.AppendAllText(CustomAnnouncements.filePath, str + Environment.NewLine);
+							File.AppendAllText(CustomAnnouncements.presetFilePath, str + Environment.NewLine);
 						}
 						return new string[] { "Removed preset \"" + name + "\"" };
 					}
@@ -154,7 +154,7 @@ namespace CustomAnnouncements
 				}
 				else if (args[0].ToLower() == "list")
 				{
-					string[] presets = File.ReadAllLines(CustomAnnouncements.filePath);
+					string[] presets = File.ReadAllLines(CustomAnnouncements.presetFilePath);
 
 					return presets;
 				}

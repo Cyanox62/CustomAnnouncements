@@ -19,14 +19,14 @@ namespace CustomAnnouncements
     public class CustomAnnouncements : Plugin
     {
 		public static NineTailedFoxAnnouncer ann;
-		public static string filePath = "C:/Users/Infer/Desktop/savedAnnouncements.txt";
+		public static string presetFilePath = "C:/Users/Infer/Desktop/savedAnnouncements.txt";
 
 		public override void OnDisable() {}
 
 		public override void OnEnable()
 		{
-			if (!File.Exists(filePath))
-				using (new StreamWriter(File.Create(filePath))) { }
+			if (!File.Exists(presetFilePath))
+				using (new StreamWriter(File.Create(presetFilePath))) { }
 		}
 
         public override void Register()
@@ -42,8 +42,6 @@ namespace CustomAnnouncements
 			this.AddCommands(new string[] { "textannouncement", "ta" }, new CustomTextCommand(this));
 			this.AddCommands(new string[] { "mtfannouncement", "mtfa" }, new NTFAnnouncementCommand(this));
 			this.AddCommands(new string[] { "scpannouncement", "scpa" }, new SCPEliminationCommand(this));
-			this.AddCommands(new string[] { "saveannouncement", "sa" }, new SaveAnnouncement(this));
-			this.AddCommands(new string[] { "loadannouncement", "la" }, new LoadAnnouncement(this));
 			this.AddCommands(new string[] { "presetannouncement", "pa" }, new PresetAnnouncements(this));
 		}
 
