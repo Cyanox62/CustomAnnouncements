@@ -143,7 +143,7 @@ namespace CustomAnnouncements
 								{
 									newText.Add(str);
 									count++;
-								} // FIXME : determine if the preset was actually found, and say 'preset not found' if not
+								}
 							}
 
 							if (val == count)
