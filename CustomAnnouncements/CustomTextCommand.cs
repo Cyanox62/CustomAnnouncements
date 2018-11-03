@@ -19,7 +19,6 @@ namespace CustomAnnouncements
 		{
 			foreach (NineTailedFoxAnnouncer.VoiceLine vl in ann.voiceLines)
 			{
-				plugin.Info(str);
 				if (vl.apiName == str.ToUpper())
 					return true;
 			}

@@ -37,16 +37,16 @@ namespace CustomAnnouncements
                     return new string[] { "Not a valid number!" };
                 }
 
-                if (Int32.TryParse(args[1], out int b))
-                {
-                    int mtfNumber = b;
-                }
-                else
-                {
-                    return new string[] { "Not a valid number!" };
-                }
+				if (Int32.TryParse(args[1], out int b))
+				{
+					int mtfNumber = b;
+				}
+				else
+				{
+					return new string[] { "Not a valid number!" };
+				}
 
-                if (char.TryParse(args[2], out char c))
+				if (char.TryParse(args[2], out char c))
                 {
                     char scpsLeft = c;
                 }

@@ -32,6 +32,7 @@ namespace CustomAnnouncements
 
         public override void Register()
         {
+			this.AddCommands(new string[] { "countdownannouncement", "cda" }, new CountdownCommand(this));
 			this.AddCommands(new string[] { "textannouncement", "ta" }, new CustomTextCommand(this));
 			this.AddCommands(new string[] { "mtfannouncement", "mtfa" }, new NTFAnnouncementCommand(this));
             this.AddCommands(new string[] { "scpannouncement", "scpa" }, new SCPEliminationCommand(this));

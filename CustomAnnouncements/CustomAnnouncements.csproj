@@ -51,6 +51,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CountdownCommand.cs" />
     <Compile Include="CustomAnnouncements.cs" />
     <Compile Include="CustomTextCommand.cs" />
     <Compile Include="NTFAnnouncementCommand.cs" />
