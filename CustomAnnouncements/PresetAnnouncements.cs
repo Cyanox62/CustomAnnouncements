@@ -135,12 +135,20 @@ namespace CustomAnnouncements
 
 						if (currentText.Length > 0)
 						{
+							int val = currentText.Length;
+							int count = 0;
 							foreach (string str in currentText)
 							{
 								if (str.Split(':')[0].ToLower() != name.ToLower())
 								{
 									newText.Add(str);
+									count++;
 								} // FIXME : determine if the preset was actually found, and say 'preset not found' if not
+							}
+
+							if (val == count)
+							{
+								return new string[] { "Error: couldn't find preset \"" + name + "\"." };
 							}
 						}
 						else
@@ -164,8 +172,14 @@ namespace CustomAnnouncements
 				else if (args[0].ToLower() == "list")
 				{
 					string[] presets = File.ReadAllLines(CustomAnnouncements.presetFilePath);
-
-					return presets;
+					if (presets.Length > 0)
+					{
+						return presets;
+					}
+					else
+					{
+						return new string[] { "There are no saved presets." };
+					}
 				}
 				else
 				{
