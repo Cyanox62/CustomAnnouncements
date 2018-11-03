@@ -8,6 +8,7 @@ A plugin that allows anyone with access to the Remote Admin console ability to m
 | SCPA / SCPANNOUNCEMENT | SCP NUMBER | | | Announces a SCP death. |
 | TA / TEXTANNOUNCEMENT | TEXT | | | Create a custom announcement, view the wiki for all possible words. |
 | CDA / COUNTDOWNANNOUNCEMENT | START NUMBER | END NUMBER | TEXT | Create a countdown with the option of saying something at the end of the countdown. |
+| PA / PRESETANNOUNCEMENT | SAVE / LOAD / REMOVE / LIST | PRESET NAME | | Creates/saves/loads/lists the user's custom presets. |
 
 | Config        | Value Type | Default | Description |
 | :-------------: | :---------: | :---------: |:------ |
