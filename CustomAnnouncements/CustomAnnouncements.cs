@@ -20,22 +20,45 @@ namespace CustomAnnouncements
     )]
     public class CustomAnnouncements : Plugin
     {
+		public static NineTailedFoxAnnouncer ann = UnityEngine.Object.FindObjectOfType<NineTailedFoxAnnouncer>();
 
-        public override void OnDisable()
-        {
-        }
+		public override void OnDisable() {}
 
-        public override void OnEnable()
-        {
-
-        }
+		public override void OnEnable() {}
 
         public override void Register()
         {
+			this.AddConfig(new Smod2.Config.ConfigSetting("ca_countdown_whitelist", new string[] { "owner", "admin" }, Smod2.Config.SettingType.LIST, true, "Defines what ranks are allowed to use the countdown command."));
+			this.AddConfig(new Smod2.Config.ConfigSetting("ca_text_whitelist", new string[] { "owner", "admin" }, Smod2.Config.SettingType.LIST, true, "Defines what ranks are allowed to use the text command."));
+			this.AddConfig(new Smod2.Config.ConfigSetting("ca_mtf_whitelist", new string[] { "owner", "admin" }, Smod2.Config.SettingType.LIST, true, "Defines what ranks are allowed to use the mtf command."));
+			this.AddConfig(new Smod2.Config.ConfigSetting("ca_scp_whitelist", new string[] { "owner", "admin" }, Smod2.Config.SettingType.LIST, true, "Defines what ranks are allowed to use the scp command."));
+
 			this.AddCommands(new string[] { "countdownannouncement", "cda" }, new CountdownCommand(this));
 			this.AddCommands(new string[] { "textannouncement", "ta" }, new CustomTextCommand(this));
 			this.AddCommands(new string[] { "mtfannouncement", "mtfa" }, new NTFAnnouncementCommand(this));
             this.AddCommands(new string[] { "scpannouncement", "scpa" }, new SCPEliminationCommand(this));
-        }
-    }
+		}
+
+		public static bool IsPlayerWhitelisted(Player player, string[] whitelist)
+		{
+			foreach (string rank in whitelist)
+			{
+				if (player.GetRankName().ToLower() == rank.ToLower())
+				{
+					return true;
+				}
+			}
+			return false;
+		}
+
+		public static bool IsVoiceLine(string str)
+		{
+			foreach (NineTailedFoxAnnouncer.VoiceLine vl in ann.voiceLines)
+			{
+				if (vl.apiName == str.ToUpper())
+					return true;
+			}
+			return false;
+		}
+	}
 }

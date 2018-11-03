@@ -1,6 +1,7 @@
 ﻿using System;
 using Smod2;
 using Smod2.Commands;
+using Smod2.API;
 using UnityEngine;
 
 namespace CustomAnnouncements
@@ -8,16 +9,19 @@ namespace CustomAnnouncements
 	class CustomTextCommand : ICommandHandler
 	{
 		private Plugin plugin;
-		private NineTailedFoxAnnouncer ann;
+		private string[] whitelist;
 
 		public CustomTextCommand(Plugin plugin)
 		{
 			this.plugin = plugin;
+			whitelist = plugin.GetConfigList("ca_text_whitelist");
+			for (int i = 0; i < whitelist.Length; i++)
+				whitelist[i] = whitelist[i].Replace(" ", "");
 		}
 
 		private bool IsVoiceLine(string str)
 		{
-			foreach (NineTailedFoxAnnouncer.VoiceLine vl in ann.voiceLines)
+			foreach (NineTailedFoxAnnouncer.VoiceLine vl in CustomAnnouncements.ann.voiceLines)
 			{
 				if (vl.apiName == str.ToUpper())
 					return true;
@@ -37,7 +41,15 @@ namespace CustomAnnouncements
 
 		public string[] OnCall(ICommandSender sender, string[] args)
 		{
-			ann = UnityEngine.Object.FindObjectOfType<NineTailedFoxAnnouncer>();
+			if (sender is Player)
+			{
+				Player player = (Player)sender;
+				if (!CustomAnnouncements.IsPlayerWhitelisted(player, whitelist))
+				{
+					return new string[] { "You are not allowed to run this command." };
+				}
+			}
+
 			if (args.Length > 0)
 			{
 				foreach (string str in args)

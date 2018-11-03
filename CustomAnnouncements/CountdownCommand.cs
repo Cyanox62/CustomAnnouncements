@@ -1,6 +1,7 @@
 ﻿using System;
 using Smod2;
 using Smod2.Commands;
+using Smod2.API;
 using UnityEngine;
 
 namespace CustomAnnouncements
@@ -8,21 +9,14 @@ namespace CustomAnnouncements
 	class CountdownCommand : ICommandHandler
 	{
 		private Plugin plugin;
-		private NineTailedFoxAnnouncer ann;
+		private string[] whitelist;
 
 		public CountdownCommand(Plugin plugin)
 		{
 			this.plugin = plugin;
-		}
-
-		private bool IsVoiceLine(string str)
-		{
-			foreach (NineTailedFoxAnnouncer.VoiceLine vl in ann.voiceLines)
-			{
-				if (vl.apiName == str.ToUpper())
-					return true;
-			}
-			return false;
+			whitelist = plugin.GetConfigList("ca_countdown_whitelist");
+			for (int i = 0; i < whitelist.Length; i++)
+				whitelist[i] = whitelist[i].Replace(" ", "");
 		}
 
 		private string[] GetCountdown(int start, int end)
@@ -33,7 +27,7 @@ namespace CustomAnnouncements
 				string[] num = new string[((start - end + 1) * 2) - 1];
 				for (int i = start; i >= end; i--)
 				{
-					num[count] = (i > 19) ? ann.ConvertNumber(i).ToString() : i.ToString();
+					num[count] = (i > 19) ? CustomAnnouncements.ann.ConvertNumber(i).ToString() : i.ToString();
 					if (i < 100)
 						if (i != end)
 							num[count + 1] = ".";
@@ -69,7 +63,15 @@ namespace CustomAnnouncements
 
 		public string[] OnCall(ICommandSender sender, string[] args)
 		{
-			ann = UnityEngine.Object.FindObjectOfType<NineTailedFoxAnnouncer>();
+			if (sender is Player)
+			{
+				Player player = (Player)sender;
+				if (!CustomAnnouncements.IsPlayerWhitelisted(player, whitelist))
+				{
+					return new string[] { "You are not allowed to run this command." };
+				}
+			}
+
 			if (args.Length > 1)
 			{
 				int start, end = 0;
@@ -99,7 +101,7 @@ namespace CustomAnnouncements
 						string endString = "";
 						for (int i = 2; i < args.Length; i++)
 						{
-							if (!IsVoiceLine(args[i]))
+							if (!CustomAnnouncements.IsVoiceLine(args[i]))
 							{
 								return new string[] { "Error: phrase \"" + args[i] + "\" is not in text to speech." };
 							}

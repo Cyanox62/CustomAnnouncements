@@ -12,11 +12,15 @@ namespace CustomAnnouncements
     class SCPEliminationCommand : ICommandHandler
     {
         private Plugin plugin;
+		private string[] whitelist;
 
         public SCPEliminationCommand(Plugin plugin)
         {
             this.plugin = plugin;
-        }
+			whitelist = plugin.GetConfigList("ca_scp_whitelist");
+			for (int i = 0; i < whitelist.Length; i++)
+				whitelist[i] = whitelist[i].Replace(" ", "");
+		}
 
         public string GetCommandDescription()
         {
@@ -30,7 +34,16 @@ namespace CustomAnnouncements
 
         public string[] OnCall(ICommandSender sender, string[] args)
         {
-            if (args.Length > 0)
+			if (sender is Player)
+			{
+				Player player = (Player)sender;
+				if (!CustomAnnouncements.IsPlayerWhitelisted(player, whitelist))
+				{
+					return new string[] { "You are not allowed to run this command." };
+				}
+			}
+
+			if (args.Length > 0)
             {
                 if (Int32.TryParse(args[0], out int a))
                 {
