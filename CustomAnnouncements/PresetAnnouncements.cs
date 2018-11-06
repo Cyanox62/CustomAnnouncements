@@ -51,12 +51,7 @@ namespace CustomAnnouncements
 						string saveText = null;
 						string name = args[1];
 
-						for (int i = 2; i < args.Length; i++)
-						{
-							saveText += args[i];
-							if (i != args.Length - 1)
-								saveText += " ";
-						}
+						saveText = CustomAnnouncements.StringArrayToString(args, 2);
 
 						string[] currentText = File.ReadAllLines(CustomAnnouncements.presetFilePath);
 
