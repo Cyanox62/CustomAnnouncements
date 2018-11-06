@@ -7,12 +7,12 @@ using System.Collections.Generic;
 
 namespace CustomAnnouncements
 {
-	class TimerAnnouncementsCommand : ICommandHandler
+	class TimerCommand : ICommandHandler
 	{
 		private Plugin plugin;
 		private string[] whitelist;
 
-		public TimerAnnouncementsCommand(Plugin plugin)
+		public TimerCommand(Plugin plugin)
 		{
 			this.plugin = plugin;
 			whitelist = plugin.GetConfigList("ca_timer_whitelist");
@@ -27,7 +27,7 @@ namespace CustomAnnouncements
 
 		public string GetUsage()
 		{
-			return "(TIA / TIMEDANNOUNCEMENT) (SAVE / REMOVE / LIST) (TIME) (TEXT)";
+			return "(TI / TIMER) (SET / REMOVE / LIST) (TIME) (TEXT)";
 		}
 
 		public string[] OnCall(ICommandSender sender, string[] args)
@@ -44,7 +44,7 @@ namespace CustomAnnouncements
 
 			if (args.Length > 0)
 			{
-				if (args[0].ToLower() == "save")
+				if (args[0].ToLower() == "set")
 				{
 					if (args.Length > 1)
 					{

@@ -27,6 +27,8 @@ namespace CustomAnnouncements
 		public static string configFolerFilePath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/SCP Secret Laboratory/CustomAnnouncements";
 		public static string presetFilePath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/SCP Secret Laboratory/CustomAnnouncements/presets.txt";
 		public static string timerFilePath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/SCP Secret Laboratory/CustomAnnouncements/timers.txt";
+		public static string chaosFilePath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/SCP Secret Laboratory/CustomAnnouncements/chaos.txt";
+		public static string roundendFilePath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/SCP Secret Laboratory/CustomAnnouncements/roundend.txt";
 		public static bool roundStarted = false;
 
 		public override void OnDisable() {}
@@ -38,6 +40,8 @@ namespace CustomAnnouncements
 				configFolerFilePath = "/home/" + Environment.UserName + "/.config/SCP Secret Laboratory/CustomAnnouncements";
 				presetFilePath = "/home/" + Environment.UserName + "/.config/SCP Secret Laboratory/CustomAnnouncements/presets.txt";
 				timerFilePath = "/home/" + Environment.UserName + "/.config/SCP Secret Laboratory/CustomAnnouncements/timers.txt";
+				chaosFilePath = "/home/" + Environment.UserName + "/.config/SCP Secret Laboratory/CustomAnnouncements/chaos.txt";
+				roundendFilePath = "/home/" + Environment.UserName + "/.config/SCP Secret Laboratory/CustomAnnouncements/roundend.txt";
 			}
 
 			if (!Directory.Exists(configFolerFilePath))
@@ -51,6 +55,14 @@ namespace CustomAnnouncements
 			if (!File.Exists(timerFilePath))
 			{
 				using (new StreamWriter(File.Create(timerFilePath))) { }
+			}
+			if (!File.Exists(chaosFilePath))
+			{
+				using (new StreamWriter(File.Create(chaosFilePath))) { }
+			}
+			if (!File.Exists(roundendFilePath))
+			{
+				using (new StreamWriter(File.Create(roundendFilePath))) { }
 			}
 		}
 
@@ -66,15 +78,19 @@ namespace CustomAnnouncements
 			this.AddConfig(new Smod2.Config.ConfigSetting("ca_scp_whitelist", new string[] { "owner", "admin" }, Smod2.Config.SettingType.LIST, true, "Defines what ranks are allowed to use the scp command."));
 			this.AddConfig(new Smod2.Config.ConfigSetting("ca_preset_whitelist", new string[] { "owner", "admin" }, Smod2.Config.SettingType.LIST, true, "Defines what ranks are allowed to use the preset command."));
 			this.AddConfig(new Smod2.Config.ConfigSetting("ca_timer_whitelist", new string[] { "owner", "admin" }, Smod2.Config.SettingType.LIST, true, "Defines what ranks are allowed to use the timer command."));
+			this.AddConfig(new Smod2.Config.ConfigSetting("ca_chaosspawn_whitelist", new string[] { "owner", "admin" }, Smod2.Config.SettingType.LIST, true, "Defines what ranks are allowed to use the chaosspawn command."));
+			this.AddConfig(new Smod2.Config.ConfigSetting("ca_roundend_whitelist", new string[] { "owner", "admin" }, Smod2.Config.SettingType.LIST, true, "Defines what ranks are allowed to use the roundend command."));
 
 			// Commands
 			this.AddCommands(new string[] { "customannouncements", "ca" }, new CommandsOutput());
-			this.AddCommands(new string[] { "countdownannouncement", "cda" }, new CountdownCommand(this));
+			this.AddCommands(new string[] { "countdown", "cd" }, new CountdownCommand(this));
 			this.AddCommands(new string[] { "textannouncement", "ta" }, new CustomTextCommand(this));
 			this.AddCommands(new string[] { "mtfannouncement", "mtfa" }, new MTFAnnouncementCommand(this));
 			this.AddCommands(new string[] { "scpannouncement", "scpa" }, new SCPEliminationCommand(this));
-			this.AddCommands(new string[] { "presetannouncement", "pa" }, new PresetAnnouncements(this));
-			this.AddCommands(new string[] { "timerannouncement", "tia" }, new TimerAnnouncementsCommand(this));
+			this.AddCommands(new string[] { "preset", "pr" }, new PresetCommand(this));
+			this.AddCommands(new string[] { "timer", "ti" }, new TimerCommand(this));
+			this.AddCommands(new string[] { "chaosspawn", "cs" }, new ChaosSpawnCommand(this));
+			this.AddCommands(new string[] { "roundend", "re" }, new RoundEndCommand(this));
 		}
 
 		public static bool IsPlayerWhitelisted(Player player, string[] whitelist)
@@ -111,12 +127,14 @@ namespace CustomAnnouncements
 		public static string StringArrayToString(string[] array, int startPos)
 		{
 			string saveText = null;
-
-			for (int i = startPos; i < array.Length; i++)
+			if (array.Length > 0)
 			{
-				saveText += array[i];
-				if (i != array.Length - 1)
-					saveText += " ";
+				for (int i = startPos; i < array.Length; i++)
+				{
+					saveText += array[i];
+					if (i != array.Length - 1)
+						saveText += " ";
+				}
 			}
 			return saveText;
 		}

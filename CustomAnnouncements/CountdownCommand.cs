@@ -58,7 +58,7 @@ namespace CustomAnnouncements
 
 		public string GetUsage()
 		{
-			return "(CDA / COUNTDOWNANNOUNCEMENT) (START) (END) (TEXT)";
+			return "(CD / COUNTDOWN) (START) (END) (TEXT)";
 		}
 
 		public string[] OnCall(ICommandSender sender, string[] args)

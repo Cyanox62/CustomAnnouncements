@@ -7,12 +7,12 @@ using System.Collections.Generic;
 
 namespace CustomAnnouncements
 {
-	class PresetAnnouncements : ICommandHandler
+	class PresetCommand : ICommandHandler
 	{
 		private Plugin plugin;
 		private string[] whitelist;
 
-		public PresetAnnouncements(Plugin plugin)
+		public PresetCommand(Plugin plugin)
 		{
 			this.plugin = plugin;
 			whitelist = plugin.GetConfigList("ca_preset_whitelist");
@@ -27,7 +27,7 @@ namespace CustomAnnouncements
 
 		public string GetUsage()
 		{
-			return "(PA / PRESETANNOUNCEMENT) (SAVE / LOAD / REMOVE / LIST) (NAME) (TEXT)";
+			return "(PR / PRESET) (SAVE / LOAD / REMOVE / LIST) (NAME) (TEXT)";
 		}
 
 		public string[] OnCall(ICommandSender sender, string[] args)

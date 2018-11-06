@@ -7,9 +7,9 @@ using System.Threading;
 
 namespace CustomAnnouncements
 {
-	class TimerAnnouncementsHandler
+	class TimerHandler
 	{
-		public TimerAnnouncementsHandler(Plugin plugin)
+		public TimerHandler(Plugin plugin)
 		{
 			string[] timers = File.ReadAllLines(CustomAnnouncements.timerFilePath);
 
