@@ -19,6 +19,6 @@ A plugin that allows admins to make custom CASSIE announcements.
 | ca_text_whitelist | List | owner, admin | Determines which ranks are allowed to use the `TA / TEXTANNOUNCEMENT` command. |
 | ca_countdown_whitelist | List | owner, admin | Determines which ranks are allowed to use the `CDA / COUNTDOWNANNOUNCEMENT` command. |
 | ca_preset_whitelist | List | owner, admin | Determines which ranks are allowed to use the `PA / PRESETANNOUNCEMENT` command. |
-| ca_timer_whitelist | List | owner, admin | Determines which ranks are allowed to use the `TIA / TIMERANNOUNCEMENT` command. Define a timer as an integer value being the number of seconds into a round the announcement will be played. Ex. `tia save 50 hello` classd will announce "hello classd" 50 seconds into the round. |
+| ca_timer_whitelist | List | owner, admin | Determines which ranks are allowed to use the `TIA / TIMERANNOUNCEMENT` command. Define a timer as an integer value being the number of seconds into a round the announcement will be played. Ex. `tia save 50 hello classd` will announce "hello classd" 50 seconds into the round. |
 
 Any command using the remove keyword can use `all` or `*` to target all items.
