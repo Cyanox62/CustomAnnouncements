@@ -21,4 +21,4 @@ A plugin that allows admins to make custom CASSIE announcements.
 | ca_preset_whitelist | List | owner, admin | Determines which ranks are allowed to use the `PR / PRESET` command. |
 | ca_timer_whitelist | List | owner, admin | Determines which ranks are allowed to use the `TI / TIMER` command. |
 
-Any command using the remove keyword can use `all` or `*` to target all items.
+Any command using the remove keyword can use `all` or `*` to target all items. For instance, `timer remove all`
