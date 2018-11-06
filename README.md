@@ -4,7 +4,7 @@ A plugin that allows admins to make custom CASSIE announcements.
 
 **[Smod2](https://github.com/Grover-c13/Smod2) must be installed for this to work.**
 
-Any command requiring a text input can use various [round data variables](https://github.com/Cyanox62/CustomAnnouncements/wiki/Server-Info-Variables) to use current data in the round. All normal words CASSIE can say can be found [here](https://github.com/Cyanox62/CustomAnnouncements/wiki/CASSIE-Phrases).
+Any command requiring a text input can use various [round data variables](https://github.com/Cyanox62/CustomAnnouncements/wiki/Round-Data-Variables-List) to use current data in the round. All normal words CASSIE can say can be found [here](https://github.com/Cyanox62/CustomAnnouncements/wiki/CASSIE-Phrases).
 
 Any command using the remove keyword can use `all` or `*` to target all items. For instance, `timer remove all`.
 
