@@ -10,7 +10,7 @@ A plugin that allows admins to make custom CASSIE announcements.
 | TA / TEXTANNOUNCEMENT | TEXT | | | Create a custom announcement, view the wiki for all possible words. |
 | CDA / COUNTDOWNANNOUNCEMENT | START NUMBER | END NUMBER | TEXT | Create a countdown with the option of saying something at the end of the countdown. |
 | PA / PRESETANNOUNCEMENT | SAVE / LOAD / REMOVE / LIST | PRESET NAME | | Creates/saves/loads/removes/lists the user's custom presets. |
-| TIA / TIMERANNOUNCEMENT | SAVE / REMOVE / LIST | TIMER | | Creates/saves/removes/lists the user's set timers. |
+| TIA / TIMERANNOUNCEMENT | SAVE / REMOVE / LIST | TIMER | TEXT | Creates/saves/removes/lists the user's set timers. |
 
 | Config        | Value Type | Default | Description |
 | :-------------: | :---------: | :---------: |:------ |
