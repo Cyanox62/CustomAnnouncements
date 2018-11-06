@@ -185,7 +185,7 @@ namespace CustomAnnouncements
 		{
 			string[] currentText = File.ReadAllLines(filePath);
 
-			if (!DoesKeyExistInFile(filePath, key))
+			if (DoesKeyExistInFile(filePath, key))
 			{
 				return -1;
 			}

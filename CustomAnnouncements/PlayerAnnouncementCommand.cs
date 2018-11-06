@@ -51,7 +51,7 @@ namespace CustomAnnouncements
 						string saveText = null;
 						string steamid = args[1];
 
-						if (!Int32.TryParse(steamid, out int a))
+						if (!ulong.TryParse(steamid, out ulong a))
 						{
 							return new string[] { "Error: invalid steamid." };
 						}
@@ -109,7 +109,7 @@ namespace CustomAnnouncements
 						}
 						else
 						{
-							return new string[] { GetUsage() };
+							return new string[] { "There are no player announcements." };
 						}
 					}
 					else
