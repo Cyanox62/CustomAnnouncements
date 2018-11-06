@@ -27,7 +27,7 @@ namespace CustomAnnouncements
 
 		public string GetUsage()
 		{
-			return "(PA / PRESETANNOUNCEMENT) (SAVE / LOAD / REMOVE / LIST) (NAME)";
+			return "(PA / PRESETANNOUNCEMENT) (SAVE / LOAD / REMOVE / LIST) (NAME) (TEXT)";
 		}
 
 		public string[] OnCall(ICommandSender sender, string[] args)
