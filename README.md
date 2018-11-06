@@ -27,5 +27,6 @@ A plugin that allows admins to make custom CASSIE announcements.
 | ca_roundend_whitelist | List | owner, admin | Determines which ranks are allowed to use the `RE / ROUNDEND` command. |
 | ca_player_whitelist | List | owner, admin | Determines which ranks are allowed to use the `PA / PLAYERANNOUNCEMENT` command. |
 
-Any command using the remove keyword can use `all` or `*` to target all items. For instance, `timer remove all`
-All settings are saved in %APPDATA%/SCP Secret Laboratory/CustomAnnouncements
+Any command using the remove keyword can use `all` or `*` to target all items. For instance, `timer remove all`.
+
+All settings are saved in %APPDATA%/SCP Secret Laboratory/CustomAnnouncements.
