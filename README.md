@@ -2,6 +2,14 @@
 
 A plugin that allows admins to make custom CASSIE announcements.
 
+**[Smod2](https://github.com/Grover-c13/Smod2) must be installed for this to work.**
+
+Any command requiring a text input can use various [server name variables](https://github.com/Cyanox62/CustomAnnouncements/wiki/Server-Info-Variables) to use current data in the round.
+
+Any command using the remove keyword can use `all` or `*` to target all items. For instance, `timer remove all`.
+
+All settings are saved in %APPDATA%/SCP Secret Laboratory/CustomAnnouncements.
+
 | Command        | Value Type | Value Type | Value Type | Description |
 | :-------------: | :---------: | :---------: | :---------: | :------ |
 | CA / CUSTOMANNOUNCEMENTS | | | | Lists all commands. |
@@ -26,7 +34,3 @@ A plugin that allows admins to make custom CASSIE announcements.
 | ca_chaosspawn_whitelist | List | owner, admin | Determines which ranks are allowed to use the `CS / CHAOSSPAWN` command. |
 | ca_roundend_whitelist | List | owner, admin | Determines which ranks are allowed to use the `RE / ROUNDEND` command. |
 | ca_player_whitelist | List | owner, admin | Determines which ranks are allowed to use the `PA / PLAYERANNOUNCEMENT` command. |
-
-Any command using the remove keyword can use `all` or `*` to target all items. For instance, `timer remove all`.
-
-All settings are saved in %APPDATA%/SCP Secret Laboratory/CustomAnnouncements.
