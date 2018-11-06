@@ -58,12 +58,17 @@ namespace CustomAnnouncements
 
 						saveText = CustomAnnouncements.StringArrayToString(args, 2);
 
-						foreach (string str in saveText.Split(' '))
+						if (saveText.Length > 0)
 						{
-							if (!CustomAnnouncements.IsVoiceLine(str))
+							string text = CustomAnnouncements.NonValidText(saveText.Split(' '));
+							if (text != null)
 							{
-								return new string[] { "Error: phrase \"" + str + "\" is not in text to speech." };
+								return new string[] { "Error: phrase \"" + text + "\" is not in text to speech." };
 							}
+						}
+						else
+						{
+							return new string[] { GetUsage() };
 						}
 
 						int output = CustomAnnouncements.AddLineToFile(CustomAnnouncements.playerFilePath, steamid, saveText);

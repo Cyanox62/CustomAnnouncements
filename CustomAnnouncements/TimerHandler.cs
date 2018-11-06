@@ -17,10 +17,13 @@ namespace CustomAnnouncements
 			{
 				foreach (string timer in timers)
 				{
-					if (plugin.pluginManager.Server.Round.Duration == Int32.Parse(timer.Split(':')[0]))
+					if (timer.Length > 0)
 					{
-						string message = timer.Split(':')[1].Substring(1);
-						plugin.pluginManager.Server.Map.AnnounceCustomMessage(message);
+						if (plugin.pluginManager.Server.Round.Duration == Int32.Parse(timer.Split(':')[0]))
+						{
+							string message = timer.Split(':')[1].Substring(1);
+							plugin.pluginManager.Server.Map.AnnounceCustomMessage(CustomAnnouncements.ReplaceVariables(message));
+						}
 					}
 				}
 				Thread.Sleep(1000);

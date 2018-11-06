@@ -8,7 +8,6 @@ using System.Collections.Generic;
 // TO DO:
 
 // ADD SUPPORT FOR PERIODS
-// INVESTIGATE SOME WORDS NOT WORKING
 
 namespace CustomAnnouncements
 {
@@ -17,7 +16,7 @@ namespace CustomAnnouncements
     name = "CustomAnnouncements",
     description = "Makes custom CASSIE announcements",
     id = "cyan.custom.announcements",
-    version = "0.7",
+    version = "0.9",
     SmodMajor = 3,
     SmodMinor = 0,
     SmodRevision = 0
@@ -25,6 +24,24 @@ namespace CustomAnnouncements
     public class CustomAnnouncements : Plugin
     {
 		public static NineTailedFoxAnnouncer ann;
+		public static List<String> roundVariables = new List<string>()
+		{
+			"$scp_alive",
+			"$scp_start",
+			"$scp_dead",
+			"$scp_zombies",
+			"$classd_alive",
+			"$classd_escape",
+			"$classd_start",
+			"$scientists_alive",
+			"$scientists_escape",
+			"$scientists_start",
+			"$scp_kills",
+			"$grenade_kills",
+			"$mtf_alive",
+			"$ci_alive",
+			"$round_duration"
+		};
 		public static string configFolerFilePath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/SCP Secret Laboratory/CustomAnnouncements";
 		public static string presetFilePath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/SCP Secret Laboratory/CustomAnnouncements/presets.txt";
 		public static string timerFilePath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/SCP Secret Laboratory/CustomAnnouncements/timers.txt";
@@ -72,7 +89,7 @@ namespace CustomAnnouncements
 				using (new StreamWriter(File.Create(playerFilePath))) { }
 			}
 		}
-
+		
         public override void Register()
         {
 			// Event handlers
@@ -122,6 +139,18 @@ namespace CustomAnnouncements
 					return true;
 			}
 			return false;
+		}
+
+		public static string NonValidText(string[] text)
+		{
+			foreach (string str in text)
+			{
+				if (!IsVoiceLine(str) && !roundVariables.Contains(str))
+				{
+					return str;
+				}
+			}
+			return null;
 		}
 
 		public static bool IsLinux
@@ -220,6 +249,41 @@ namespace CustomAnnouncements
 				File.AppendAllText(filePath, str + Environment.NewLine);
 			}
 			return 1;
+		}
+
+		public static string ReplaceVariables(string input)
+		{
+			RoundStats stats = PluginManager.Manager.Server.Round.Stats;
+			input = input.Replace("$scp_alive", stats.SCPAlive.ToString());
+			input = input.Replace("$scp_start", stats.SCPStart.ToString());
+			input = input.Replace("$scp_dead", stats.SCPDead.ToString());
+			input = input.Replace("$scp_zombies", stats.Zombies.ToString());
+			input = input.Replace("$classd_alive", stats.ClassDAlive.ToString());
+			input = input.Replace("$classd_escape", stats.ClassDEscaped.ToString());
+			input = input.Replace("$classd_start", stats.ClassDStart.ToString());
+			input = input.Replace("$scientists_alive", stats.ScientistsAlive.ToString());
+			input = input.Replace("$scientists_escape", stats.ScientistsEscaped.ToString());
+			input = input.Replace("$scientists_start", stats.ScientistsStart.ToString());
+			input = input.Replace("$scp_kills", stats.SCPKills.ToString());
+			input = input.Replace("$grenade_kills", stats.GrenadeKills.ToString());
+			input = input.Replace("$mtf_alive", stats.NTFAlive.ToString());
+			input = input.Replace("$ci_alive", stats.CiAlive.ToString());
+			input = input.Replace("$round_duration", ((int)(RoundSummary.roundTime / 60)).ToString());
+
+			string[] words = input.Split(' ');
+
+			for (int i = 0; i < words.Length; i++)
+			{ 
+				if (Int32.TryParse(words[i], out int a))
+				{
+					if (a > 20)
+					{
+						words[i] = ann.ConvertNumber(a).ToString();
+					}
+				}
+			}
+
+			return StringArrayToString(words, 0);
 		}
 	}
 }

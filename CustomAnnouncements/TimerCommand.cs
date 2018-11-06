@@ -61,26 +61,26 @@ namespace CustomAnnouncements
 							return new string[] { "Error: invalid time" };
 						}
 
-						if (currentText.Length > 0)
+						if (saveText.Length > 0)
 						{
-							foreach (string str in currentText)
+							string text = CustomAnnouncements.NonValidText(saveText.Split(' '));
+							if (text != null)
 							{
-								if (str.Split(':')[0] == time.ToString())
-								{
-									return new string[] { "Error: Timer already exists." };
-								}
+								return new string[] { "Error: phrase \"" + text + "\" is not in text to speech." };
 							}
 						}
-
-						foreach (string str in saveText.Split(' '))
+						else
 						{
-							if (!CustomAnnouncements.IsVoiceLine(str))
-							{
-								return new string[] { "Error: phrase \"" + str + "\" is not in text to speech." };
-							}
+							return new string[] { GetUsage() };
 						}
 
-						File.AppendAllText(CustomAnnouncements.timerFilePath, time + ": " + saveText + Environment.NewLine);
+						int output = CustomAnnouncements.AddLineToFile(CustomAnnouncements.timerFilePath, time.ToString(), saveText);
+
+						if (output == -1)
+						{
+							return new string[] { "Error: Preset name already exists." };
+						}
+
 						return new string[] { "Saved timer." };
 
 					}

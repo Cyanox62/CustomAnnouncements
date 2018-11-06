@@ -51,12 +51,10 @@ namespace CustomAnnouncements
 
 						if (saveText.Length > 0)
 						{
-							foreach (string str in saveText.Split(' '))
+							string text = CustomAnnouncements.NonValidText(saveText.Split(' '));
+							if (text != null)
 							{
-								if (!CustomAnnouncements.IsVoiceLine(str))
-								{
-									return new string[] { "Error: phrase \"" + str + "\" is not in text to speech." };
-								}
+								return new string[] { "Error: phrase \"" + text + "\" is not in text to speech." };
 							}
 						}
 						else

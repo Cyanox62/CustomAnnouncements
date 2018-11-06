@@ -32,7 +32,8 @@ namespace CustomAnnouncements
 			string[] message = File.ReadAllLines(CustomAnnouncements.roundendFilePath);
 			if (message.Length > 0)
 			{
-				plugin.pluginManager.Server.Map.AnnounceCustomMessage(message[0]);
+				string text = CustomAnnouncements.ReplaceVariables(CustomAnnouncements.StringArrayToString(message, 0));
+				plugin.pluginManager.Server.Map.AnnounceCustomMessage(text);
 			}
 		}
 
@@ -43,7 +44,8 @@ namespace CustomAnnouncements
 				string[] message = File.ReadAllLines(CustomAnnouncements.chaosFilePath);
 				if (message.Length > 0)
 				{
-					plugin.pluginManager.Server.Map.AnnounceCustomMessage(message[0]);
+					string text = CustomAnnouncements.ReplaceVariables(CustomAnnouncements.StringArrayToString(message, 0));
+					plugin.pluginManager.Server.Map.AnnounceCustomMessage(text);
 				}
 			}
 		}
@@ -54,8 +56,7 @@ namespace CustomAnnouncements
 			{
 				if (CustomAnnouncements.DoesKeyExistInFile(CustomAnnouncements.playerFilePath, ev.Player.SteamId))
 				{
-					plugin.Info(CustomAnnouncements.GetValueOfKey(CustomAnnouncements.playerFilePath, ev.Player.SteamId.ToString()));
-					plugin.pluginManager.Server.Map.AnnounceCustomMessage(CustomAnnouncements.GetValueOfKey(CustomAnnouncements.playerFilePath, ev.Player.SteamId.ToString()));
+					plugin.pluginManager.Server.Map.AnnounceCustomMessage(CustomAnnouncements.ReplaceVariables(CustomAnnouncements.GetValueOfKey(CustomAnnouncements.playerFilePath, ev.Player.SteamId.ToString())));
 				}
 			}
 		}
