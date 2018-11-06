@@ -67,7 +67,7 @@ namespace CustomAnnouncements
 							{
 								if (str.Split(':')[0] == time.ToString())
 								{
-									return new string[] { "Error: Preset name already exists." };
+									return new string[] { "Error: Timer already exists." };
 								}
 							}
 						}
@@ -106,33 +106,18 @@ namespace CustomAnnouncements
 
 						if (currentText.Length > 0)
 						{
-							int val = currentText.Length;
-							int count = 0;
-							foreach (string str in currentText)
-							{
-								if (str.Split(':')[0] != time)
-								{
-									newText.Add(str);
-									count++;
-								}
-							}
-
-							if (val == count)
+							if (CustomAnnouncements.RemoveLineFromFile(currentText, time, CustomAnnouncements.timerFilePath) == -1)
 							{
 								return new string[] { "Error: couldn't find timer." };
 							}
-
-							File.WriteAllText(CustomAnnouncements.timerFilePath, String.Empty);
-
-							foreach (string str in newText.ToArray())
+							else
 							{
-								File.AppendAllText(CustomAnnouncements.timerFilePath, str + Environment.NewLine);
+								return new string[] { "Removed timer." };
 							}
-							return new string[] { "Removed timer." };
 						}
 						else
 						{
-							return new string[] { "Error: there are no saved presets." };
+							return new string[] { "Error: there are no set timers." };
 						}
 					}
 					else
@@ -149,7 +134,7 @@ namespace CustomAnnouncements
 					}
 					else
 					{
-						return new string[] { "There are no timers." };
+						return new string[] { "Error: there are no set timers." };
 					}
 				}
 				else
