@@ -3,6 +3,7 @@ using Smod2;
 using Smod2.API;
 using Smod2.Attributes;
 using System.IO;
+using System.Collections.Generic;
 
 // TO DO:
 
@@ -29,6 +30,7 @@ namespace CustomAnnouncements
 		public static string timerFilePath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/SCP Secret Laboratory/CustomAnnouncements/timers.txt";
 		public static string chaosFilePath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/SCP Secret Laboratory/CustomAnnouncements/chaos.txt";
 		public static string roundendFilePath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/SCP Secret Laboratory/CustomAnnouncements/roundend.txt";
+		public static string playerFilePath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/SCP Secret Laboratory/CustomAnnouncements/player.txt";
 		public static bool roundStarted = false;
 
 		public override void OnDisable() {}
@@ -42,6 +44,7 @@ namespace CustomAnnouncements
 				timerFilePath = "/home/" + Environment.UserName + "/.config/SCP Secret Laboratory/CustomAnnouncements/timers.txt";
 				chaosFilePath = "/home/" + Environment.UserName + "/.config/SCP Secret Laboratory/CustomAnnouncements/chaos.txt";
 				roundendFilePath = "/home/" + Environment.UserName + "/.config/SCP Secret Laboratory/CustomAnnouncements/roundend.txt";
+				playerFilePath = "/home/" + Environment.UserName + "/.config/SCP Secret Laboratory/CustomAnnouncements/player.txt";
 			}
 
 			if (!Directory.Exists(configFolerFilePath))
@@ -64,6 +67,10 @@ namespace CustomAnnouncements
 			{
 				using (new StreamWriter(File.Create(roundendFilePath))) { }
 			}
+			if (!File.Exists(playerFilePath))
+			{
+				using (new StreamWriter(File.Create(playerFilePath))) { }
+			}
 		}
 
         public override void Register()
@@ -80,6 +87,7 @@ namespace CustomAnnouncements
 			this.AddConfig(new Smod2.Config.ConfigSetting("ca_timer_whitelist", new string[] { "owner", "admin" }, Smod2.Config.SettingType.LIST, true, "Defines what ranks are allowed to use the timer command."));
 			this.AddConfig(new Smod2.Config.ConfigSetting("ca_chaosspawn_whitelist", new string[] { "owner", "admin" }, Smod2.Config.SettingType.LIST, true, "Defines what ranks are allowed to use the chaosspawn command."));
 			this.AddConfig(new Smod2.Config.ConfigSetting("ca_roundend_whitelist", new string[] { "owner", "admin" }, Smod2.Config.SettingType.LIST, true, "Defines what ranks are allowed to use the roundend command."));
+			this.AddConfig(new Smod2.Config.ConfigSetting("ca_player_whitelist", new string[] { "owner", "admin" }, Smod2.Config.SettingType.LIST, true, "Defines what ranks are allowed to use the player command."));
 
 			// Commands
 			this.AddCommands(new string[] { "customannouncements", "ca" }, new CommandsOutput());
@@ -91,6 +99,7 @@ namespace CustomAnnouncements
 			this.AddCommands(new string[] { "timer", "ti" }, new TimerCommand(this));
 			this.AddCommands(new string[] { "chaosspawn", "cs" }, new ChaosSpawnCommand(this));
 			this.AddCommands(new string[] { "roundend", "re" }, new RoundEndCommand(this));
+			this.AddCommands(new string[] { "playerannouncement", "pa" }, new PlayerAnnouncementCommand(this));
 		}
 
 		public static bool IsPlayerWhitelisted(Player player, string[] whitelist)
@@ -137,6 +146,80 @@ namespace CustomAnnouncements
 				}
 			}
 			return saveText;
+		}
+
+		public static bool DoesKeyExistInFile(string filePath, string key)
+		{
+			string[] currentText = File.ReadAllLines(filePath);
+
+			if (currentText.Length > 0)
+			{
+				foreach (string str in currentText)
+				{
+					if (str.Split(':')[0].ToLower() == key.ToLower())
+					{
+						return true;
+					}
+				}
+			}
+			return false;
+		}
+
+		public static string GetValueOfKey(string filePath, string key)
+		{
+			string[] keys = File.ReadAllLines(filePath);
+			if (keys.Length > 0)
+			{
+				foreach (string str in keys)
+				{
+					if (str.Split(':')[0].ToLower() == key.ToLower())
+					{
+						return str.Substring(str.IndexOf(':') + 2);
+					}
+				}
+			}
+			return null;
+		}
+
+		public static int AddLineToFile(string filePath, string key, string value)
+		{
+			string[] currentText = File.ReadAllLines(filePath);
+
+			if (!DoesKeyExistInFile(filePath, key))
+			{
+				return -1;
+			}
+
+			File.AppendAllText(filePath, key + ": " + value + Environment.NewLine);
+			return 1;
+		}
+
+		public static int RemoveLineFromFile(string[] lines, string removeString, string filePath)
+		{
+			List<string> newText = new List<string>();
+			int val = lines.Length;
+			int count = 0;
+			foreach (string str in lines)
+			{
+				if (str.Split(':')[0] != removeString)
+				{
+					newText.Add(str);
+					count++;
+				}
+			}
+
+			if (val == count)
+			{
+				return -1;
+			}
+
+			File.WriteAllText(filePath, String.Empty);
+
+			foreach (string str in newText.ToArray())
+			{
+				File.AppendAllText(filePath, str + Environment.NewLine);
+			}
+			return 1;
 		}
 	}
 }

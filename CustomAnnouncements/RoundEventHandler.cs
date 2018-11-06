@@ -9,7 +9,7 @@ using System.Threading;
 
 namespace CustomAnnouncements
 {
-	class RoundEventHandler : IEventHandlerRoundStart, IEventHandlerRoundEnd, IEventHandlerTeamRespawn
+	class RoundEventHandler : IEventHandlerRoundStart, IEventHandlerRoundEnd, IEventHandlerTeamRespawn, IEventHandlerPlayerJoin
 	{
 		private Plugin plugin;
 
@@ -44,6 +44,18 @@ namespace CustomAnnouncements
 				if (message.Length > 0)
 				{
 					plugin.pluginManager.Server.Map.AnnounceCustomMessage(message[0]);
+				}
+			}
+		}
+
+		public void OnPlayerJoin(PlayerJoinEvent ev)
+		{
+			if (File.ReadAllLines(CustomAnnouncements.playerFilePath).Length > 0)
+			{
+				if (CustomAnnouncements.DoesKeyExistInFile(CustomAnnouncements.playerFilePath, ev.Player.SteamId))
+				{
+					plugin.Info(CustomAnnouncements.GetValueOfKey(CustomAnnouncements.playerFilePath, ev.Player.SteamId.ToString()));
+					plugin.pluginManager.Server.Map.AnnounceCustomMessage(CustomAnnouncements.GetValueOfKey(CustomAnnouncements.playerFilePath, ev.Player.SteamId.ToString()));
 				}
 			}
 		}

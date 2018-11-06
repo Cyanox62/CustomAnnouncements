@@ -27,7 +27,8 @@ namespace CustomAnnouncements
 				"(PR / PRESET) (SAVE / LOAD / REMOVE / LIST) (NAME) (TEXT)",
 				"(TI / TIMER) (SET / REMOVE / LIST) (TIME) (TEXT)",
 				"(CS / CHAOSSPAWN) (SET / CLEAR) (TEXT)",
-				"(RE / ROUNDEND) (SET / CLEAR) (TEXT)"
+				"(RE / ROUNDEND) (SET / CLEAR) (TEXT)",
+				"(PA / PLAYERANNOUNCEMENT) (SET / REMOVE / LIST) (STEAMID) (TEXT)"
 			};
 		}
 	}

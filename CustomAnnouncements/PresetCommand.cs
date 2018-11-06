@@ -53,19 +53,6 @@ namespace CustomAnnouncements
 
 						saveText = CustomAnnouncements.StringArrayToString(args, 2);
 
-						string[] currentText = File.ReadAllLines(CustomAnnouncements.presetFilePath);
-
-						if (currentText.Length > 0)
-						{
-							foreach (string str in currentText)
-							{
-								if (str.Split(':')[0].ToLower() == name.ToLower())
-								{
-									return new string[] { "Error: Preset name already exists." };
-								}
-							}
-						}
-
 						foreach (string str in saveText.Split(' '))
 						{
 							if (!CustomAnnouncements.IsVoiceLine(str))
@@ -74,7 +61,12 @@ namespace CustomAnnouncements
 							}
 						}
 
-						File.AppendAllText(CustomAnnouncements.presetFilePath, name + ": " + saveText + Environment.NewLine);
+						int output = CustomAnnouncements.AddLineToFile(CustomAnnouncements.presetFilePath, name, saveText);
+
+						if (output == -1)
+						{
+							return new string[] { "Error: Preset name already exists." };
+						}
 						return new string[] { "Saved preset \"" + name + "\"." };
 					}
 					else
@@ -136,34 +128,19 @@ namespace CustomAnnouncements
 
 						if (currentText.Length > 0)
 						{
-							int val = currentText.Length;
-							int count = 0;
-							foreach (string str in currentText)
-							{
-								if (str.Split(':')[0].ToLower() != name.ToLower())
-								{
-									newText.Add(str);
-									count++;
-								}
-							}
-
-							if (val == count)
+							if (CustomAnnouncements.RemoveLineFromFile(currentText, name, CustomAnnouncements.presetFilePath) == -1)
 							{
 								return new string[] { "Error: couldn't find preset \"" + name + "\"." };
+							}
+							else
+							{
+								return new string[] { "Removed player \"" + name + "\"." };
 							}
 						}
 						else
 						{
-							return new string[] { "Error: there are no saved presets." };
+							return new string[] { GetUsage() };
 						}
-
-						File.WriteAllText(CustomAnnouncements.presetFilePath, String.Empty);
-
-						foreach (string str in newText.ToArray())
-						{
-							File.AppendAllText(CustomAnnouncements.presetFilePath, str + Environment.NewLine);
-						}
-						return new string[] { "Removed preset \"" + name + "\"" };
 					}
 					else
 					{

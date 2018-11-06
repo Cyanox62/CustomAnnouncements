@@ -58,6 +58,7 @@
     <Compile Include="CustomAnnouncements.cs" />
     <Compile Include="CustomTextCommand.cs" />
     <Compile Include="MTFAnnouncementCommand.cs" />
+    <Compile Include="PlayerAnnouncementCommand.cs" />
     <Compile Include="PresetCommand.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RoundEndCommand.cs" />
