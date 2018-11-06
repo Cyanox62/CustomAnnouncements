@@ -1,6 +1,6 @@
 # CustomAnnouncements
 
-A plugin that allows anyone with access to the Remote Admin console ability to make custom CASSIE announcements.
+A plugin that allows admins to make custom CASSIE announcements.
 
 | Command        | Value Type | Value Type | Value Type | Description |
 | :-------------: | :---------: | :---------: | :---------: | :------ |
@@ -8,11 +8,12 @@ A plugin that allows anyone with access to the Remote Admin console ability to m
 | SCPA / SCPANNOUNCEMENT | SCP NUMBER | | | Announces a SCP death. |
 | TA / TEXTANNOUNCEMENT | TEXT | | | Create a custom announcement, view the wiki for all possible words. |
 | CDA / COUNTDOWNANNOUNCEMENT | START NUMBER | END NUMBER | TEXT | Create a countdown with the option of saying something at the end of the countdown. |
-| PA / PRESETANNOUNCEMENT | SAVE / LOAD / REMOVE / LIST | PRESET NAME | | Creates/saves/loads/lists the user's custom presets. |
+| PA / PRESETANNOUNCEMENT | SAVE / LOAD / REMOVE / LIST | PRESET NAME | | Creates/saves/loads/removes/lists the user's custom presets. |
 
 | Config        | Value Type | Default | Description |
 | :-------------: | :---------: | :---------: |:------ |
 | ca_mtf_whitelist | List | owner, admin | Determines which ranks are allowed to use the `MTFA / MTFANNOUNCEMENT` command. |
 | ca_scp_whitelist | List | owner, admin | Determines which ranks are allowed to use the `SCPA / SCPANNOUNCEMENT` command. |
-| ca_ta_whitelist | List | owner, admin | Determines which ranks are allowed to use the `TA / TEXTANNOUNCEMENT` command. |
-| ca_cda_whitelist | List | owner, admin | Determines which ranks are allowed to use the `CDA / COUNTDOWNANNOUNCEMENT` command. |
+| ca_text_whitelist | List | owner, admin | Determines which ranks are allowed to use the `TA / TEXTANNOUNCEMENT` command. |
+| ca_countdown_whitelist | List | owner, admin | Determines which ranks are allowed to use the `CDA / COUNTDOWNANNOUNCEMENT` command. |
+| ca_preset_whitelist | List | owner, admin | Determines which ranks are allowed to use the `PA / PRESETANNOUNCEMENT` command. |
