@@ -13,6 +13,7 @@ A plugin that allows admins to make custom CASSIE announcements.
 | TI / TIMER | SAVE / REMOVE / LIST | TIMER | TEXT | Creates/saves/removes/lists the user's set timers. Define a timer as an integer value being the number of seconds into a round the announcement will be played. Ex. `tia save 50 hello classd` will announce "hello classd" 50 seconds into the round. |
 | CS / CHAOSSPAWN | SET / CLEAR | TEXT | | Sets an announcement to be played when chaos spawn. |
 | RE / ROUNDEND | SET / CLEAR | TEXT | | Sets an announcement to be played when the round ends. |
+| PA / PLAYERANNOUNCEMENT | SET / REMOVE / LIST | STEAMID | TEXT | Sets an announcement to be played when a certain player joins the server. |
 
 | Config        | Value Type | Default | Description |
 | :-------------: | :---------: | :---------: |:------ |
@@ -24,5 +25,6 @@ A plugin that allows admins to make custom CASSIE announcements.
 | ca_timer_whitelist | List | owner, admin | Determines which ranks are allowed to use the `TI / TIMER` command. |
 | ca_chaosspawn_whitelist | List | owner, admin | Determines which ranks are allowed to use the `CS / CHAOSSPAWN` command. |
 | ca_roundend_whitelist | List | owner, admin | Determines which ranks are allowed to use the `RE / ROUNDEND` command. |
+| ca_player_whitelist | List | owner, admin | Determines which ranks are allowed to use the `PA / PLAYERANNOUNCEMENT` command. |
 
 Any command using the remove keyword can use `all` or `*` to target all items. For instance, `timer remove all`
