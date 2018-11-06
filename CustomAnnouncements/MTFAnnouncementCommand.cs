@@ -5,12 +5,12 @@ using Smod2.API;
 
 namespace CustomAnnouncements
 {
-    class NTFAnnouncementCommand : ICommandHandler
+    class MTFAnnouncementCommand : ICommandHandler
     {
         private Plugin plugin;
 		private string[] whitelist;
 
-        public NTFAnnouncementCommand(Plugin plugin)
+        public MTFAnnouncementCommand(Plugin plugin)
         {
             this.plugin = plugin;
 			whitelist = plugin.GetConfigList("ca_mtf_whitelist");

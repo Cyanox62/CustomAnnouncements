@@ -27,7 +27,7 @@ namespace CustomAnnouncements
 
 		public string GetUsage()
 		{
-			return "(TIA / TIMEDANNOUNCEMENT) (ADD / REMOVE / LIST) (TIME) (TEXT)";
+			return "(TIA / TIMEDANNOUNCEMENT) (SAVE / REMOVE / LIST) (TIME) (TEXT)";
 		}
 
 		public string[] OnCall(ICommandSender sender, string[] args)
@@ -44,7 +44,7 @@ namespace CustomAnnouncements
 
 			if (args.Length > 0)
 			{
-				if (args[0].ToLower() == "add")
+				if (args[0].ToLower() == "save")
 				{
 					if (args.Length > 1)
 					{
@@ -91,8 +91,14 @@ namespace CustomAnnouncements
 				}
 				else if (args[0].ToLower() == "remove")
 				{
-					if (args.Length > 1)
+					if (args.Length > 0)
 					{
+						if (args[1].ToLower() == "all" || args[1] == "*")
+						{
+							File.WriteAllText(CustomAnnouncements.timerFilePath, String.Empty);
+							return new string[] { "Removed all timers." };
+						}
+
 						string time = args[1];
 
 						string[] currentText = File.ReadAllLines(CustomAnnouncements.timerFilePath);

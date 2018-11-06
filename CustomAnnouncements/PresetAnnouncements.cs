@@ -123,6 +123,12 @@ namespace CustomAnnouncements
 				{
 					if (args.Length > 1)
 					{
+						if (args[1].ToLower() == "all" || args[1] == "*")
+						{
+							File.WriteAllText(CustomAnnouncements.presetFilePath, String.Empty);
+							return new string[] { "Removed all presets." };
+						}
+
 						string name = args[1];
 
 						string[] currentText = File.ReadAllLines(CustomAnnouncements.presetFilePath);

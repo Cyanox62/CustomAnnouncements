@@ -56,7 +56,7 @@
     <Compile Include="CountdownCommand.cs" />
     <Compile Include="CustomAnnouncements.cs" />
     <Compile Include="CustomTextCommand.cs" />
-    <Compile Include="NTFAnnouncementCommand.cs" />
+    <Compile Include="MTFAnnouncementCommand.cs" />
     <Compile Include="PresetAnnouncements.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RoundEventHandler.cs" />

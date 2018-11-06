@@ -8,7 +8,6 @@ using System.IO;
 
 // ADD SUPPORT FOR PERIODS
 // INVESTIGATE SOME WORDS NOT WORKING
-// ADD SUPPORT FOR THE 'ALL' KEYWORD IN COMMANDS
 
 namespace CustomAnnouncements
 {
@@ -72,7 +71,7 @@ namespace CustomAnnouncements
 			this.AddCommands(new string[] { "customannouncements", "ca" }, new CommandsOutput());
 			this.AddCommands(new string[] { "countdownannouncement", "cda" }, new CountdownCommand(this));
 			this.AddCommands(new string[] { "textannouncement", "ta" }, new CustomTextCommand(this));
-			this.AddCommands(new string[] { "mtfannouncement", "mtfa" }, new NTFAnnouncementCommand(this));
+			this.AddCommands(new string[] { "mtfannouncement", "mtfa" }, new MTFAnnouncementCommand(this));
 			this.AddCommands(new string[] { "scpannouncement", "scpa" }, new SCPEliminationCommand(this));
 			this.AddCommands(new string[] { "presetannouncement", "pa" }, new PresetAnnouncements(this));
 			this.AddCommands(new string[] { "timerannouncement", "tia" }, new TimerAnnouncementsCommand(this));
