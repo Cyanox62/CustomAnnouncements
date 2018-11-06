@@ -4,11 +4,13 @@ A plugin that allows admins to make custom CASSIE announcements.
 
 | Command        | Value Type | Value Type | Value Type | Description |
 | :-------------: | :---------: | :---------: | :---------: | :------ |
+| CA / CUSTOMANNOUNCEMENTS | | | | Lists all commands. |
 | MTFA / MTFANNOUNCEMENT | SCPS LEFT | MTF NUMBER | MTF LETTER | Announces a MTF squad entrance. |
 | SCPA / SCPANNOUNCEMENT | SCP NUMBER | | | Announces a SCP death. |
 | TA / TEXTANNOUNCEMENT | TEXT | | | Create a custom announcement, view the wiki for all possible words. |
 | CDA / COUNTDOWNANNOUNCEMENT | START NUMBER | END NUMBER | TEXT | Create a countdown with the option of saying something at the end of the countdown. |
 | PA / PRESETANNOUNCEMENT | SAVE / LOAD / REMOVE / LIST | PRESET NAME | | Creates/saves/loads/removes/lists the user's custom presets. |
+| TIA / TIMERANNOUNCEMENT | SAVE / REMOVE / LIST | TIMER | | Creates/saves/removes/lists the user's set timers. |
 
 | Config        | Value Type | Default | Description |
 | :-------------: | :---------: | :---------: |:------ |
@@ -17,3 +19,6 @@ A plugin that allows admins to make custom CASSIE announcements.
 | ca_text_whitelist | List | owner, admin | Determines which ranks are allowed to use the `TA / TEXTANNOUNCEMENT` command. |
 | ca_countdown_whitelist | List | owner, admin | Determines which ranks are allowed to use the `CDA / COUNTDOWNANNOUNCEMENT` command. |
 | ca_preset_whitelist | List | owner, admin | Determines which ranks are allowed to use the `PA / PRESETANNOUNCEMENT` command. |
+| ca_timer_whitelist | List | owner, admin | Determines which ranks are allowed to use the `TIA / TIMERANNOUNCEMENT` command. |
+
+Any command using the remove keyword can use `all` or `*` to target all items.
