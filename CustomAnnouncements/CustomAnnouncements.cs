@@ -2,12 +2,14 @@
 using Smod2;
 using Smod2.API;
 using Smod2.Attributes;
+using Smod2.Commands;
 using System.IO;
 using System.Collections.Generic;
 
 // TO DO:
 
-// ADD SUPPORT FOR PERIODS
+// CREATE A CLASS BASED EVENT SYSTEM
+// ADD SUPPORT FOR NUMBERS IN ANNOUNCEMENTS
 
 namespace CustomAnnouncements
 {

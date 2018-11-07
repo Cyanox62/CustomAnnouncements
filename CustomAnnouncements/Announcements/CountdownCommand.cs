@@ -2,7 +2,6 @@
 using Smod2;
 using Smod2.Commands;
 using Smod2.API;
-using UnityEngine;
 
 namespace CustomAnnouncements
 {

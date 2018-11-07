@@ -10,9 +10,12 @@ namespace CustomAnnouncements
 	{
 		private Plugin plugin;
 		private string[] whitelist;
+		private Announcement ea;
 
 		public RoundEndCommand(Plugin plugin)
 		{
+			ea = new Announcement(GetUsage(), "Round end announcement set.", "Round end announcement cleared.", CustomAnnouncements.roundendFilePath);
+
 			this.plugin = plugin;
 			whitelist = plugin.GetConfigList("ca_roundend_whitelist");
 			for (int i = 0; i < whitelist.Length; i++)
@@ -47,45 +50,15 @@ namespace CustomAnnouncements
 				{
 					if (args.Length > 1)
 					{
-						string saveText = CustomAnnouncements.StringArrayToString(args, 1);
-
-						if (saveText.Length > 0)
-						{
-							string text = CustomAnnouncements.GetNonValidText(CustomAnnouncements.SpacePeriods(saveText).Split(' '));
-							if (text != null)
-							{
-								return new string[] { "Error: phrase \"" + text + "\" is not in text to speech." };
-							}
-						}
-						else
-						{
-							return new string[] { GetUsage() };
-						}
-
-						File.WriteAllText(CustomAnnouncements.roundendFilePath, String.Empty);
-						File.AppendAllText(CustomAnnouncements.roundendFilePath, saveText);
-
-						return new string[] { "Round end announcement set." };
-					}
-					else
-					{
-						return new string[] { GetUsage() };
+						return ea.SetAnnouncement(CustomAnnouncements.StringArrayToString(args, 1));
 					}
 				}
 				else if (args[0].ToLower() == "clear")
 				{
-					File.WriteAllText(CustomAnnouncements.roundendFilePath, String.Empty);
-					return new string[] { "Round end announcement cleared." };
-				}
-				else
-				{
-					return new string[] { GetUsage() };
+					return ea.ClearAnnouncement();
 				}
 			}
-			else
-			{
-				return new string[] { GetUsage() };
-			}
+			return new string[] { GetUsage() };
 		}
 	}
 }

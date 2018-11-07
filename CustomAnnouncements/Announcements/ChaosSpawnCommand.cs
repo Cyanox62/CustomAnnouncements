@@ -10,9 +10,12 @@ namespace CustomAnnouncements
 	{
 		private Plugin plugin;
 		private string[] whitelist;
+		private Announcement ea;
 
 		public ChaosSpawnCommand(Plugin plugin)
 		{
+			ea = new Announcement(GetUsage(), "Chaos spawn announcement set.", "Chaos spawn announcement cleared.", CustomAnnouncements.chaosFilePath);
+
 			this.plugin = plugin;
 			whitelist = plugin.GetConfigList("ca_chaosspawn_whitelist");
 			for (int i = 0; i < whitelist.Length; i++)
@@ -47,45 +50,16 @@ namespace CustomAnnouncements
 				{
 					if (args.Length > 1)
 					{
-						string saveText = CustomAnnouncements.StringArrayToString(args, 1);
-
-						if (saveText.Length > 0)
-						{
-							string text = CustomAnnouncements.GetNonValidText(CustomAnnouncements.SpacePeriods(saveText).Split(' '));
-							if (text != null)
-							{
-								return new string[] { "Error: phrase \"" + text + "\" is not in text to speech." };
-							}
-						}
-						else
-						{
-							return new string[] { GetUsage() };
-						}
-
-						File.WriteAllText(CustomAnnouncements.chaosFilePath, String.Empty);
-						File.AppendAllText(CustomAnnouncements.chaosFilePath, saveText);
-
-						return new string[] { "Chaos spawn announcement set." };
-					}
-					else
-					{
-						return new string[] { GetUsage() };
+						string text = CustomAnnouncements.StringArrayToString(args, 1);
+						return ea.SetAnnouncement(text);
 					}
 				}
 				else if (args[0].ToLower() == "clear")
 				{
-					File.WriteAllText(CustomAnnouncements.chaosFilePath, String.Empty);
-					return new string[] { "Chaos spawn announcement cleared." };
-				}
-				else
-				{
-					return new string[] { GetUsage() };
+					return ea.ClearAnnouncement();
 				}
 			}
-			else
-			{
-				return new string[] { GetUsage() };
-			}
+			return new string[] { GetUsage() };
 		}
 	}
 }
