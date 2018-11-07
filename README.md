@@ -14,7 +14,7 @@ Any command requiring a text input can use various [round data variables](https:
 
 Any command using the remove keyword can use `all` or `*` to target all items. For instance, `timer remove all`.
 
-All settings are saved in %APPDATA%/SCP Secret Laboratory/CustomAnnouncements.
+All settings are saved in `%APPDATA%/SCP Secret Laboratory/CustomAnnouncements`.
 
 | Command        | Value Type | Value Type | Value Type | Description |
 | :-------------: | :---------: | :---------: | :---------: | :------ |
