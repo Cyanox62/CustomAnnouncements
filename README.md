@@ -27,7 +27,7 @@ All settings are saved in `%APPDATA%/SCP Secret Laboratory/CustomAnnouncements`.
 | TI / TIMER | SAVE / REMOVE / LIST | TIMER | TEXT | Creates/saves/removes/lists the user's set timers. Define a timer as an integer value being the number of seconds into a round the announcement will be played. Ex. `ti save 50 hello classd` will announce "hello classd" 50 seconds into the round. |
 | CS / CHAOSSPAWN | SET / CLEAR | TEXT | | Sets an announcement to be played when chaos spawn. |
 | RE / ROUNDEND | SET / CLEAR | TEXT | | Sets an announcement to be played when the round ends. |
-| PA / PLAYERANNOUNCEMENT | SET / REMOVE / LIST | STEAMID64 | TEXT | Sets an announcement to be played when a certain player joins the server. |
+| PA / PLAYERANNOUNCEMENT | SAVE / REMOVE / LIST | STEAMID64 | TEXT | Sets an announcement to be played when a certain player joins the server. |
 
 | Config        | Value Type | Default | Description |
 | :-------------: | :---------: | :---------: |:------ |
