@@ -6,7 +6,7 @@ A plugin that allows admins to make custom CASSIE announcements.
 
 **[Smod2](https://github.com/Grover-c13/Smod2) must be installed for this to work.**
 
-Place the "BetterDisarming.dll" file in your sm_plugins folder.
+Place the "CustomAnnouncements.dll" file in your sm_plugins folder.
 
 # Features
 
