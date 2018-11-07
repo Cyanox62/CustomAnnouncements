@@ -41,12 +41,13 @@ namespace CustomAnnouncements
 
 			if (args.Length > 0)
 			{
-				string text = CustomAnnouncements.NonValidText(args);
+				string saytext = CustomAnnouncements.SpacePeriods(CustomAnnouncements.StringArrayToString(args, 0));
+				string text = CustomAnnouncements.GetNonValidText(saytext.Split(' '));
 				if (text != null)
 				{
 					return new string[] { "Error: phrase \"" + text + "\" is not in text to speech." };
 				}
-				plugin.pluginManager.Server.Map.AnnounceCustomMessage(CustomAnnouncements.ReplaceVariables(CustomAnnouncements.StringArrayToString(args, 0)));
+				plugin.pluginManager.Server.Map.AnnounceCustomMessage(CustomAnnouncements.ReplaceVariables(saytext));
 				return new string[] { "Announcement has been made." };
 			}
 			else

@@ -48,14 +48,18 @@ namespace CustomAnnouncements
 				{
 					if (args.Length > 2)
 					{
-						string saveText = null;
+						string input = CustomAnnouncements.StringArrayToString(args, 2);
+						string saveText = CustomAnnouncements.SpacePeriods(input);
 						string name = args[1];
 
-						saveText = CustomAnnouncements.StringArrayToString(args, 2);
+						if (name.ToLower() == "all" || name == "*")
+						{
+							return new string[] { "Error: invalid preset name." };
+						}
 
 						if (saveText.Length > 0)
 						{
-							string text = CustomAnnouncements.NonValidText(saveText.Split(' '));
+							string text = CustomAnnouncements.GetNonValidText(saveText.Split(' '));
 							if (text != null)
 							{
 								return new string[] { "Error: phrase \"" + text + "\" is not in text to speech." };
@@ -66,7 +70,7 @@ namespace CustomAnnouncements
 							return new string[] { GetUsage() };
 						}
 
-						int output = CustomAnnouncements.AddLineToFile(CustomAnnouncements.presetFilePath, name, saveText);
+						int output = CustomAnnouncements.AddLineToFile(CustomAnnouncements.presetFilePath, name, input);
 
 						if (output == -1)
 						{
@@ -85,7 +89,6 @@ namespace CustomAnnouncements
 					{
 						string text = null;
 						string name = args[1];
-
 						string[] currentText = File.ReadAllLines(CustomAnnouncements.presetFilePath);
 
 						if (currentText.Length > 0)
@@ -107,8 +110,7 @@ namespace CustomAnnouncements
 						{
 							return new string[] { "Error: couldn't find preset \"" + name + "\"." };
 						}
-
-						plugin.pluginManager.Server.Map.AnnounceCustomMessage(CustomAnnouncements.ReplaceVariables(text));
+						plugin.pluginManager.Server.Map.AnnounceCustomMessage(CustomAnnouncements.ReplaceVariables(CustomAnnouncements.SpacePeriods(text)));
 						return new string[] { "Loaded preset \"" + name + "\"." };
 					}
 					else

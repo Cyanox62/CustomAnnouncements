@@ -40,6 +40,7 @@ namespace CustomAnnouncements
 			"$grenade_kills",
 			"$mtf_alive",
 			"$ci_alive",
+			"$tutorial_alive",
 			"$round_duration"
 		};
 		public static string configFolerFilePath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/SCP Secret Laboratory/CustomAnnouncements";
@@ -119,6 +120,15 @@ namespace CustomAnnouncements
 			this.AddCommands(new string[] { "playerannouncement", "pa" }, new PlayerAnnouncementCommand(this));
 		}
 
+		public static int CountRoles(Role role)
+		{
+			int count = 0;
+			foreach (Player pl in PluginManager.Manager.Server.GetPlayers())
+				if (pl.TeamRole.Role == role)
+					count++;
+			return count;
+		}
+
 		public static bool IsPlayerWhitelisted(Player player, string[] whitelist)
 		{
 			foreach (string rank in whitelist)
@@ -141,13 +151,18 @@ namespace CustomAnnouncements
 			return false;
 		}
 
-		public static string NonValidText(string[] text)
+		public static string GetNonValidText(string[] text)
 		{
 			foreach (string str in text)
 			{
-				if (!IsVoiceLine(str) && !roundVariables.Contains(str))
+				string word = str;
+				if (word.IndexOf(".") != -1)
 				{
-					return str;
+					word = word.Replace(" .", "");
+				}
+				if (!IsVoiceLine(word) && !roundVariables.Contains(word))
+				{
+					return word;
 				}
 			}
 			return null;
@@ -268,6 +283,7 @@ namespace CustomAnnouncements
 			input = input.Replace("$grenade_kills", stats.GrenadeKills.ToString());
 			input = input.Replace("$mtf_alive", stats.NTFAlive.ToString());
 			input = input.Replace("$ci_alive", stats.CiAlive.ToString());
+			input = input.Replace("$tutorial_alive", CountRoles(Role.TUTORIAL).ToString());
 			input = input.Replace("$round_duration", ((int)(RoundSummary.roundTime / 60)).ToString());
 
 			string[] words = input.Split(' ');
@@ -283,6 +299,23 @@ namespace CustomAnnouncements
 				}
 			}
 
+			return StringArrayToString(words, 0);
+		}
+
+		public static string SpacePeriods(string input)
+		{
+			string[] words = input.Split(' ');
+			for (int i = 0; i < words.Length; i++)
+			{
+				int index = words[i].IndexOf(".");
+				if (index != -1)
+				{
+					if (index == 0)
+						words[i] = words[i].Replace(".", ". ");
+					else
+						words[i] = words[i].Replace(".", " .");
+				}
+			}
 			return StringArrayToString(words, 0);
 		}
 	}

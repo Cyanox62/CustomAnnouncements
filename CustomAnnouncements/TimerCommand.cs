@@ -49,7 +49,8 @@ namespace CustomAnnouncements
 					if (args.Length > 1)
 					{
 						string[] currentText = File.ReadAllLines(CustomAnnouncements.timerFilePath);
-						string saveText = CustomAnnouncements.StringArrayToString(args, 2);
+						string input = CustomAnnouncements.StringArrayToString(args, 2);
+						string saveText = CustomAnnouncements.SpacePeriods(input);
 						int time = 0;
 
 						if (Int32.TryParse(args[1], out int a))
@@ -63,7 +64,7 @@ namespace CustomAnnouncements
 
 						if (saveText.Length > 0)
 						{
-							string text = CustomAnnouncements.NonValidText(saveText.Split(' '));
+							string text = CustomAnnouncements.GetNonValidText(saveText.Split(' '));
 							if (text != null)
 							{
 								return new string[] { "Error: phrase \"" + text + "\" is not in text to speech." };
@@ -74,7 +75,7 @@ namespace CustomAnnouncements
 							return new string[] { GetUsage() };
 						}
 
-						int output = CustomAnnouncements.AddLineToFile(CustomAnnouncements.timerFilePath, time.ToString(), saveText);
+						int output = CustomAnnouncements.AddLineToFile(CustomAnnouncements.timerFilePath, time.ToString(), input);
 
 						if (output == -1)
 						{

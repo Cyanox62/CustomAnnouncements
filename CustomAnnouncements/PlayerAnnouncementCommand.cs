@@ -48,7 +48,7 @@ namespace CustomAnnouncements
 				{
 					if (args.Length > 1)
 					{
-						string saveText = null;
+						string input = null;
 						string steamid = args[1];
 
 						if (!ulong.TryParse(steamid, out ulong a))
@@ -56,11 +56,11 @@ namespace CustomAnnouncements
 							return new string[] { "Error: invalid steamid." };
 						}
 
-						saveText = CustomAnnouncements.StringArrayToString(args, 2);
+						input = CustomAnnouncements.StringArrayToString(args, 2);
 
-						if (saveText.Length > 0)
+						if (input.Length > 0)
 						{
-							string text = CustomAnnouncements.NonValidText(saveText.Split(' '));
+							string text = CustomAnnouncements.GetNonValidText(CustomAnnouncements.SpacePeriods(input).Split(' '));
 							if (text != null)
 							{
 								return new string[] { "Error: phrase \"" + text + "\" is not in text to speech." };
@@ -71,7 +71,7 @@ namespace CustomAnnouncements
 							return new string[] { GetUsage() };
 						}
 
-						int output = CustomAnnouncements.AddLineToFile(CustomAnnouncements.playerFilePath, steamid, saveText);
+						int output = CustomAnnouncements.AddLineToFile(CustomAnnouncements.playerFilePath, steamid, input);
 
 						if (output == -1)
 						{

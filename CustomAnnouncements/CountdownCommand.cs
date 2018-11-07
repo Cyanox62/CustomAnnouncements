@@ -95,20 +95,20 @@ namespace CustomAnnouncements
 				}
 
 				string[] statement = GetCountdown(start, end);
+				string saveText = CustomAnnouncements.SpacePeriods(CustomAnnouncements.StringArrayToString(args, 2));
 				if (statement != null)
 				{
 					if (args.Length > 2)
 					{
-						string endString = "";
 						for (int i = 2; i < args.Length; i++)
 						{
-							if (!CustomAnnouncements.IsVoiceLine(args[i]))
+							string text = CustomAnnouncements.GetNonValidText(saveText.Split(' '));
+							if (text != null)
 							{
-								return new string[] { "Error: phrase \"" + args[i] + "\" is not in text to speech." };
+								return new string[] { "Error: phrase \"" + text + "\" is not in text to speech." };
 							}
-							endString += args[i] + " ";
 						}
-						plugin.pluginManager.Server.Map.AnnounceCustomMessage(string.Join(" ", statement) + " . . " + endString);
+						plugin.pluginManager.Server.Map.AnnounceCustomMessage(string.Join(" ", statement) + " . . " + CustomAnnouncements.ReplaceVariables(saveText));
 					}
 					else
 					{

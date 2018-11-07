@@ -51,7 +51,7 @@ namespace CustomAnnouncements
 
 						if (saveText.Length > 0)
 						{
-							string text = CustomAnnouncements.NonValidText(saveText.Split(' '));
+							string text = CustomAnnouncements.GetNonValidText(CustomAnnouncements.SpacePeriods(saveText).Split(' '));
 							if (text != null)
 							{
 								return new string[] { "Error: phrase \"" + text + "\" is not in text to speech." };
