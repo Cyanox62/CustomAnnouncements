@@ -9,17 +9,13 @@ namespace CustomAnnouncements
 {
 	class PresetCommand : ICommandHandler
 	{
-		private KeyAnnouncement va;
+		private Announcement an;
 		private Plugin plugin;
-		private string[] whitelist;
 
 		public PresetCommand(Plugin plugin)
 		{
-			va = new KeyAnnouncement(GetUsage(), CustomAnnouncements.presetFilePath);
+			an = new Announcement(CustomAnnouncements.presetFilePath, GetUsage(), plugin.GetConfigList("ca_preset_whitelist"));
 			this.plugin = plugin;
-			whitelist = plugin.GetConfigList("ca_preset_whitelist");
-			for (int i = 0; i < whitelist.Length; i++)
-				whitelist[i] = whitelist[i].Replace(" ", "");
 		}
 
 		public string GetCommandDescription()
@@ -35,14 +31,8 @@ namespace CustomAnnouncements
 		public string[] OnCall(ICommandSender sender, string[] args)
 		{
 			CustomAnnouncements.ann = UnityEngine.Object.FindObjectOfType<NineTailedFoxAnnouncer>();
-			if (sender is Player)
-			{
-				Player player = (Player)sender;
-				if (!CustomAnnouncements.IsPlayerWhitelisted(player, whitelist))
-				{
-					return new string[] { "You are not allowed to run this command." };
-				}
-			}
+			if (!an.CanRunCommand(sender))
+				return new string[] { "You are not allowed to run this command." };
 
 			if (args.Length > 0)
 			{
@@ -57,26 +47,26 @@ namespace CustomAnnouncements
 							return new string[] { "Error: invalid preset name." };
 						}
 
-						return va.SetVariable(name, CustomAnnouncements.StringArrayToString(args, 2), "Error: Preset name already exists.", "Saved preset \"" + name + "\".");
+						return an.SetVariable(name, CustomAnnouncements.StringArrayToString(args, 2), "Error: Preset name already exists.", "Saved preset \"" + name + "\".");
 					}
 				}
 				else if (args[0].ToLower() == "load")
 				{
 					if (args.Length > 1)
 					{
-						return va.LoadVariable(args[1], "Error: no presets saved.", "Error: couldn't find preset \"" + args[1] + "\".", "Loaded preset \"" + args[1] + "\".");
+						return an.LoadVariable(args[1], "Error: no presets saved.", "Error: couldn't find preset \"" + args[1] + "\".", "Loaded preset \"" + args[1] + "\".");
 					}
 				}
 				else if (args[0].ToLower() == "remove")
 				{
 					if (args.Length > 1)
 					{
-						return va.RemoveVariable(args[1], "Error: there are no saved presets.", "Error: couldn't find preset \"" + args[1] + "\".", "Removed all presets.", "Removed preset \"" + args[1] + "\".");
+						return an.RemoveVariable(args[1], "Error: there are no saved presets.", "Error: couldn't find preset \"" + args[1] + "\".", "Removed all presets.", "Removed preset \"" + args[1] + "\".");
 					}
 				}
 				else if (args[0].ToLower() == "list")
 				{ 
-					return va.ListVariables("Error: there are no saved presets.");
+					return an.ListVariables("Error: there are no saved presets.");
 				}
 			}
 			return new string[] { GetUsage() };

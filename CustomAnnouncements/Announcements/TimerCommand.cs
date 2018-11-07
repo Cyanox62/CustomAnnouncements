@@ -9,17 +9,13 @@ namespace CustomAnnouncements
 {
 	class TimerCommand : ICommandHandler
 	{
-		private KeyAnnouncement va;
+		private Announcement an;
 		private Plugin plugin;
-		private string[] whitelist;
 
 		public TimerCommand(Plugin plugin)
 		{
-			va = new KeyAnnouncement(GetUsage(), CustomAnnouncements.timerFilePath);
+			an = new Announcement(CustomAnnouncements.timerFilePath, GetUsage(), plugin.GetConfigList("ca_timer_whitelist"));
 			this.plugin = plugin;
-			whitelist = plugin.GetConfigList("ca_timer_whitelist");
-			for (int i = 0; i < whitelist.Length; i++)
-				whitelist[i] = whitelist[i].Replace(" ", "");
 		}
 
 		public string GetCommandDescription()
@@ -35,14 +31,8 @@ namespace CustomAnnouncements
 		public string[] OnCall(ICommandSender sender, string[] args)
 		{
 			CustomAnnouncements.ann = UnityEngine.Object.FindObjectOfType<NineTailedFoxAnnouncer>();
-			if (sender is Player)
-			{
-				Player player = (Player)sender;
-				if (!CustomAnnouncements.IsPlayerWhitelisted(player, whitelist))
-				{
-					return new string[] { "You are not allowed to run this command." };
-				}
-			}
+			if (!an.CanRunCommand(sender))
+				return new string[] { "You are not allowed to run this command." };
 
 			if (args.Length > 0)
 			{
@@ -57,7 +47,7 @@ namespace CustomAnnouncements
 							return new string[] { "Error: invalid time" };
 
 						if (args.Length > 2)
-							return va.SetVariable(time.ToString(), CustomAnnouncements.StringArrayToString(args, 2), "Error: Preset name already exists.", "Saved timer.");
+							return an.SetVariable(time.ToString(), CustomAnnouncements.StringArrayToString(args, 2), "Error: Preset name already exists.", "Saved timer.");
 
 					}
 				}
@@ -65,12 +55,12 @@ namespace CustomAnnouncements
 				{
 					if (args.Length > 1)
 					{
-						return va.RemoveVariable(args[1], "Error: there are no set timers.", "Error: couldn't find timer.", "Removed all timers.", "Removed timer.");
+						return an.RemoveVariable(args[1], "Error: there are no set timers.", "Error: couldn't find timer.", "Removed all timers.", "Removed timer.");
 					}
 				}
 				else if (args[0].ToLower() == "list")
 				{
-					return va.ListVariables("Error: there are no set timers.");
+					return an.ListVariables("Error: there are no set timers.");
 				}
 			}
 			return new string[] { GetUsage() };

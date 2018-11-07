@@ -8,18 +8,13 @@ namespace CustomAnnouncements
 {
 	class ChaosSpawnCommand : ICommandHandler
 	{
+		private Announcement an;
 		private Plugin plugin;
-		private string[] whitelist;
-		private Announcement ea;
 
 		public ChaosSpawnCommand(Plugin plugin)
 		{
-			ea = new Announcement(GetUsage(), "Chaos spawn announcement set.", "Chaos spawn announcement cleared.", CustomAnnouncements.chaosFilePath);
-
+			an = new Announcement(CustomAnnouncements.chaosFilePath, GetUsage(), plugin.GetConfigList("ca_chaosspawn_whitelist"));
 			this.plugin = plugin;
-			whitelist = plugin.GetConfigList("ca_chaosspawn_whitelist");
-			for (int i = 0; i < whitelist.Length; i++)
-				whitelist[i] = whitelist[i].Replace(" ", "");
 		}
 
 		public string GetCommandDescription()
@@ -35,14 +30,8 @@ namespace CustomAnnouncements
 		public string[] OnCall(ICommandSender sender, string[] args)
 		{
 			CustomAnnouncements.ann = UnityEngine.Object.FindObjectOfType<NineTailedFoxAnnouncer>();
-			if (sender is Player)
-			{
-				Player player = (Player)sender;
-				if (!CustomAnnouncements.IsPlayerWhitelisted(player, whitelist))
-				{
-					return new string[] { "You are not allowed to run this command." };
-				}
-			}
+			if (!an.CanRunCommand(sender))
+				return new string[] { "You are not allowed to run this command." };
 
 			if (args.Length > 0)
 			{
@@ -51,12 +40,12 @@ namespace CustomAnnouncements
 					if (args.Length > 1)
 					{
 						string text = CustomAnnouncements.StringArrayToString(args, 1);
-						return ea.SetAnnouncement(text);
+						return an.SetAnnouncement(text, "Chaos spawn announcement set.");
 					}
 				}
 				else if (args[0].ToLower() == "clear")
 				{
-					return ea.ClearAnnouncement();
+					return an.ClearAnnouncement("Chaos spawn announcement cleared.");
 				}
 			}
 			return new string[] { GetUsage() };

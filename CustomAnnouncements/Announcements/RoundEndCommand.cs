@@ -9,17 +9,12 @@ namespace CustomAnnouncements
 	class RoundEndCommand : ICommandHandler
 	{
 		private Plugin plugin;
-		private string[] whitelist;
-		private Announcement ea;
+		private Announcement an;
 
 		public RoundEndCommand(Plugin plugin)
 		{
-			ea = new Announcement(GetUsage(), "Round end announcement set.", "Round end announcement cleared.", CustomAnnouncements.roundendFilePath);
-
+			an = new Announcement(CustomAnnouncements.roundendFilePath, GetUsage(), plugin.GetConfigList("ca_roundend_whitelist"));
 			this.plugin = plugin;
-			whitelist = plugin.GetConfigList("ca_roundend_whitelist");
-			for (int i = 0; i < whitelist.Length; i++)
-				whitelist[i] = whitelist[i].Replace(" ", "");
 		}
 
 		public string GetCommandDescription()
@@ -35,14 +30,8 @@ namespace CustomAnnouncements
 		public string[] OnCall(ICommandSender sender, string[] args)
 		{
 			CustomAnnouncements.ann = UnityEngine.Object.FindObjectOfType<NineTailedFoxAnnouncer>();
-			if (sender is Player)
-			{
-				Player player = (Player)sender;
-				if (!CustomAnnouncements.IsPlayerWhitelisted(player, whitelist))
-				{
-					return new string[] { "You are not allowed to run this command." };
-				}
-			}
+			if (!an.CanRunCommand(sender))
+				return new string[] { "You are not allowed to run this command." };
 
 			if (args.Length > 0)
 			{
@@ -50,12 +39,12 @@ namespace CustomAnnouncements
 				{
 					if (args.Length > 1)
 					{
-						return ea.SetAnnouncement(CustomAnnouncements.StringArrayToString(args, 1));
+						return an.SetAnnouncement(CustomAnnouncements.StringArrayToString(args, 1), "Round end announcement set.");
 					}
 				}
 				else if (args[0].ToLower() == "clear")
 				{
-					return ea.ClearAnnouncement();
+					return an.ClearAnnouncement("Round end announcement cleared.");
 				}
 			}
 			return new string[] { GetUsage() };

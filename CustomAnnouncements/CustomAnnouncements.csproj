@@ -57,7 +57,6 @@
     <Compile Include="Announcements\CountdownCommand.cs" />
     <Compile Include="CustomAnnouncements.cs" />
     <Compile Include="Announcements\CustomTextCommand.cs" />
-    <Compile Include="Announcement.cs" />
     <Compile Include="Announcements\MTFAnnouncementCommand.cs" />
     <Compile Include="Announcements\PlayerAnnouncementCommand.cs" />
     <Compile Include="Announcements\PresetCommand.cs" />
@@ -67,7 +66,7 @@
     <Compile Include="Announcements\SCPEliminationCommand.cs" />
     <Compile Include="Announcements\TimerCommand.cs" />
     <Compile Include="AnnouncementHandlers\TimerHandler.cs" />
-    <Compile Include="KeyAnnouncement.cs" />
+    <Compile Include="Announcement.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
