@@ -12,18 +12,18 @@ using System.Collections.Generic;
 
 namespace CustomAnnouncements
 {
-    [PluginDetails(
-    author = "Cyanox",
-    name = "CustomAnnouncements",
-    description = "Makes custom CASSIE announcements",
-    id = "cyan.custom.announcements",
-    version = "0.9",
-    SmodMajor = 3,
-    SmodMinor = 0,
-    SmodRevision = 0
-    )]
-    public class CustomAnnouncements : Plugin
-    {
+	[PluginDetails(
+	author = "Cyanox",
+	name = "CustomAnnouncements",
+	description = "Makes custom CASSIE announcements",
+	id = "cyan.custom.announcements",
+	version = "0.9",
+	SmodMajor = 3,
+	SmodMinor = 0,
+	SmodRevision = 0
+	)]
+	public class CustomAnnouncements : Plugin
+	{
 		public static NineTailedFoxAnnouncer ann;
 		public static List<String> roundVariables = new List<string>()
 		{
@@ -52,9 +52,17 @@ namespace CustomAnnouncements
 		public static string RoundEndFilePath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/SCP Secret Laboratory/CustomAnnouncements/RoundEnd.txt";
 		public static string PlayerJoinFilePath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/SCP Secret Laboratory/CustomAnnouncements/PlayerJoin.txt";
 		public static string WaitingForPlayersFilePath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/SCP Secret Laboratory/CustomAnnouncements/WaitingForPlayers.txt";
+
+		//Temporary variables to handle the file name changes
+		public static string oldPresetsFilePath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/SCP Secret Laboratory/CustomAnnouncements/presets.txt";
+		public static string oldTimersFilePath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/SCP Secret Laboratory/CustomAnnouncements/timer.txt";
+		public static string oldChaosSpawnFilePath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/SCP Secret Laboratory/CustomAnnouncements/chaos.txt";
+		public static string oldRoundEndFilePath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/SCP Secret Laboratory/CustomAnnouncements/roundend.txt";
+		public static string oldPlayerJoinFilePath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/SCP Secret Laboratory/CustomAnnouncements/player.txt";
+
 		public static bool roundStarted = false;
 
-		public override void OnDisable() {}
+		public override void OnDisable() { }
 
 		public override void OnEnable()
 		{
@@ -68,6 +76,13 @@ namespace CustomAnnouncements
 				RoundEndFilePath = "/home/" + Environment.UserName + "/.config/SCP Secret Laboratory/CustomAnnouncements/RoundEnd.txt";
 				PlayerJoinFilePath = "/home/" + Environment.UserName + "/.config/SCP Secret Laboratory/CustomAnnouncements/PlayerJoin.txt";
 				WaitingForPlayersFilePath = "/home/" + Environment.UserName + "/.config/SCP Secret Laboratory/CustomAnnouncements/WaitingForPlayers.txt";
+
+				//Temporary variables to handle the file name changes
+				oldPresetsFilePath = "/home/" + Environment.UserName + "/.config/SCP Secret Laboratory/CustomAnnouncements/presets.txt";
+				oldTimersFilePath = "/home/" + Environment.UserName + "/.config/SCP Secret Laboratory/CustomAnnouncements/timer.txt";
+				oldChaosSpawnFilePath = "/home/" + Environment.UserName + "/.config/SCP Secret Laboratory/CustomAnnouncements/chaos.txt";
+				oldRoundEndFilePath = "/home/" + Environment.UserName + "/.config/SCP Secret Laboratory/CustomAnnouncements/roundend.txt";
+				oldPlayerJoinFilePath = "/home/" + Environment.UserName + "/.config/SCP Secret Laboratory/CustomAnnouncements/player.txt";
 			}
 
 			if (!Directory.Exists(ConfigFolerFilePath))
@@ -101,6 +116,29 @@ namespace CustomAnnouncements
 			if (!File.Exists(WaitingForPlayersFilePath))
 			{
 				using (new StreamWriter(File.Create(WaitingForPlayersFilePath))) { }
+			}
+
+
+
+			if (File.Exists(oldPresetsFilePath))
+			{
+				File.Delete(oldPresetsFilePath);
+			}
+			if (File.Exists(oldTimersFilePath))
+			{
+				File.Delete(oldTimersFilePath);
+			}
+			if (File.Exists(oldChaosSpawnFilePath))
+			{
+				File.Delete(oldChaosSpawnFilePath);
+			}
+			if (File.Exists(oldRoundEndFilePath))
+			{
+				File.Delete(oldRoundEndFilePath);
+			}
+			if (File.Exists(oldPlayerJoinFilePath))
+			{
+				File.Delete(oldPlayerJoinFilePath);
 			}
 		}
 		
