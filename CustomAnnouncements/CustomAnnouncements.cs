@@ -8,7 +8,6 @@ using System.Collections.Generic;
 
 // TO DO:
 
-// CREATE A CLASS BASED EVENT SYSTEM
 // ADD SUPPORT FOR NUMBERS IN ANNOUNCEMENTS
 
 namespace CustomAnnouncements
@@ -46,11 +45,12 @@ namespace CustomAnnouncements
 			"$round_duration"
 		};
 		public static string configFolerFilePath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/SCP Secret Laboratory/CustomAnnouncements";
-		public static string presetFilePath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/SCP Secret Laboratory/CustomAnnouncements/presets.txt";
-		public static string timerFilePath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/SCP Secret Laboratory/CustomAnnouncements/timers.txt";
-		public static string chaosFilePath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/SCP Secret Laboratory/CustomAnnouncements/chaos.txt";
-		public static string roundendFilePath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/SCP Secret Laboratory/CustomAnnouncements/roundend.txt";
-		public static string playerFilePath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/SCP Secret Laboratory/CustomAnnouncements/player.txt";
+		public static string presetFilePath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/SCP Secret Laboratory/CustomAnnouncements/Presets.txt";
+		public static string timerFilePath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/SCP Secret Laboratory/CustomAnnouncements/Timers.txt";
+		public static string chaosFilePath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/SCP Secret Laboratory/CustomAnnouncements/ChaosSpawn.txt";
+		public static string roundstartFilePath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/SCP Secret Laboratory/CustomAnnouncements/RoundStart.txt";
+		public static string roundendFilePath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/SCP Secret Laboratory/CustomAnnouncements/RoundEnd.txt";
+		public static string playerFilePath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/SCP Secret Laboratory/CustomAnnouncements/PlayerJoin.txt";
 		public static bool roundStarted = false;
 
 		public override void OnDisable() {}
@@ -60,11 +60,12 @@ namespace CustomAnnouncements
 			if (IsLinux)
 			{
 				configFolerFilePath = "/home/" + Environment.UserName + "/.config/SCP Secret Laboratory/CustomAnnouncements";
-				presetFilePath = "/home/" + Environment.UserName + "/.config/SCP Secret Laboratory/CustomAnnouncements/presets.txt";
-				timerFilePath = "/home/" + Environment.UserName + "/.config/SCP Secret Laboratory/CustomAnnouncements/timers.txt";
-				chaosFilePath = "/home/" + Environment.UserName + "/.config/SCP Secret Laboratory/CustomAnnouncements/chaos.txt";
-				roundendFilePath = "/home/" + Environment.UserName + "/.config/SCP Secret Laboratory/CustomAnnouncements/roundend.txt";
-				playerFilePath = "/home/" + Environment.UserName + "/.config/SCP Secret Laboratory/CustomAnnouncements/player.txt";
+				presetFilePath = "/home/" + Environment.UserName + "/.config/SCP Secret Laboratory/CustomAnnouncements/Presets.txt";
+				timerFilePath = "/home/" + Environment.UserName + "/.config/SCP Secret Laboratory/CustomAnnouncements/Timers.txt";
+				chaosFilePath = "/home/" + Environment.UserName + "/.config/SCP Secret Laboratory/CustomAnnouncements/ChaosSpawn.txt";
+				roundstartFilePath = "/home/" + Environment.UserName + "/.config/SCP Secret Laboratory/CustomAnnouncements/RoundStart.txt";
+				roundendFilePath = "/home/" + Environment.UserName + "/.config/SCP Secret Laboratory/CustomAnnouncements/RoundEnd.txt";
+				playerFilePath = "/home/" + Environment.UserName + "/.config/SCP Secret Laboratory/CustomAnnouncements/PlayerJoin.txt";
 			}
 
 			if (!Directory.Exists(configFolerFilePath))
@@ -82,6 +83,10 @@ namespace CustomAnnouncements
 			if (!File.Exists(chaosFilePath))
 			{
 				using (new StreamWriter(File.Create(chaosFilePath))) { }
+			}
+			if (!File.Exists(roundstartFilePath))
+			{
+				using (new StreamWriter(File.Create(roundstartFilePath))) { }
 			}
 			if (!File.Exists(roundendFilePath))
 			{
@@ -106,6 +111,7 @@ namespace CustomAnnouncements
 			this.AddConfig(new Smod2.Config.ConfigSetting("ca_preset_whitelist", new string[] { "owner", "admin" }, Smod2.Config.SettingType.LIST, true, "Defines what ranks are allowed to use the preset command."));
 			this.AddConfig(new Smod2.Config.ConfigSetting("ca_timer_whitelist", new string[] { "owner", "admin" }, Smod2.Config.SettingType.LIST, true, "Defines what ranks are allowed to use the timer command."));
 			this.AddConfig(new Smod2.Config.ConfigSetting("ca_chaosspawn_whitelist", new string[] { "owner", "admin" }, Smod2.Config.SettingType.LIST, true, "Defines what ranks are allowed to use the chaosspawn command."));
+			this.AddConfig(new Smod2.Config.ConfigSetting("ca_roundstart_whitelist", new string[] { "owner", "admin" }, Smod2.Config.SettingType.LIST, true, "Defines what ranks are allowed to use the roundstart command."));
 			this.AddConfig(new Smod2.Config.ConfigSetting("ca_roundend_whitelist", new string[] { "owner", "admin" }, Smod2.Config.SettingType.LIST, true, "Defines what ranks are allowed to use the roundend command."));
 			this.AddConfig(new Smod2.Config.ConfigSetting("ca_player_whitelist", new string[] { "owner", "admin" }, Smod2.Config.SettingType.LIST, true, "Defines what ranks are allowed to use the player command."));
 
@@ -118,6 +124,7 @@ namespace CustomAnnouncements
 			this.AddCommands(new string[] { "preset", "pr" }, new PresetCommand(this));
 			this.AddCommands(new string[] { "timer", "ti" }, new TimerCommand(this));
 			this.AddCommands(new string[] { "chaosspawn", "cs" }, new ChaosSpawnCommand(this));
+			this.AddCommands(new string[] { "roundstart", "rs" }, new RoundStartCommand(this));
 			this.AddCommands(new string[] { "roundend", "re" }, new RoundEndCommand(this));
 			this.AddCommands(new string[] { "playerannouncement", "pa" }, new PlayerAnnouncementCommand(this));
 		}

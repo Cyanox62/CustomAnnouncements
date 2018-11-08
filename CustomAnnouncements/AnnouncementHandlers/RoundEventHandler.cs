@@ -23,6 +23,13 @@ namespace CustomAnnouncements
 			CustomAnnouncements.roundStarted = true;
 			Thread TimerHandler = new Thread(new ThreadStart(() => new TimerHandler(plugin)));
 			TimerHandler.Start();
+
+			string[] message = File.ReadAllLines(CustomAnnouncements.roundstartFilePath);
+			if (message.Length > 0)
+			{
+				string text = CustomAnnouncements.ReplaceVariables(CustomAnnouncements.SpacePeriods(CustomAnnouncements.StringArrayToString(message, 0)));
+				plugin.pluginManager.Server.Map.AnnounceCustomMessage(text);
+			}
 		}
 
 		public void OnRoundEnd(RoundEndEvent ev)

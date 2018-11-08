@@ -53,6 +53,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Announcements\ChaosSpawnCommand.cs" />
+    <Compile Include="Announcements\RoundStartCommand.cs" />
     <Compile Include="CommandsOutput.cs" />
     <Compile Include="Announcements\CountdownCommand.cs" />
     <Compile Include="CustomAnnouncements.cs" />
