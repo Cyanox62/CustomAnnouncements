@@ -52,8 +52,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AnnouncementHandlers\WaitingForPlayersHandler.cs" />
     <Compile Include="Announcements\ChaosSpawnCommand.cs" />
     <Compile Include="Announcements\RoundStartCommand.cs" />
+    <Compile Include="Announcements\WaitingForPlayersCommand.cs" />
     <Compile Include="CommandsOutput.cs" />
     <Compile Include="Announcements\CountdownCommand.cs" />
     <Compile Include="CustomAnnouncements.cs" />

@@ -44,13 +44,14 @@ namespace CustomAnnouncements
 			"$tutorial_alive",
 			"$round_duration"
 		};
-		public static string configFolerFilePath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/SCP Secret Laboratory/CustomAnnouncements";
-		public static string presetFilePath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/SCP Secret Laboratory/CustomAnnouncements/Presets.txt";
-		public static string timerFilePath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/SCP Secret Laboratory/CustomAnnouncements/Timers.txt";
-		public static string chaosFilePath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/SCP Secret Laboratory/CustomAnnouncements/ChaosSpawn.txt";
-		public static string roundstartFilePath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/SCP Secret Laboratory/CustomAnnouncements/RoundStart.txt";
-		public static string roundendFilePath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/SCP Secret Laboratory/CustomAnnouncements/RoundEnd.txt";
-		public static string playerFilePath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/SCP Secret Laboratory/CustomAnnouncements/PlayerJoin.txt";
+		public static string ConfigFolerFilePath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/SCP Secret Laboratory/CustomAnnouncements";
+		public static string PresetsFilePath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/SCP Secret Laboratory/CustomAnnouncements/Presets.txt";
+		public static string TimersFilePath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/SCP Secret Laboratory/CustomAnnouncements/Timers.txt";
+		public static string ChaosSpawnFilePath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/SCP Secret Laboratory/CustomAnnouncements/ChaosSpawn.txt";
+		public static string RoundStartFilePath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/SCP Secret Laboratory/CustomAnnouncements/RoundStart.txt";
+		public static string RoundEndFilePath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/SCP Secret Laboratory/CustomAnnouncements/RoundEnd.txt";
+		public static string PlayerJoinFilePath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/SCP Secret Laboratory/CustomAnnouncements/PlayerJoin.txt";
+		public static string WaitingForPlayersFilePath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/SCP Secret Laboratory/CustomAnnouncements/WaitingForPlayers.txt";
 		public static bool roundStarted = false;
 
 		public override void OnDisable() {}
@@ -59,42 +60,47 @@ namespace CustomAnnouncements
 		{
 			if (IsLinux)
 			{
-				configFolerFilePath = "/home/" + Environment.UserName + "/.config/SCP Secret Laboratory/CustomAnnouncements";
-				presetFilePath = "/home/" + Environment.UserName + "/.config/SCP Secret Laboratory/CustomAnnouncements/Presets.txt";
-				timerFilePath = "/home/" + Environment.UserName + "/.config/SCP Secret Laboratory/CustomAnnouncements/Timers.txt";
-				chaosFilePath = "/home/" + Environment.UserName + "/.config/SCP Secret Laboratory/CustomAnnouncements/ChaosSpawn.txt";
-				roundstartFilePath = "/home/" + Environment.UserName + "/.config/SCP Secret Laboratory/CustomAnnouncements/RoundStart.txt";
-				roundendFilePath = "/home/" + Environment.UserName + "/.config/SCP Secret Laboratory/CustomAnnouncements/RoundEnd.txt";
-				playerFilePath = "/home/" + Environment.UserName + "/.config/SCP Secret Laboratory/CustomAnnouncements/PlayerJoin.txt";
+				ConfigFolerFilePath = "/home/" + Environment.UserName + "/.config/SCP Secret Laboratory/CustomAnnouncements";
+				PresetsFilePath = "/home/" + Environment.UserName + "/.config/SCP Secret Laboratory/CustomAnnouncements/Presets.txt";
+				TimersFilePath = "/home/" + Environment.UserName + "/.config/SCP Secret Laboratory/CustomAnnouncements/Timers.txt";
+				ChaosSpawnFilePath = "/home/" + Environment.UserName + "/.config/SCP Secret Laboratory/CustomAnnouncements/ChaosSpawn.txt";
+				RoundStartFilePath = "/home/" + Environment.UserName + "/.config/SCP Secret Laboratory/CustomAnnouncements/RoundStart.txt";
+				RoundEndFilePath = "/home/" + Environment.UserName + "/.config/SCP Secret Laboratory/CustomAnnouncements/RoundEnd.txt";
+				PlayerJoinFilePath = "/home/" + Environment.UserName + "/.config/SCP Secret Laboratory/CustomAnnouncements/PlayerJoin.txt";
+				WaitingForPlayersFilePath = "/home/" + Environment.UserName + "/.config/SCP Secret Laboratory/CustomAnnouncements/WaitingForPlayers.txt";
 			}
 
-			if (!Directory.Exists(configFolerFilePath))
+			if (!Directory.Exists(ConfigFolerFilePath))
 			{
-				Directory.CreateDirectory(configFolerFilePath);
+				Directory.CreateDirectory(ConfigFolerFilePath);
 			}
-			if (!File.Exists(presetFilePath))
+			if (!File.Exists(PresetsFilePath))
 			{
-				using (new StreamWriter(File.Create(presetFilePath))) { }
+				using (new StreamWriter(File.Create(PresetsFilePath))) { }
 			}
-			if (!File.Exists(timerFilePath))
+			if (!File.Exists(TimersFilePath))
 			{
-				using (new StreamWriter(File.Create(timerFilePath))) { }
+				using (new StreamWriter(File.Create(TimersFilePath))) { }
 			}
-			if (!File.Exists(chaosFilePath))
+			if (!File.Exists(ChaosSpawnFilePath))
 			{
-				using (new StreamWriter(File.Create(chaosFilePath))) { }
+				using (new StreamWriter(File.Create(ChaosSpawnFilePath))) { }
 			}
-			if (!File.Exists(roundstartFilePath))
+			if (!File.Exists(RoundStartFilePath))
 			{
-				using (new StreamWriter(File.Create(roundstartFilePath))) { }
+				using (new StreamWriter(File.Create(RoundStartFilePath))) { }
 			}
-			if (!File.Exists(roundendFilePath))
+			if (!File.Exists(RoundEndFilePath))
 			{
-				using (new StreamWriter(File.Create(roundendFilePath))) { }
+				using (new StreamWriter(File.Create(RoundEndFilePath))) { }
 			}
-			if (!File.Exists(playerFilePath))
+			if (!File.Exists(PlayerJoinFilePath))
 			{
-				using (new StreamWriter(File.Create(playerFilePath))) { }
+				using (new StreamWriter(File.Create(PlayerJoinFilePath))) { }
+			}
+			if (!File.Exists(WaitingForPlayersFilePath))
+			{
+				using (new StreamWriter(File.Create(WaitingForPlayersFilePath))) { }
 			}
 		}
 		
@@ -114,6 +120,7 @@ namespace CustomAnnouncements
 			this.AddConfig(new Smod2.Config.ConfigSetting("ca_roundstart_whitelist", new string[] { "owner", "admin" }, Smod2.Config.SettingType.LIST, true, "Defines what ranks are allowed to use the roundstart command."));
 			this.AddConfig(new Smod2.Config.ConfigSetting("ca_roundend_whitelist", new string[] { "owner", "admin" }, Smod2.Config.SettingType.LIST, true, "Defines what ranks are allowed to use the roundend command."));
 			this.AddConfig(new Smod2.Config.ConfigSetting("ca_player_whitelist", new string[] { "owner", "admin" }, Smod2.Config.SettingType.LIST, true, "Defines what ranks are allowed to use the player command."));
+			this.AddConfig(new Smod2.Config.ConfigSetting("ca_waitingforplayers_whitelist", new string[] { "owner", "admin" }, Smod2.Config.SettingType.LIST, true, "Defines what ranks are allowed to use the waitingforplayers command."));
 
 			// Commands
 			this.AddCommands(new string[] { "customannouncements", "ca" }, new CommandsOutput());
@@ -127,6 +134,7 @@ namespace CustomAnnouncements
 			this.AddCommands(new string[] { "roundstart", "rs" }, new RoundStartCommand(this));
 			this.AddCommands(new string[] { "roundend", "re" }, new RoundEndCommand(this));
 			this.AddCommands(new string[] { "playerannouncement", "pa" }, new PlayerAnnouncementCommand(this));
+			this.AddCommands(new string[] { "waitingforplayers", "wp" }, new WaitingForPlayersCommand(this));
 		}
 
 		public static int CountRoles(Role role)

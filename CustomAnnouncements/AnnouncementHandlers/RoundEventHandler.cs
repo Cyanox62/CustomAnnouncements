@@ -9,7 +9,7 @@ using System.Threading;
 
 namespace CustomAnnouncements
 {
-	class RoundEventHandler : IEventHandlerRoundStart, IEventHandlerRoundEnd, IEventHandlerTeamRespawn, IEventHandlerPlayerJoin
+	class RoundEventHandler : IEventHandlerRoundStart, IEventHandlerRoundEnd, IEventHandlerTeamRespawn, IEventHandlerPlayerJoin, IEventHandlerWaitingForPlayers
 	{
 		private Plugin plugin;
 
@@ -24,7 +24,7 @@ namespace CustomAnnouncements
 			Thread TimerHandler = new Thread(new ThreadStart(() => new TimerHandler(plugin)));
 			TimerHandler.Start();
 
-			string[] message = File.ReadAllLines(CustomAnnouncements.roundstartFilePath);
+			string[] message = File.ReadAllLines(CustomAnnouncements.RoundStartFilePath);
 			if (message.Length > 0)
 			{
 				string text = CustomAnnouncements.ReplaceVariables(CustomAnnouncements.SpacePeriods(CustomAnnouncements.StringArrayToString(message, 0)));
@@ -36,7 +36,7 @@ namespace CustomAnnouncements
 		{
 			CustomAnnouncements.roundStarted = false;
 
-			string[] message = File.ReadAllLines(CustomAnnouncements.roundendFilePath);
+			string[] message = File.ReadAllLines(CustomAnnouncements.RoundEndFilePath);
 			if (message.Length > 0)
 			{
 				string text = CustomAnnouncements.ReplaceVariables(CustomAnnouncements.SpacePeriods(CustomAnnouncements.StringArrayToString(message, 0)));
@@ -48,7 +48,7 @@ namespace CustomAnnouncements
 		{
 			if (ev.SpawnChaos)
 			{
-				string[] message = File.ReadAllLines(CustomAnnouncements.chaosFilePath);
+				string[] message = File.ReadAllLines(CustomAnnouncements.ChaosSpawnFilePath);
 				if (message.Length > 0)
 				{
 					string text = CustomAnnouncements.ReplaceVariables(CustomAnnouncements.SpacePeriods(CustomAnnouncements.StringArrayToString(message, 0)));
@@ -59,12 +59,22 @@ namespace CustomAnnouncements
 
 		public void OnPlayerJoin(PlayerJoinEvent ev)
 		{
-			if (File.ReadAllLines(CustomAnnouncements.playerFilePath).Length > 0)
+			if (File.ReadAllLines(CustomAnnouncements.PlayerJoinFilePath).Length > 0)
 			{
-				if (CustomAnnouncements.DoesKeyExistInFile(CustomAnnouncements.playerFilePath, ev.Player.SteamId))
+				if (CustomAnnouncements.DoesKeyExistInFile(CustomAnnouncements.PlayerJoinFilePath, ev.Player.SteamId))
 				{
-					plugin.pluginManager.Server.Map.AnnounceCustomMessage(CustomAnnouncements.ReplaceVariables(CustomAnnouncements.SpacePeriods(CustomAnnouncements.GetValueOfKey(CustomAnnouncements.playerFilePath, ev.Player.SteamId.ToString()))));
+					plugin.pluginManager.Server.Map.AnnounceCustomMessage(CustomAnnouncements.ReplaceVariables(CustomAnnouncements.SpacePeriods(CustomAnnouncements.GetValueOfKey(CustomAnnouncements.PlayerJoinFilePath, ev.Player.SteamId.ToString()))));
 				}
+			}
+		}
+
+		public void OnWaitingForPlayers(WaitingForPlayersEvent ev)
+		{
+			string[] message = File.ReadAllLines(CustomAnnouncements.WaitingForPlayersFilePath);
+			if (message.Length > 0)
+			{
+				Thread WaitingForPlayersHandler = new Thread(new ThreadStart(() => new WaitingForPlayersHandler(plugin, CustomAnnouncements.ReplaceVariables(CustomAnnouncements.SpacePeriods(CustomAnnouncements.StringArrayToString(message, 0))))));
+				WaitingForPlayersHandler.Start();
 			}
 		}
 	}

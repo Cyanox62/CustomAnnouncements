@@ -13,7 +13,7 @@ namespace CustomAnnouncements
 
 		public RoundEndCommand(Plugin plugin)
 		{
-			an = new Announcement(CustomAnnouncements.roundendFilePath, GetUsage(), plugin.GetConfigList("ca_roundend_whitelist"));
+			an = new Announcement(CustomAnnouncements.RoundEndFilePath, GetUsage(), plugin.GetConfigList("ca_roundend_whitelist"));
 			this.plugin = plugin;
 		}
 

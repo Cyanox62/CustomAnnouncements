@@ -6,14 +6,14 @@ using Smod2.API;
 
 namespace CustomAnnouncements
 {
-	class ChaosSpawnCommand : ICommandHandler
+	class WaitingForPlayersCommand : ICommandHandler
 	{
 		private Announcement an;
 		private Plugin plugin;
 
-		public ChaosSpawnCommand(Plugin plugin)
+		public WaitingForPlayersCommand(Plugin plugin)
 		{
-			an = new Announcement(CustomAnnouncements.ChaosSpawnFilePath, GetUsage(), plugin.GetConfigList("ca_chaosspawn_whitelist"));
+			an = new Announcement(CustomAnnouncements.WaitingForPlayersFilePath, GetUsage(), plugin.GetConfigList("ca_waitingforplayers_whitelist"));
 			this.plugin = plugin;
 		}
 
@@ -24,7 +24,7 @@ namespace CustomAnnouncements
 
 		public string GetUsage()
 		{
-			return "(CS / CHAOSSPAWN) (SET / CLEAR) (TEXT)";
+			return "(WP / WAITINGFORPLAYERS) (SET / CLEAR) (TEXT)";
 		}
 
 		public string[] OnCall(ICommandSender sender, string[] args)
@@ -39,13 +39,12 @@ namespace CustomAnnouncements
 				{
 					if (args.Length > 1)
 					{
-						string text = CustomAnnouncements.StringArrayToString(args, 1);
-						return an.SetAnnouncement(text, "Chaos spawn announcement set.");
+						return an.SetAnnouncement(CustomAnnouncements.StringArrayToString(args, 1), "Waiting for players announcement set.");
 					}
 				}
 				else if (args[0].ToLower() == "clear")
 				{
-					return an.ClearAnnouncement("Chaos spawn announcement cleared.");
+					return an.ClearAnnouncement("Waiting for players announcement cleared.");
 				}
 			}
 			return new string[] { GetUsage() };

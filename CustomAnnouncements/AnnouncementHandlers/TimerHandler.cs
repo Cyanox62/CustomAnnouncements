@@ -9,7 +9,7 @@ namespace CustomAnnouncements
 	{
 		public TimerHandler(Plugin plugin)
 		{
-			string[] timers = File.ReadAllLines(CustomAnnouncements.timerFilePath);
+			string[] timers = File.ReadAllLines(CustomAnnouncements.TimersFilePath);
 
 			while (CustomAnnouncements.roundStarted)
 			{
