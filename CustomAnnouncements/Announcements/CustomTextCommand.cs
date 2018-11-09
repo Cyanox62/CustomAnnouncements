@@ -12,9 +12,7 @@ namespace CustomAnnouncements
 		public CustomTextCommand(Plugin plugin)
 		{
 			this.plugin = plugin;
-			whitelist = plugin.GetConfigList("ca_text_whitelist");
-			for (int i = 0; i < whitelist.Length; i++)
-				whitelist[i] = whitelist[i].Replace(" ", "");
+			whitelist = CustomAnnouncements.SetWhitelist("ca_text_whitelist");
 		}
 
 		public string GetCommandDescription()

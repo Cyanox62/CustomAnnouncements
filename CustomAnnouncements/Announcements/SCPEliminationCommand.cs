@@ -17,9 +17,7 @@ namespace CustomAnnouncements
         public SCPEliminationCommand(Plugin plugin)
         {
             this.plugin = plugin;
-			whitelist = plugin.GetConfigList("ca_scp_whitelist");
-			for (int i = 0; i < whitelist.Length; i++)
-				whitelist[i] = whitelist[i].Replace(" ", "");
+			whitelist = CustomAnnouncements.SetWhitelist("ca_scp_whitelist");
 		}
 
         public string GetCommandDescription()

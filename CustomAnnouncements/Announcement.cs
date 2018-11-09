@@ -12,14 +12,11 @@ namespace CustomAnnouncements
 		private string FilePath;
 		private string[] WhitelistConfig;
 
-		public Announcement(string FilePath, string GetUsage, string[] WhitelistConfig)
+		public Announcement(string FilePath, string GetUsage, string WhitelistConfig)
 		{
 			this.GetUsage = GetUsage;
 			this.FilePath = FilePath;
-			this.WhitelistConfig = WhitelistConfig;
-
-			for (int i = 0; i < WhitelistConfig.Length; i++)
-				WhitelistConfig[i] = WhitelistConfig[i].Replace(" ", "");
+			this.WhitelistConfig = CustomAnnouncements.SetWhitelist(WhitelistConfig);
 		}
 
 		public bool CanRunCommand(ICommandSender sender)

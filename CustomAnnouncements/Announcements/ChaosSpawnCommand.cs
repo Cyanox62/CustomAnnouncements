@@ -13,7 +13,7 @@ namespace CustomAnnouncements
 
 		public ChaosSpawnCommand(Plugin plugin)
 		{
-			an = new Announcement(CustomAnnouncements.ChaosSpawnFilePath, GetUsage(), plugin.GetConfigList("ca_chaosspawn_whitelist"));
+			an = new Announcement(CustomAnnouncements.ChaosSpawnFilePath, GetUsage(), "ca_chaosspawn_whitelist");
 			this.plugin = plugin;
 		}
 

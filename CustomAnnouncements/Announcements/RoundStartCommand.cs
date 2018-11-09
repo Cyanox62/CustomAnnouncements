@@ -13,7 +13,7 @@ namespace CustomAnnouncements
 
 		public RoundStartCommand(Plugin plugin)
 		{
-			an = new Announcement(CustomAnnouncements.RoundStartFilePath, GetUsage(), plugin.GetConfigList("ca_roundstart_whitelist"));
+			an = new Announcement(CustomAnnouncements.RoundStartFilePath, GetUsage(), "ca_roundstart_whitelist");
 			this.plugin = plugin;
 		}
 

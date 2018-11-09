@@ -14,7 +14,7 @@ namespace CustomAnnouncements
 
 		public PlayerAnnouncementCommand(Plugin plugin)
 		{
-			an = new Announcement(GetUsage(), CustomAnnouncements.PlayerJoinFilePath, plugin.GetConfigList("ca_player_whitelist"));
+			an = new Announcement(GetUsage(), CustomAnnouncements.PlayerJoinFilePath, "ca_player_whitelist");
 			this.plugin = plugin;
 		}
 

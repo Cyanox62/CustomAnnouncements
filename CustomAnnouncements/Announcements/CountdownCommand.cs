@@ -13,9 +13,7 @@ namespace CustomAnnouncements
 		public CountdownCommand(Plugin plugin)
 		{
 			this.plugin = plugin;
-			whitelist = plugin.GetConfigList("ca_countdown_whitelist");
-			for (int i = 0; i < whitelist.Length; i++)
-				whitelist[i] = whitelist[i].Replace(" ", "");
+			whitelist = CustomAnnouncements.SetWhitelist("ca_countdown_whitelist");
 		}
 
 		private string[] GetCountdown(int start, int end)

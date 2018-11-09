@@ -13,9 +13,7 @@ namespace CustomAnnouncements
         public MTFAnnouncementCommand(Plugin plugin)
         {
             this.plugin = plugin;
-			whitelist = plugin.GetConfigList("ca_mtf_whitelist");
-			for (int i = 0; i < whitelist.Length; i++)
-				whitelist[i] = whitelist[i].Replace(" ", "");
+			whitelist = CustomAnnouncements.SetWhitelist("ca_mtf_whitelist");
 		}
 
         public string GetCommandDescription()

@@ -26,6 +26,7 @@ namespace CustomAnnouncements
 	)]
 	public class CustomAnnouncements : Plugin
 	{
+		private static Plugin plugin;
 		public static NineTailedFoxAnnouncer ann;
 		public static List<String> roundVariables = new List<string>()
 		{
@@ -146,10 +147,13 @@ namespace CustomAnnouncements
 		
         public override void Register()
         {
+			plugin = this;
+
 			// Event handlers
 			this.AddEventHandlers(new RoundEventHandler(this));
 
 			// Config settings
+			this.AddConfig(new Smod2.Config.ConfigSetting("ca_all_whitelist", new string[] {}, Smod2.Config.SettingType.LIST, true, "Defines what ranks are allowed to use all commands. This will override all other whitelists"));
 			this.AddConfig(new Smod2.Config.ConfigSetting("ca_countdown_whitelist", new string[] { "owner", "admin" }, Smod2.Config.SettingType.LIST, true, "Defines what ranks are allowed to use the countdown command."));
 			this.AddConfig(new Smod2.Config.ConfigSetting("ca_text_whitelist", new string[] { "owner", "admin" }, Smod2.Config.SettingType.LIST, true, "Defines what ranks are allowed to use the text command."));
 			this.AddConfig(new Smod2.Config.ConfigSetting("ca_mtf_whitelist", new string[] { "owner", "admin" }, Smod2.Config.SettingType.LIST, true, "Defines what ranks are allowed to use the mtf command."));
@@ -196,6 +200,19 @@ namespace CustomAnnouncements
 				}
 			}
 			return false;
+		}
+
+		public static string[] SetWhitelist(string whitelistName)
+		{
+			string[] allWhitelist = plugin.GetConfigList("ca_all_whitelist");
+			string[] whitelist;
+			if (allWhitelist.Length > 0)
+				whitelist = allWhitelist;
+			else
+				whitelist = plugin.GetConfigList(whitelistName);
+			for (int i = 0; i < whitelist.Length; i++)
+				whitelist[i] = whitelist[i].Replace(" ", "");
+			return whitelist;
 		}
 
 		public static bool IsVoiceLine(string str)
