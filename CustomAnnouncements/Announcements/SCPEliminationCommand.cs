@@ -11,13 +11,13 @@ namespace CustomAnnouncements
 {
     class SCPEliminationCommand : ICommandHandler
     {
+		private Announcement an;
         private Plugin plugin;
-		private string[] whitelist;
 
         public SCPEliminationCommand(Plugin plugin)
         {
-            this.plugin = plugin;
-			whitelist = CustomAnnouncements.SetWhitelist("ca_scp_whitelist");
+			an = new Announcement(GetUsage(), "ca_scp_whitelist");
+			this.plugin = plugin;
 		}
 
         public string GetCommandDescription()
@@ -33,26 +33,14 @@ namespace CustomAnnouncements
         public string[] OnCall(ICommandSender sender, string[] args)
         {
 			CustomAnnouncements.ann = UnityEngine.Object.FindObjectOfType<NineTailedFoxAnnouncer>();
-			if (sender is Player)
-			{
-				Player player = (Player)sender;
-				if (!CustomAnnouncements.IsPlayerWhitelisted(player, whitelist))
-				{
-					return new string[] { "You are not allowed to run this command." };
-				}
-			}
+			if (!an.CanRunCommand(sender))
+				return new string[] { "You are not allowed to run this command." };
 
 			if (args.Length > 0)
             {
-                if (Int32.TryParse(args[0], out int a))
-                {
-                    plugin.pluginManager.Server.Map.AnnounceScpKill(args[0]);
-                }
-                else
-                {
-                    return new string[] { "Not a valid number!" };
-                }
-                return new string[] { "Announcement has been made." };
+                if (!Int32.TryParse(args[0], out int a))
+                    return new string[] { "Error: not a valid number." };
+				return an.PlaySCPAnnouncement(args[0], "Announcement has been made.");
             }
             else
             {

@@ -7,13 +7,13 @@ namespace CustomAnnouncements
 {
 	class CountdownCommand : ICommandHandler
 	{
+		private Announcement an;
 		private Plugin plugin;
-		private string[] whitelist;
 
 		public CountdownCommand(Plugin plugin)
 		{
+			an = new Announcement(GetUsage(), "ca_countdown_whitelist");
 			this.plugin = plugin;
-			whitelist = CustomAnnouncements.SetWhitelist("ca_countdown_whitelist");
 		}
 
 		private string[] GetCountdown(int start, int end)
@@ -61,14 +61,8 @@ namespace CustomAnnouncements
 		public string[] OnCall(ICommandSender sender, string[] args)
 		{
 			CustomAnnouncements.ann = UnityEngine.Object.FindObjectOfType<NineTailedFoxAnnouncer>();
-			if (sender is Player)
-			{
-				Player player = (Player)sender;
-				if (!CustomAnnouncements.IsPlayerWhitelisted(player, whitelist))
-				{
-					return new string[] { "You are not allowed to run this command." };
-				}
-			}
+			if (!an.CanRunCommand(sender))
+				return new string[] { "You are not allowed to run this command." };
 
 			if (args.Length > 1)
 			{
@@ -92,31 +86,22 @@ namespace CustomAnnouncements
 				}
 
 				string[] statement = GetCountdown(start, end);
+
 				if (statement != null)
 				{
-					if (args.Length > 2)
+					if (args.Length > 1)
 					{
-						string saveText = CustomAnnouncements.SpacePeriods(CustomAnnouncements.StringArrayToString(args, 2));
-
-						for (int i = 2; i < args.Length; i++)
-						{
-							string text = CustomAnnouncements.GetNonValidText(saveText.Split(' '));
-							if (text != null)
-							{
-								return new string[] { "Error: phrase \"" + text + "\" is not in text to speech." };
-							}
-						}
-						plugin.pluginManager.Server.Map.AnnounceCustomMessage(string.Join(" ", statement) + " . . " + CustomAnnouncements.ReplaceVariables(saveText));
+						plugin.Info(CustomAnnouncements.StringArrayToString(statement, 0) + " . . " + CustomAnnouncements.StringArrayToString(args, 2));
+						return an.PlayCustomAnnouncement(CustomAnnouncements.StringArrayToString(statement, 0) + " . . " + CustomAnnouncements.StringArrayToString(args, 2), "Countdown has been started");
 					}
 					else
 					{
-						plugin.pluginManager.Server.Map.AnnounceCustomMessage(string.Join(" ", statement));
+						return an.PlayCustomAnnouncement(CustomAnnouncements.StringArrayToString(statement, 0), "Countdown has been started");
 					}
-					return new string[] { "Countdown has been started." };
 				}
 				else
 				{
-					return new string[] { "Error: starting value is less than ending value." };
+					return new string[] { "Error: starting value is less than or equal to ending value." };
 				}
 			}
 			return new string[] { GetUsage() };

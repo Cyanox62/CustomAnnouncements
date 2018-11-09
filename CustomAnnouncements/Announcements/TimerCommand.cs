@@ -14,7 +14,7 @@ namespace CustomAnnouncements
 
 		public TimerCommand(Plugin plugin)
 		{
-			an = new Announcement(CustomAnnouncements.TimersFilePath, GetUsage(), "ca_timer_whitelist");
+			an = new Announcement(GetUsage(), "ca_timer_whitelist", CustomAnnouncements.TimersFilePath);
 			this.plugin = plugin;
 		}
 

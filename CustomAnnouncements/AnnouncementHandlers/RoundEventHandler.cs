@@ -27,7 +27,7 @@ namespace CustomAnnouncements
 			string[] message = File.ReadAllLines(CustomAnnouncements.RoundStartFilePath);
 			if (message.Length > 0)
 			{
-				string text = CustomAnnouncements.ReplaceVariables(CustomAnnouncements.SpacePeriods(CustomAnnouncements.StringArrayToString(message, 0)));
+				string text = CustomAnnouncements.ReplaceVariables(CustomAnnouncements.HandlePeriods(CustomAnnouncements.StringArrayToString(message, 0)));
 				plugin.pluginManager.Server.Map.AnnounceCustomMessage(text);
 				plugin.Info("Running round start announcement...");
 			}
@@ -40,7 +40,7 @@ namespace CustomAnnouncements
 			string[] message = File.ReadAllLines(CustomAnnouncements.RoundEndFilePath);
 			if (message.Length > 0)
 			{
-				string text = CustomAnnouncements.ReplaceVariables(CustomAnnouncements.SpacePeriods(CustomAnnouncements.StringArrayToString(message, 0)));
+				string text = CustomAnnouncements.ReplaceVariables(CustomAnnouncements.HandlePeriods(CustomAnnouncements.StringArrayToString(message, 0)));
 				plugin.pluginManager.Server.Map.AnnounceCustomMessage(text);
 				plugin.Info("Running round end anmnouncement...");
 			}
@@ -53,7 +53,7 @@ namespace CustomAnnouncements
 				string[] message = File.ReadAllLines(CustomAnnouncements.ChaosSpawnFilePath);
 				if (message.Length > 0)
 				{
-					string text = CustomAnnouncements.ReplaceVariables(CustomAnnouncements.SpacePeriods(CustomAnnouncements.StringArrayToString(message, 0)));
+					string text = CustomAnnouncements.ReplaceVariables(CustomAnnouncements.HandlePeriods(CustomAnnouncements.StringArrayToString(message, 0)));
 					plugin.pluginManager.Server.Map.AnnounceCustomMessage(text);
 					plugin.Info("Running Chaos Insurgency spawn announcement...");
 				}
@@ -66,7 +66,7 @@ namespace CustomAnnouncements
 			{
 				if (CustomAnnouncements.DoesKeyExistInFile(CustomAnnouncements.PlayerJoinFilePath, ev.Player.SteamId))
 				{
-					plugin.pluginManager.Server.Map.AnnounceCustomMessage(CustomAnnouncements.ReplaceVariables(CustomAnnouncements.SpacePeriods(CustomAnnouncements.GetValueOfKey(CustomAnnouncements.PlayerJoinFilePath, ev.Player.SteamId.ToString()))));
+					plugin.pluginManager.Server.Map.AnnounceCustomMessage(CustomAnnouncements.ReplaceVariables(CustomAnnouncements.HandlePeriods(CustomAnnouncements.GetValueOfKey(CustomAnnouncements.PlayerJoinFilePath, ev.Player.SteamId.ToString()))));
 					plugin.Info("Running player join announcement for player: " + ev.Player.Name);
 				}
 			}
@@ -77,7 +77,7 @@ namespace CustomAnnouncements
 			string[] message = File.ReadAllLines(CustomAnnouncements.WaitingForPlayersFilePath);
 			if (message.Length > 0)
 			{
-				Thread WaitingForPlayersHandler = new Thread(new ThreadStart(() => new WaitingForPlayersHandler(plugin, CustomAnnouncements.ReplaceVariables(CustomAnnouncements.SpacePeriods(CustomAnnouncements.StringArrayToString(message, 0))))));
+				Thread WaitingForPlayersHandler = new Thread(new ThreadStart(() => new WaitingForPlayersHandler(plugin, CustomAnnouncements.ReplaceVariables(CustomAnnouncements.HandlePeriods(CustomAnnouncements.StringArrayToString(message, 0))))));
 				WaitingForPlayersHandler.Start();
 			}
 		}

@@ -57,11 +57,11 @@ namespace CustomAnnouncements
 		public static string WaitingForPlayersFilePath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/SCP Secret Laboratory/CustomAnnouncements/WaitingForPlayers.txt";
 
 		//Temporary variables to handle the file name changes
-		public static string oldPresetsFilePath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/SCP Secret Laboratory/CustomAnnouncements/presets.txt";
+		/*public static string oldPresetsFilePath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/SCP Secret Laboratory/CustomAnnouncements/presets.txt";
 		public static string oldTimersFilePath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/SCP Secret Laboratory/CustomAnnouncements/timer.txt";
 		public static string oldChaosSpawnFilePath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/SCP Secret Laboratory/CustomAnnouncements/chaos.txt";
 		public static string oldRoundEndFilePath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/SCP Secret Laboratory/CustomAnnouncements/roundend.txt";
-		public static string oldPlayerJoinFilePath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/SCP Secret Laboratory/CustomAnnouncements/player.txt";
+		public static string oldPlayerJoinFilePath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/SCP Secret Laboratory/CustomAnnouncements/player.txt";*/
 
 		public static bool roundStarted = false;
 
@@ -81,12 +81,33 @@ namespace CustomAnnouncements
 				WaitingForPlayersFilePath = "/home/" + Environment.UserName + "/.config/SCP Secret Laboratory/CustomAnnouncements/WaitingForPlayers.txt";
 
 				//Temporary variables to handle the file name changes
-				oldPresetsFilePath = "/home/" + Environment.UserName + "/.config/SCP Secret Laboratory/CustomAnnouncements/presets.txt";
+				/*oldPresetsFilePath = "/home/" + Environment.UserName + "/.config/SCP Secret Laboratory/CustomAnnouncements/presets.txt";
 				oldTimersFilePath = "/home/" + Environment.UserName + "/.config/SCP Secret Laboratory/CustomAnnouncements/timer.txt";
 				oldChaosSpawnFilePath = "/home/" + Environment.UserName + "/.config/SCP Secret Laboratory/CustomAnnouncements/chaos.txt";
 				oldRoundEndFilePath = "/home/" + Environment.UserName + "/.config/SCP Secret Laboratory/CustomAnnouncements/roundend.txt";
-				oldPlayerJoinFilePath = "/home/" + Environment.UserName + "/.config/SCP Secret Laboratory/CustomAnnouncements/player.txt";
+				oldPlayerJoinFilePath = "/home/" + Environment.UserName + "/.config/SCP Secret Laboratory/CustomAnnouncements/player.txt";*/
 			}
+
+			/*if (File.Exists(oldPresetsFilePath))
+			{
+				File.Delete(oldPresetsFilePath);
+			}
+			if (File.Exists(oldTimersFilePath))
+			{
+				File.Delete(oldTimersFilePath);
+			}
+			if (File.Exists(oldChaosSpawnFilePath))
+			{
+				File.Delete(oldChaosSpawnFilePath);
+			}
+			if (File.Exists(oldRoundEndFilePath))
+			{
+				File.Delete(oldRoundEndFilePath);
+			}
+			if (File.Exists(oldPlayerJoinFilePath))
+			{
+				File.Delete(oldPlayerJoinFilePath);
+			}*/
 
 			if (!Directory.Exists(ConfigFolerFilePath))
 			{
@@ -119,29 +140,6 @@ namespace CustomAnnouncements
 			if (!File.Exists(WaitingForPlayersFilePath))
 			{
 				using (new StreamWriter(File.Create(WaitingForPlayersFilePath))) { }
-			}
-
-
-
-			if (File.Exists(oldPresetsFilePath))
-			{
-				File.Delete(oldPresetsFilePath);
-			}
-			if (File.Exists(oldTimersFilePath))
-			{
-				File.Delete(oldTimersFilePath);
-			}
-			if (File.Exists(oldChaosSpawnFilePath))
-			{
-				File.Delete(oldChaosSpawnFilePath);
-			}
-			if (File.Exists(oldRoundEndFilePath))
-			{
-				File.Delete(oldRoundEndFilePath);
-			}
-			if (File.Exists(oldPlayerJoinFilePath))
-			{
-				File.Delete(oldPlayerJoinFilePath);
 			}
 		}
 		
@@ -376,7 +374,24 @@ namespace CustomAnnouncements
 			return StringArrayToString(words, 0);
 		}
 
-		public static string SpacePeriods(string input)
+		/*public static string HandleNumbers(string input)
+		{
+			string[] words = input.Split(' ');
+			for (int i = 0; i < words.Length; i++)
+			{
+				if (Int32.TryParse(words[i], out int a))
+					if (a > 20)
+					{
+						string[] temp = ann.ConvertNumber(a).Split(' ');
+					}
+						words[i] = ann.ConvertNumber(a);
+			}
+			string str = StringArrayToString(words, 0);
+			plugin.Info(str);
+			return str;
+		}*/
+
+		public static string HandlePeriods(string input)
 		{
 			string[] words = input.Split(' ');
 			for (int i = 0; i < words.Length; i++)

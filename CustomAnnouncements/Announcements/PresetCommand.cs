@@ -14,7 +14,7 @@ namespace CustomAnnouncements
 
 		public PresetCommand(Plugin plugin)
 		{
-			an = new Announcement(CustomAnnouncements.PresetsFilePath, GetUsage(), "ca_preset_whitelist");
+			an = new Announcement(GetUsage(), "ca_preset_whitelist", CustomAnnouncements.PresetsFilePath);
 			this.plugin = plugin;
 		}
 

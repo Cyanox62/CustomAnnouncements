@@ -13,7 +13,7 @@ namespace CustomAnnouncements
 
 		public WaitingForPlayersCommand(Plugin plugin)
 		{
-			an = new Announcement(CustomAnnouncements.WaitingForPlayersFilePath, GetUsage(), "ca_waitingforplayers_whitelist");
+			an = new Announcement(GetUsage(), "ca_waitingforplayers_whitelist", CustomAnnouncements.WaitingForPlayersFilePath);
 			this.plugin = plugin;
 		}
 

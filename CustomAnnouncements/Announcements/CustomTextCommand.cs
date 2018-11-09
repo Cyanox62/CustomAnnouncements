@@ -6,13 +6,13 @@ namespace CustomAnnouncements
 {
 	class CustomTextCommand : ICommandHandler
 	{
+		private Announcement an;
 		private Plugin plugin;
-		private string[] whitelist;
 
 		public CustomTextCommand(Plugin plugin)
 		{
+			an = new Announcement(GetUsage(), "ca_text_whitelist");
 			this.plugin = plugin;
-			whitelist = CustomAnnouncements.SetWhitelist("ca_text_whitelist");
 		}
 
 		public string GetCommandDescription()
@@ -28,30 +28,12 @@ namespace CustomAnnouncements
 		public string[] OnCall(ICommandSender sender, string[] args)
 		{
 			CustomAnnouncements.ann = UnityEngine.Object.FindObjectOfType<NineTailedFoxAnnouncer>();
-			if (sender is Player)
-			{
-				Player player = (Player)sender;
-				if (!CustomAnnouncements.IsPlayerWhitelisted(player, whitelist))
-				{
-					return new string[] { "You are not allowed to run this command." };
-				}
-			}
+			if (!an.CanRunCommand(sender))
+				return new string[] { "You are not allowed to run this command." };
 
 			if (args.Length > 0)
-			{
-				string saytext = CustomAnnouncements.SpacePeriods(CustomAnnouncements.StringArrayToString(args, 0));
-				string text = CustomAnnouncements.GetNonValidText(saytext.Split(' '));
-				if (text != null)
-				{
-					return new string[] { "Error: phrase \"" + text + "\" is not in text to speech." };
-				}
-				plugin.pluginManager.Server.Map.AnnounceCustomMessage(CustomAnnouncements.ReplaceVariables(saytext));
-				return new string[] { "Announcement has been made." };
-			}
-			else
-			{
-				return new string[] { GetUsage() };
-			}
+				return an.PlayCustomAnnouncement(CustomAnnouncements.StringArrayToString(args, 0), "Announcement has been made.");
+			return new string[] { GetUsage() };
 		}
 	}
 }

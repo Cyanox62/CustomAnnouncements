@@ -12,7 +12,7 @@ namespace CustomAnnouncements
 		private string FilePath;
 		private string[] WhitelistConfig;
 
-		public Announcement(string FilePath, string GetUsage, string WhitelistConfig)
+		public Announcement(string GetUsage, string WhitelistConfig, string FilePath = "")
 		{
 			this.GetUsage = GetUsage;
 			this.FilePath = FilePath;
@@ -32,11 +32,41 @@ namespace CustomAnnouncements
 			return true;
 		}
 
-		public string[] SetAnnouncement(string text, string SetMessage)
+		public string[] PlayCustomAnnouncement(string text, string successResponse)
 		{
 			if (text.Length > 0)
 			{
-				string testText = CustomAnnouncements.GetNonValidText(CustomAnnouncements.SpacePeriods(text).Split(' '));
+				string testText = CustomAnnouncements.GetNonValidText(CustomAnnouncements.HandlePeriods(text).Split(' '));
+				if (testText != null && testText != "")
+				{
+					return new string[] { "Error: phrase \"" + testText + "\" is not in text to speech." };
+				}
+				PluginManager.Manager.Server.Map.AnnounceCustomMessage(CustomAnnouncements.ReplaceVariables(CustomAnnouncements.HandlePeriods(text)));
+				return new string[] { successResponse };
+			}
+			return new string[] { GetUsage };
+		}
+
+		public string[] PlayMTFAnnouncement(int scpsLeft, int mtfNumber, char mtfLetter, string successResponse)
+		{
+			PluginManager.Manager.Server.Map.AnnounceNtfEntrance(scpsLeft, mtfNumber, mtfLetter);
+			return new string[] { successResponse };
+		}
+
+		public string[] PlaySCPAnnouncement(string scpNumber, string successResponse)
+		{
+			PluginManager.Manager.Server.Map.AnnounceScpKill(scpNumber);
+			return new string[] { successResponse };
+		}
+
+		public string[] SetAnnouncement(string text, string SetMessage)
+		{
+			if (FilePath == "")
+				return new string[] { "Error: missing filepath." };
+
+			if (text.Length > 0)
+			{
+				string testText = CustomAnnouncements.GetNonValidText(CustomAnnouncements.HandlePeriods(text).Split(' '));
 				if (testText != null)
 				{
 					return new string[] { "Error: phrase \"" + testText + "\" is not in text to speech." };
@@ -46,7 +76,6 @@ namespace CustomAnnouncements
 			{
 				return new string[] { GetUsage };
 			}
-
 			File.WriteAllText(FilePath, String.Empty);
 			File.AppendAllText(FilePath, text);
 
@@ -61,11 +90,14 @@ namespace CustomAnnouncements
 
 		public string[] SetVariable(string name, string input, string existsResponse, string successResponse)
 		{
+			if (FilePath == "")
+				return new string[] { "Error: missing filepath." };
+
 			string[] currentText = File.ReadAllLines(FilePath);
 
 			if (input.Length > 0)
 			{
-				string text = CustomAnnouncements.GetNonValidText(CustomAnnouncements.SpacePeriods(input).Split(' '));
+				string text = CustomAnnouncements.GetNonValidText(CustomAnnouncements.HandlePeriods(input).Split(' '));
 				if (text != null)
 				{
 					return new string[] { "Error: phrase \"" + text + "\" is not in text to speech." };
@@ -97,7 +129,7 @@ namespace CustomAnnouncements
 				{
 					if (str.Split(':')[0].ToLower() == name.ToLower())
 					{
-						text = str.Substring(str.IndexOf(':'));
+						text = str.Substring(str.IndexOf(':') + 2);
 					}
 				}
 			}
@@ -110,12 +142,15 @@ namespace CustomAnnouncements
 			{
 				return new string[] { cantFindResponse };
 			}
-			PluginManager.Manager.Server.Map.AnnounceCustomMessage(CustomAnnouncements.ReplaceVariables(CustomAnnouncements.SpacePeriods(text)));
+			PlayCustomAnnouncement(text, successResponse);
 			return new string[] { successResponse };
 		}
 
 		public string[] RemoveVariable(string name, string noneSavedResponse, string cantFindResponse, string removedAllResponse, string successResponse)
 		{
+			if (FilePath == "")
+				return new string[] { "Error: missing filepath." };
+
 			if (name.ToLower() == "all" || name == "*")
 			{
 				File.WriteAllText(FilePath, String.Empty);
@@ -143,6 +178,9 @@ namespace CustomAnnouncements
 
 		public string[] ListVariables(string noneSavedResponse)
 		{
+			if (FilePath == "")
+				return new string[] { "Error: missing filepath." };
+
 			string[] current = File.ReadAllLines(FilePath);
 			if (current.Length > 0)
 			{

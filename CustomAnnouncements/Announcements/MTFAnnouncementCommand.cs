@@ -7,13 +7,13 @@ namespace CustomAnnouncements
 {
     class MTFAnnouncementCommand : ICommandHandler
     {
+		private Announcement an;
         private Plugin plugin;
-		private string[] whitelist;
 
         public MTFAnnouncementCommand(Plugin plugin)
         {
-            this.plugin = plugin;
-			whitelist = CustomAnnouncements.SetWhitelist("ca_mtf_whitelist");
+			an = new Announcement(GetUsage(), "ca_mtf_whitelist");
+			this.plugin = plugin;
 		}
 
         public string GetCommandDescription()
@@ -29,14 +29,8 @@ namespace CustomAnnouncements
         public string[] OnCall(ICommandSender sender, string[] args)
         {
 			CustomAnnouncements.ann = UnityEngine.Object.FindObjectOfType<NineTailedFoxAnnouncer>();
-			if (sender is Player)
-			{
-				Player player = (Player)sender;
-				if (!CustomAnnouncements.IsPlayerWhitelisted(player, whitelist))
-				{
-					return new string[] { "You are not allowed to run this command." };
-				}
-			}
+			if (!an.CanRunCommand(sender))
+				return new string[] { "You are not allowed to run this command." };
 
 			if (args.Length == 3)
             {
@@ -46,7 +40,7 @@ namespace CustomAnnouncements
                 }
                 else
                 {
-                    return new string[] { "Not a valid number!" };
+                    return new string[] { "Error: not a valid number." };
                 }
 
 				if (Int32.TryParse(args[1], out int b))
@@ -55,7 +49,7 @@ namespace CustomAnnouncements
 				}
 				else
 				{
-					return new string[] { "Not a valid number!" };
+					return new string[] { "Error: not a valid number." };
 				}
 
 				if (char.TryParse(args[2], out char c))
@@ -64,11 +58,10 @@ namespace CustomAnnouncements
                 }
                 else
                 {
-                    return new string[] { "Not a valid letter!" };
-                }
+					return new string[] { "Error: not a valid letter." };
+				}
 
-                plugin.pluginManager.Server.Map.AnnounceNtfEntrance(a, b, c);
-                return new string[] { "Announcement has been made." };
+				return an.PlayMTFAnnouncement(a, b, c, "Announcement has been made.");
             }
             else
             {
