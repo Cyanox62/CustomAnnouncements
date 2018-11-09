@@ -54,7 +54,6 @@ namespace CustomAnnouncements
                 {
                     return new string[] { "Not a valid number!" };
                 }
-
                 return new string[] { "Announcement has been made." };
             }
             else

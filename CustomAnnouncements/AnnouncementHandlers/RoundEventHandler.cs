@@ -29,6 +29,7 @@ namespace CustomAnnouncements
 			{
 				string text = CustomAnnouncements.ReplaceVariables(CustomAnnouncements.SpacePeriods(CustomAnnouncements.StringArrayToString(message, 0)));
 				plugin.pluginManager.Server.Map.AnnounceCustomMessage(text);
+				plugin.Info("Running round start announcement...");
 			}
 		}
 
@@ -41,6 +42,7 @@ namespace CustomAnnouncements
 			{
 				string text = CustomAnnouncements.ReplaceVariables(CustomAnnouncements.SpacePeriods(CustomAnnouncements.StringArrayToString(message, 0)));
 				plugin.pluginManager.Server.Map.AnnounceCustomMessage(text);
+				plugin.Info("Running round end anmnouncement...");
 			}
 		}
 
@@ -53,6 +55,7 @@ namespace CustomAnnouncements
 				{
 					string text = CustomAnnouncements.ReplaceVariables(CustomAnnouncements.SpacePeriods(CustomAnnouncements.StringArrayToString(message, 0)));
 					plugin.pluginManager.Server.Map.AnnounceCustomMessage(text);
+					plugin.Info("Running Chaos Insurgency spawn announcement...");
 				}
 			}
 		}
@@ -64,6 +67,7 @@ namespace CustomAnnouncements
 				if (CustomAnnouncements.DoesKeyExistInFile(CustomAnnouncements.PlayerJoinFilePath, ev.Player.SteamId))
 				{
 					plugin.pluginManager.Server.Map.AnnounceCustomMessage(CustomAnnouncements.ReplaceVariables(CustomAnnouncements.SpacePeriods(CustomAnnouncements.GetValueOfKey(CustomAnnouncements.PlayerJoinFilePath, ev.Player.SteamId.ToString()))));
+					plugin.Info("Running player join announcement for player: " + ev.Player.Name);
 				}
 			}
 		}

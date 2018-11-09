@@ -94,11 +94,12 @@ namespace CustomAnnouncements
 				}
 
 				string[] statement = GetCountdown(start, end);
-				string saveText = CustomAnnouncements.SpacePeriods(CustomAnnouncements.StringArrayToString(args, 2));
 				if (statement != null)
 				{
 					if (args.Length > 2)
 					{
+						string saveText = CustomAnnouncements.SpacePeriods(CustomAnnouncements.StringArrayToString(args, 2));
+
 						for (int i = 2; i < args.Length; i++)
 						{
 							string text = CustomAnnouncements.GetNonValidText(saveText.Split(' '));
@@ -117,14 +118,10 @@ namespace CustomAnnouncements
 				}
 				else
 				{
-					return new string[] { "Error: starting value is less than ending value." }; 
+					return new string[] { "Error: starting value is less than ending value." };
 				}
-
 			}
-			else
-			{
-				return new string[] { GetUsage() };
-			}
+			return new string[] { GetUsage() };
 		}
 	}
 }

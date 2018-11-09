@@ -21,6 +21,7 @@ namespace CustomAnnouncements
 						{
 							string message = timer.Split(':')[1].Substring(1);
 							plugin.pluginManager.Server.Map.AnnounceCustomMessage(CustomAnnouncements.ReplaceVariables(CustomAnnouncements.SpacePeriods(message)));
+							plugin.Info("Running timer announcement...");
 						}
 					}
 				}
