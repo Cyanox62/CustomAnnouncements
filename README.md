@@ -33,6 +33,7 @@ All settings are saved in `%APPDATA%/SCP Secret Laboratory/CustomAnnouncements`.
 
 | Config        | Value Type | Default | Description |
 | :-------------: | :---------: | :---------: |:------ |
+| ca_all_whitelist | List | | Determines which ranks are allowed to use all commands. Setting this whitelist to any rank will override all other whitelists. |
 | ca_mtf_whitelist | List | owner, admin | Determines which ranks are allowed to use the `MTFA / MTFANNOUNCEMENT` command. |
 | ca_scp_whitelist | List | owner, admin | Determines which ranks are allowed to use the `SCPA / SCPANNOUNCEMENT` command. |
 | ca_text_whitelist | List | owner, admin | Determines which ranks are allowed to use the `TA / TEXTANNOUNCEMENT` command. |
