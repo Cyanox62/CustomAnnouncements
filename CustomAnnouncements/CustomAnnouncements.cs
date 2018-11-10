@@ -231,7 +231,6 @@ namespace CustomAnnouncements
 				{
 					word = word.Replace(" .", "");
 				}
-				//if (!IsVoiceLine(word) && !roundVariables.Contains(word) && word != "")
 				if (!IsVoiceLine(word) && !roundVariables.Contains(word.ToLower()))
 				{
 					return word;
@@ -405,10 +404,6 @@ namespace CustomAnnouncements
 					}
 				}
 			}
-			
-			foreach (string str in words)
-				plugin.Info("|" + str + "|");
-
 			return StringArrayToString(words, 0);
 		}
 
@@ -418,7 +413,6 @@ namespace CustomAnnouncements
 			int m = t.Length;
 			int[,] d = new int[n + 1, m + 1];
 
-			// Step 1
 			if (n == 0)
 			{
 				return m;
@@ -429,7 +423,6 @@ namespace CustomAnnouncements
 				return n;
 			}
 
-			// Step 2
 			for (int i = 0; i <= n; d[i, 0] = i++)
 			{
 			}
@@ -438,29 +431,23 @@ namespace CustomAnnouncements
 			{
 			}
 
-			// Step 3
 			for (int i = 1; i <= n; i++)
 			{
-				//Step 4
 				for (int j = 1; j <= m; j++)
 				{
-					// Step 5
 					int cost = (t[j - 1] == s[i - 1]) ? 0 : 1;
 
-					// Step 6
 					d[i, j] = Math.Min(
 						Math.Min(d[i - 1, j] + 1, d[i, j - 1] + 1),
 						d[i - 1, j - 1] + cost);
 				}
 			}
-			// Step 7
 			return d[n, m];
 		}
 
 		public static Player GetPlayer(string args, out Player playerOut)
 		{
-			//Takes a string and finds the closest player from the playerlist
-			int maxNameLength = 31, LastnameDifference = 31/*, lastNameLength = 31*/;
+			int maxNameLength = 31, LastnameDifference = 31;
 			Player plyer = null;
 			string str1 = args.ToLower();
 			foreach (Player pl in PluginManager.Manager.Server.GetPlayers(str1))
