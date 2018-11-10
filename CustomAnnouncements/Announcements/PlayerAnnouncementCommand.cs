@@ -25,7 +25,7 @@ namespace CustomAnnouncements
 
 		public string GetUsage()
 		{
-			return "(PA / PLAYERANNOUNCEMENT) (SET / REMOVE / LIST) (STEAMID) (TEXT)";
+			return "(PA / PLAYERANNOUNCEMENT) (SAVE / REMOVE / LIST) (STEAMID) (TEXT)";
 		}
 
 		public string[] OnCall(ICommandSender sender, string[] args)
@@ -40,21 +40,44 @@ namespace CustomAnnouncements
 				{
 					if (args.Length > 2)
 					{
-						string steamid = args[1];
-
-						if (!ulong.TryParse(steamid, out ulong a))
+						string name = "", id = "";
+						Player cPlayer = CustomAnnouncements.GetPlayer(args[1], out cPlayer);
+						if (cPlayer != null)
 						{
-							return new string[] { "Error: invalid steamid." };
+							name = cPlayer.Name;
+							id = cPlayer.SteamId;
+						}
+						else if (ulong.TryParse(args[1], out ulong a))
+						{
+							name = a.ToString();
+							id = a.ToString();
+						}
+						else
+						{
+							return new string[] { "Error: invalid player id." };
 						}
 
-						return an.SetVariable(steamid, CustomAnnouncements.StringArrayToString(args, 2), "Error: Player id already exists.", "Saved announcement for player \"" + steamid + "\".");
+						return an.SetVariable(id, CustomAnnouncements.StringArrayToString(args, 2), "Error: Player already exists.", "Saved announcement for player \"" + name + "\".");
 					}
 				}
 				else if (args[0].ToLower() == "remove")
 				{
 					if (args.Length > 1)
 					{
-						return an.RemoveVariable(args[1], "Error: there are no player announcements.", "Error: couldn't find player \"" + args[1] + "\".", "Removed all player announcements.", "Removed player \"" + args[1] + "\".");
+						string name = "", id = "";
+						Player cPlayer = CustomAnnouncements.GetPlayer(args[1], out cPlayer);
+						if (cPlayer != null)
+						{
+							name = cPlayer.Name;
+							id = cPlayer.SteamId;
+						}
+						else if (ulong.TryParse(args[1], out ulong a))
+						{
+							name = a.ToString();
+							id = a.ToString();
+						}
+
+						return an.RemoveVariable(id, "Error: there are no player announcements.", "Error: couldn't find player \"" + name + "\".", "Removed all player announcements.", "Removed player \"" + name + "\".");
 					}
 				}
 				else if (args[0].ToLower() == "list")

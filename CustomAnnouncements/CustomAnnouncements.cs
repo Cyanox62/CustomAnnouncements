@@ -10,7 +10,6 @@ using System.Collections.Generic;
 
 // ADD SUPPORT FOR PLAYER NAMES IN PLAYERANNOUNCEMENT ADDITIONS
 // ADD SUPPORT FOR NUMBERS IN ANNOUNCEMENTS
-// GLOBAL CONFIG SETTING
 
 namespace CustomAnnouncements
 {
@@ -390,6 +389,86 @@ namespace CustomAnnouncements
 				}
 			}
 			return StringArrayToString(words, 0);
+		}
+
+		public static int LevenshteinDistance(string s, string t)
+		{
+			int n = s.Length;
+			int m = t.Length;
+			int[,] d = new int[n + 1, m + 1];
+
+			// Step 1
+			if (n == 0)
+			{
+				return m;
+			}
+
+			if (m == 0)
+			{
+				return n;
+			}
+
+			// Step 2
+			for (int i = 0; i <= n; d[i, 0] = i++)
+			{
+			}
+
+			for (int j = 0; j <= m; d[0, j] = j++)
+			{
+			}
+
+			// Step 3
+			for (int i = 1; i <= n; i++)
+			{
+				//Step 4
+				for (int j = 1; j <= m; j++)
+				{
+					// Step 5
+					int cost = (t[j - 1] == s[i - 1]) ? 0 : 1;
+
+					// Step 6
+					d[i, j] = Math.Min(
+						Math.Min(d[i - 1, j] + 1, d[i, j - 1] + 1),
+						d[i - 1, j - 1] + cost);
+				}
+			}
+			// Step 7
+			return d[n, m];
+		}
+
+		public static Player GetPlayer(string args, out Player playerOut)
+		{
+			//Takes a string and finds the closest player from the playerlist
+			int maxNameLength = 31, LastnameDifference = 31/*, lastNameLength = 31*/;
+			Player plyer = null;
+			string str1 = args.ToLower();
+			foreach (Player pl in PluginManager.Manager.Server.GetPlayers(str1))
+			{
+				if (!pl.Name.ToLower().Contains(args.ToLower())) { goto NoPlayer; }
+				if (str1.Length < maxNameLength)
+				{
+					int x = maxNameLength - str1.Length;
+					int y = maxNameLength - pl.Name.Length;
+					string str2 = pl.Name;
+					for (int i = 0; i < x; i++)
+					{
+						str1 += "z";
+					}
+					for (int i = 0; i < y; i++)
+					{
+						str2 += "z";
+					}
+					int nameDifference = CustomAnnouncements.LevenshteinDistance(str1, str2);
+					if (nameDifference < LastnameDifference)
+					{
+						LastnameDifference = nameDifference;
+						plyer = pl;
+					}
+				}
+				NoPlayer:;
+			}
+			playerOut = plyer;
+			return playerOut;
 		}
 	}
 }

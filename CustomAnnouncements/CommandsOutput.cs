@@ -28,7 +28,7 @@ namespace CustomAnnouncements
 				"(TI / TIMER) (SET / REMOVE / LIST) (TIME) (TEXT)",
 				"(CS / CHAOSSPAWN) (SET / CLEAR) (TEXT)",
 				"(RE / ROUNDEND) (SET / CLEAR) (TEXT)",
-				"(PA / PLAYERANNOUNCEMENT) (SET / REMOVE / LIST) (STEAMID) (TEXT)"
+				"(PA / PLAYERANNOUNCEMENT) (SAVE / REMOVE / LIST) (STEAMID) (TEXT)"
 			};
 		}
 	}
