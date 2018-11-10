@@ -36,12 +36,12 @@ namespace CustomAnnouncements
 		{
 			if (text.Length > 0)
 			{
-				string testText = CustomAnnouncements.GetNonValidText(CustomAnnouncements.HandlePeriods(text).Split(' '));
-				if (testText != null && testText != "")
+				string testText = CustomAnnouncements.GetNonValidText(CustomAnnouncements.SpacePeriods(text).Split(' '));
+				if (testText != null)
 				{
 					return new string[] { "Error: phrase \"" + testText + "\" is not in text to speech." };
 				}
-				PluginManager.Manager.Server.Map.AnnounceCustomMessage(CustomAnnouncements.ReplaceVariables(CustomAnnouncements.HandlePeriods(text)));
+				PluginManager.Manager.Server.Map.AnnounceCustomMessage(CustomAnnouncements.ReplaceVariables(CustomAnnouncements.SpacePeriods(text)));
 				return new string[] { successResponse };
 			}
 			return new string[] { GetUsage };
@@ -66,7 +66,7 @@ namespace CustomAnnouncements
 
 			if (text.Length > 0)
 			{
-				string testText = CustomAnnouncements.GetNonValidText(CustomAnnouncements.HandlePeriods(text).Split(' '));
+				string testText = CustomAnnouncements.GetNonValidText(CustomAnnouncements.SpacePeriods(text).Split(' '));
 				if (testText != null)
 				{
 					return new string[] { "Error: phrase \"" + testText + "\" is not in text to speech." };
@@ -97,7 +97,7 @@ namespace CustomAnnouncements
 
 			if (input.Length > 0)
 			{
-				string text = CustomAnnouncements.GetNonValidText(CustomAnnouncements.HandlePeriods(input).Split(' '));
+				string text = CustomAnnouncements.GetNonValidText(CustomAnnouncements.SpacePeriods(input).Split(' '));
 				if (text != null)
 				{
 					return new string[] { "Error: phrase \"" + text + "\" is not in text to speech." };

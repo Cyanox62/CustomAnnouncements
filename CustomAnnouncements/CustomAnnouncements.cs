@@ -19,14 +19,14 @@ namespace CustomAnnouncements
 	name = "CustomAnnouncements",
 	description = "Makes custom CASSIE announcements",
 	id = "cyan.custom.announcements",
-	version = "0.9",
+	version = "1.3",
 	SmodMajor = 3,
 	SmodMinor = 0,
 	SmodRevision = 0
 	)]
 	public class CustomAnnouncements : Plugin
 	{
-		private static Plugin plugin;
+		public static Plugin plugin;
 		public static NineTailedFoxAnnouncer ann;
 		public static List<String> roundVariables = new List<string>()
 		{
@@ -232,6 +232,7 @@ namespace CustomAnnouncements
 				{
 					word = word.Replace(" .", "");
 				}
+				//if (!IsVoiceLine(word) && !roundVariables.Contains(word) && word != "")
 				if (!IsVoiceLine(word) && !roundVariables.Contains(word))
 				{
 					return word;
@@ -374,24 +375,7 @@ namespace CustomAnnouncements
 			return StringArrayToString(words, 0);
 		}
 
-		/*public static string HandleNumbers(string input)
-		{
-			string[] words = input.Split(' ');
-			for (int i = 0; i < words.Length; i++)
-			{
-				if (Int32.TryParse(words[i], out int a))
-					if (a > 20)
-					{
-						string[] temp = ann.ConvertNumber(a).Split(' ');
-					}
-						words[i] = ann.ConvertNumber(a);
-			}
-			string str = StringArrayToString(words, 0);
-			plugin.Info(str);
-			return str;
-		}*/
-
-		public static string HandlePeriods(string input)
+		public static string SpacePeriods(string input)
 		{
 			string[] words = input.Split(' ');
 			for (int i = 0; i < words.Length; i++)

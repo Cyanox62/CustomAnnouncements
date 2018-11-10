@@ -20,7 +20,7 @@ namespace CustomAnnouncements
 						if (plugin.pluginManager.Server.Round.Duration == Int32.Parse(timer.Split(':')[0]))
 						{
 							string message = timer.Split(':')[1].Substring(1);
-							plugin.pluginManager.Server.Map.AnnounceCustomMessage(CustomAnnouncements.ReplaceVariables(CustomAnnouncements.HandlePeriods(message)));
+							plugin.pluginManager.Server.Map.AnnounceCustomMessage(CustomAnnouncements.ReplaceVariables(CustomAnnouncements.SpacePeriods(message)));
 							plugin.Info("Running timer announcement...");
 						}
 					}
