@@ -232,7 +232,7 @@ namespace CustomAnnouncements
 					word = word.Replace(" .", "");
 				}
 				//if (!IsVoiceLine(word) && !roundVariables.Contains(word) && word != "")
-				if (!IsVoiceLine(word) && !roundVariables.Contains(word))
+				if (!IsVoiceLine(word) && !roundVariables.Contains(word.ToLower()))
 				{
 					return word;
 				}
@@ -388,6 +388,27 @@ namespace CustomAnnouncements
 						words[i] = words[i].Replace(".", " .");
 				}
 			}
+			return StringArrayToString(words, 0);
+		}
+
+		public static string HandleNumbers(string input)
+		{
+			string[] words = input.Split(' ');
+			for (int i = 0; i < words.Length; i++)
+			{
+				if (Int32.TryParse(words[i], out int a))
+				{
+					if (a > 20)
+					{
+						string b = ann.ConvertNumber(a).Replace("  ", " ");
+						words[i] = b.Substring(0, b.Length - 1);
+					}
+				}
+			}
+			
+			foreach (string str in words)
+				plugin.Info("|" + str + "|");
+
 			return StringArrayToString(words, 0);
 		}
 

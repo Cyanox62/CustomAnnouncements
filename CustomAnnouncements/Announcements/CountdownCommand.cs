@@ -99,7 +99,7 @@ namespace CustomAnnouncements
 				{
 					if (args.Length > 2)
 					{
-						string saveText = CustomAnnouncements.SpacePeriods(CustomAnnouncements.StringArrayToString(args, 2));
+						string saveText = CustomAnnouncements.SpacePeriods(CustomAnnouncements.HandleNumbers(CustomAnnouncements.StringArrayToString(args, 2)));
 						for (int i = 2; i < args.Length; i++)
 						{
 							string text = CustomAnnouncements.GetNonValidText(saveText.Split(' '));

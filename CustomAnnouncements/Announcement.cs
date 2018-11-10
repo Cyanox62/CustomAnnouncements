@@ -36,7 +36,7 @@ namespace CustomAnnouncements
 		{
 			if (text.Length > 0)
 			{
-				string testText = CustomAnnouncements.GetNonValidText(CustomAnnouncements.SpacePeriods(text).Split(' '));
+				string testText = CustomAnnouncements.GetNonValidText(CustomAnnouncements.SpacePeriods(CustomAnnouncements.HandleNumbers(text)).Split(' '));
 				if (testText != null)
 				{
 					return new string[] { "Error: phrase \"" + testText + "\" is not in text to speech." };
@@ -66,7 +66,7 @@ namespace CustomAnnouncements
 
 			if (text.Length > 0)
 			{
-				string testText = CustomAnnouncements.GetNonValidText(CustomAnnouncements.SpacePeriods(text).Split(' '));
+				string testText = CustomAnnouncements.GetNonValidText(CustomAnnouncements.SpacePeriods(CustomAnnouncements.HandleNumbers(text)).Split(' '));
 				if (testText != null)
 				{
 					return new string[] { "Error: phrase \"" + testText + "\" is not in text to speech." };
@@ -97,7 +97,7 @@ namespace CustomAnnouncements
 
 			if (input.Length > 0)
 			{
-				string text = CustomAnnouncements.GetNonValidText(CustomAnnouncements.SpacePeriods(input).Split(' '));
+				string text = CustomAnnouncements.GetNonValidText(CustomAnnouncements.SpacePeriods(CustomAnnouncements.HandleNumbers(input)).Split(' '));
 				if (text != null)
 				{
 					return new string[] { "Error: phrase \"" + text + "\" is not in text to speech." };
