@@ -2,14 +2,12 @@
 using Smod2;
 using Smod2.API;
 using Smod2.Attributes;
-using Smod2.Commands;
 using System.IO;
 using System.Collections.Generic;
 
 // TO DO:
 
-// ADD SUPPORT FOR PLAYER NAMES IN PLAYERANNOUNCEMENT ADDITIONS
-// ADD SUPPORT FOR NUMBERS IN ANNOUNCEMENTS
+// ¯\_(ツ)_/¯
 
 namespace CustomAnnouncements
 {
@@ -18,14 +16,14 @@ namespace CustomAnnouncements
 	name = "CustomAnnouncements",
 	description = "Makes custom CASSIE announcements",
 	id = "cyan.custom.announcements",
-	version = "1.3",
+	version = "1.4",
 	SmodMajor = 3,
 	SmodMinor = 0,
 	SmodRevision = 0
 	)]
 	public class CustomAnnouncements : Plugin
 	{
-		public static Plugin plugin;
+		private static Plugin plugin;
 		public static NineTailedFoxAnnouncer ann;
 		public static List<String> roundVariables = new List<string>()
 		{
@@ -54,14 +52,6 @@ namespace CustomAnnouncements
 		public static string RoundEndFilePath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/SCP Secret Laboratory/CustomAnnouncements/RoundEnd.txt";
 		public static string PlayerJoinFilePath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/SCP Secret Laboratory/CustomAnnouncements/PlayerJoin.txt";
 		public static string WaitingForPlayersFilePath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/SCP Secret Laboratory/CustomAnnouncements/WaitingForPlayers.txt";
-
-		//Temporary variables to handle the file name changes
-		/*public static string oldPresetsFilePath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/SCP Secret Laboratory/CustomAnnouncements/presets.txt";
-		public static string oldTimersFilePath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/SCP Secret Laboratory/CustomAnnouncements/timer.txt";
-		public static string oldChaosSpawnFilePath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/SCP Secret Laboratory/CustomAnnouncements/chaos.txt";
-		public static string oldRoundEndFilePath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/SCP Secret Laboratory/CustomAnnouncements/roundend.txt";
-		public static string oldPlayerJoinFilePath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/SCP Secret Laboratory/CustomAnnouncements/player.txt";*/
-
 		public static bool roundStarted = false;
 
 		public override void OnDisable() { }
@@ -78,35 +68,7 @@ namespace CustomAnnouncements
 				RoundEndFilePath = "/home/" + Environment.UserName + "/.config/SCP Secret Laboratory/CustomAnnouncements/RoundEnd.txt";
 				PlayerJoinFilePath = "/home/" + Environment.UserName + "/.config/SCP Secret Laboratory/CustomAnnouncements/PlayerJoin.txt";
 				WaitingForPlayersFilePath = "/home/" + Environment.UserName + "/.config/SCP Secret Laboratory/CustomAnnouncements/WaitingForPlayers.txt";
-
-				//Temporary variables to handle the file name changes
-				/*oldPresetsFilePath = "/home/" + Environment.UserName + "/.config/SCP Secret Laboratory/CustomAnnouncements/presets.txt";
-				oldTimersFilePath = "/home/" + Environment.UserName + "/.config/SCP Secret Laboratory/CustomAnnouncements/timer.txt";
-				oldChaosSpawnFilePath = "/home/" + Environment.UserName + "/.config/SCP Secret Laboratory/CustomAnnouncements/chaos.txt";
-				oldRoundEndFilePath = "/home/" + Environment.UserName + "/.config/SCP Secret Laboratory/CustomAnnouncements/roundend.txt";
-				oldPlayerJoinFilePath = "/home/" + Environment.UserName + "/.config/SCP Secret Laboratory/CustomAnnouncements/player.txt";*/
 			}
-
-			/*if (File.Exists(oldPresetsFilePath))
-			{
-				File.Delete(oldPresetsFilePath);
-			}
-			if (File.Exists(oldTimersFilePath))
-			{
-				File.Delete(oldTimersFilePath);
-			}
-			if (File.Exists(oldChaosSpawnFilePath))
-			{
-				File.Delete(oldChaosSpawnFilePath);
-			}
-			if (File.Exists(oldRoundEndFilePath))
-			{
-				File.Delete(oldRoundEndFilePath);
-			}
-			if (File.Exists(oldPlayerJoinFilePath))
-			{
-				File.Delete(oldPlayerJoinFilePath);
-			}*/
 
 			if (!Directory.Exists(ConfigFolerFilePath))
 			{
@@ -231,6 +193,7 @@ namespace CustomAnnouncements
 				{
 					word = word.Replace(" .", "");
 				}
+				plugin.Info(word);
 				if (!IsVoiceLine(word) && !roundVariables.Contains(word.ToLower()))
 				{
 					return word;
@@ -404,6 +367,9 @@ namespace CustomAnnouncements
 					}
 				}
 			}
+			//foreach (string str in words)
+			//	plugin.Info("|" + str + "|");
+
 			return StringArrayToString(words, 0);
 		}
 

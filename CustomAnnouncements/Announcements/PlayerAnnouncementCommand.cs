@@ -65,16 +65,23 @@ namespace CustomAnnouncements
 					if (args.Length > 1)
 					{
 						string name = "", id = "";
-						Player cPlayer = CustomAnnouncements.GetPlayer(args[1], out cPlayer);
-						if (cPlayer != null)
+						if (args[1].ToLower() != "all" && args[1] != "*")
 						{
-							name = cPlayer.Name;
-							id = cPlayer.SteamId;
+							Player cPlayer = CustomAnnouncements.GetPlayer(args[1], out cPlayer);
+							if (cPlayer != null)
+							{
+								name = cPlayer.Name;
+								id = cPlayer.SteamId;
+							}
+							else if (ulong.TryParse(args[1], out ulong a))
+							{
+								name = a.ToString();
+								id = a.ToString();
+							}
 						}
-						else if (ulong.TryParse(args[1], out ulong a))
+						else
 						{
-							name = a.ToString();
-							id = a.ToString();
+							id = "all";
 						}
 
 						return an.RemoveVariable(id, "Error: there are no player announcements.", "Error: couldn't find player \"" + name + "\".", "Removed all player announcements.", "Removed player \"" + name + "\".");

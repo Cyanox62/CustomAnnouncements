@@ -36,12 +36,12 @@ namespace CustomAnnouncements
 		{
 			if (text.Length > 0)
 			{
-				string testText = CustomAnnouncements.GetNonValidText(CustomAnnouncements.SpacePeriods(CustomAnnouncements.HandleNumbers(text)).Split(' '));
+				string testText = CustomAnnouncements.GetNonValidText(CustomAnnouncements.HandleNumbers(CustomAnnouncements.SpacePeriods(text)).Split(' '));
 				if (testText != null)
 				{
 					return new string[] { "Error: phrase \"" + testText + "\" is not in text to speech." };
 				}
-				PluginManager.Manager.Server.Map.AnnounceCustomMessage(CustomAnnouncements.ReplaceVariables(CustomAnnouncements.SpacePeriods(text)));
+				PluginManager.Manager.Server.Map.AnnounceCustomMessage(CustomAnnouncements.ReplaceVariables(CustomAnnouncements.HandleNumbers(CustomAnnouncements.SpacePeriods(text))));
 				return new string[] { successResponse };
 			}
 			return new string[] { GetUsage };
@@ -59,14 +59,14 @@ namespace CustomAnnouncements
 			return new string[] { successResponse };
 		}
 
-		public string[] SetAnnouncement(string text, string SetMessage)
+		public string[] SetAnnouncement(string text, string successMessage)
 		{
 			if (FilePath == "")
 				return new string[] { "Error: missing filepath." };
 
 			if (text.Length > 0)
 			{
-				string testText = CustomAnnouncements.GetNonValidText(CustomAnnouncements.SpacePeriods(CustomAnnouncements.HandleNumbers(text)).Split(' '));
+				string testText = CustomAnnouncements.GetNonValidText(CustomAnnouncements.HandleNumbers(CustomAnnouncements.SpacePeriods(text)).Split(' '));
 				if (testText != null)
 				{
 					return new string[] { "Error: phrase \"" + testText + "\" is not in text to speech." };
@@ -79,7 +79,20 @@ namespace CustomAnnouncements
 			File.WriteAllText(FilePath, String.Empty);
 			File.AppendAllText(FilePath, text);
 
-			return new string[] { SetMessage };
+			return new string[] { successMessage };
+		}
+
+		public string[] ViewAnnouncement(string notSetResponse)
+		{
+			if (FilePath == "")
+				return new string[] { "Error: missing filepath." };
+
+			string[] current = File.ReadAllLines(FilePath);
+			if (current.Length > 0)
+			{
+				return current;
+			}
+			return new string[] { notSetResponse };
 		}
 
 		public string[] ClearAnnouncement(string ClearMessage)
@@ -97,7 +110,7 @@ namespace CustomAnnouncements
 
 			if (input.Length > 0)
 			{
-				string text = CustomAnnouncements.GetNonValidText(CustomAnnouncements.SpacePeriods(CustomAnnouncements.HandleNumbers(input)).Split(' '));
+				string text = CustomAnnouncements.GetNonValidText(CustomAnnouncements.HandleNumbers(CustomAnnouncements.SpacePeriods(input)).Split(' '));
 				if (text != null)
 				{
 					return new string[] { "Error: phrase \"" + text + "\" is not in text to speech." };

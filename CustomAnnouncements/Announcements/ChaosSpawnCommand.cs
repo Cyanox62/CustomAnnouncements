@@ -24,7 +24,7 @@ namespace CustomAnnouncements
 
 		public string GetUsage()
 		{
-			return "(CS / CHAOSSPAWN) (SET / CLEAR) (TEXT)";
+			return "(CS / CHAOSSPAWN) (SET / CLEAR / VIEW) (TEXT)";
 		}
 
 		public string[] OnCall(ICommandSender sender, string[] args)
@@ -42,6 +42,10 @@ namespace CustomAnnouncements
 						string text = CustomAnnouncements.StringArrayToString(args, 1);
 						return an.SetAnnouncement(text, "Chaos spawn announcement set.");
 					}
+				}
+				else if (args[0].ToLower() == "view")
+				{
+					return an.ViewAnnouncement("Error: announcement has not been set.");
 				}
 				else if (args[0].ToLower() == "clear")
 				{

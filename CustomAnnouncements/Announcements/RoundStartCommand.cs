@@ -24,7 +24,7 @@ namespace CustomAnnouncements
 
 		public string GetUsage()
 		{
-			return "(RS / ROUNDSTART) (SET / CLEAR) (TEXT)";
+			return "(RS / ROUNDSTART) (SET / CLEAR / VIEW) (TEXT)";
 		}
 
 		public string[] OnCall(ICommandSender sender, string[] args)
@@ -41,6 +41,10 @@ namespace CustomAnnouncements
 					{
 						return an.SetAnnouncement(CustomAnnouncements.StringArrayToString(args, 1), "Round start announcement set.");
 					}
+				}
+				else if (args[0].ToLower() == "view")
+				{
+					return an.ViewAnnouncement("Error: announcement has not been set.");
 				}
 				else if (args[0].ToLower() == "clear")
 				{
