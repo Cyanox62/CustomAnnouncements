@@ -44,32 +44,20 @@ namespace CustomAnnouncements
 			"$tutorial_alive",
 			"$round_duration"
 		};
-		public static string ConfigFolerFilePath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/SCP Secret Laboratory/CustomAnnouncements";
-		public static string PresetsFilePath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/SCP Secret Laboratory/CustomAnnouncements/Presets.txt";
-		public static string TimersFilePath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/SCP Secret Laboratory/CustomAnnouncements/Timers.txt";
-		public static string ChaosSpawnFilePath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/SCP Secret Laboratory/CustomAnnouncements/ChaosSpawn.txt";
-		public static string RoundStartFilePath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/SCP Secret Laboratory/CustomAnnouncements/RoundStart.txt";
-		public static string RoundEndFilePath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/SCP Secret Laboratory/CustomAnnouncements/RoundEnd.txt";
-		public static string PlayerJoinFilePath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/SCP Secret Laboratory/CustomAnnouncements/PlayerJoin.txt";
-		public static string WaitingForPlayersFilePath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/SCP Secret Laboratory/CustomAnnouncements/WaitingForPlayers.txt";
+		public static string ConfigFolerFilePath = FileManager.GetAppFolder() + "CustomAnnouncements";
+		public static string PresetsFilePath = FileManager.GetAppFolder() + "CustomAnnouncements" + Path.DirectorySeparatorChar + "Presets.txt";
+		public static string TimersFilePath = FileManager.GetAppFolder() + "CustomAnnouncements" + Path.DirectorySeparatorChar + "Timers.txt";
+		public static string ChaosSpawnFilePath = FileManager.GetAppFolder() + "CustomAnnouncements" + Path.DirectorySeparatorChar + "ChaosSpawn.txt";
+		public static string RoundStartFilePath = FileManager.GetAppFolder() + "CustomAnnouncements" + Path.DirectorySeparatorChar + "RoundStart.txt";
+		public static string RoundEndFilePath = FileManager.GetAppFolder() + "CustomAnnouncements" + Path.DirectorySeparatorChar + "RoundEnd.txt";
+		public static string PlayerJoinFilePath = FileManager.GetAppFolder() + "CustomAnnouncements" + Path.DirectorySeparatorChar + "PlayerJoin.txt";
+		public static string WaitingForPlayersFilePath = FileManager.GetAppFolder() + "CustomAnnouncements" + Path.DirectorySeparatorChar + "WaitingForPlayers.txt";
 		public static bool roundStarted = false;
 
 		public override void OnDisable() { }
 
 		public override void OnEnable()
 		{
-			if (IsLinux)
-			{
-				ConfigFolerFilePath = "/home/" + Environment.UserName + "/.config/SCP Secret Laboratory/CustomAnnouncements";
-				PresetsFilePath = "/home/" + Environment.UserName + "/.config/SCP Secret Laboratory/CustomAnnouncements/Presets.txt";
-				TimersFilePath = "/home/" + Environment.UserName + "/.config/SCP Secret Laboratory/CustomAnnouncements/Timers.txt";
-				ChaosSpawnFilePath = "/home/" + Environment.UserName + "/.config/SCP Secret Laboratory/CustomAnnouncements/ChaosSpawn.txt";
-				RoundStartFilePath = "/home/" + Environment.UserName + "/.config/SCP Secret Laboratory/CustomAnnouncements/RoundStart.txt";
-				RoundEndFilePath = "/home/" + Environment.UserName + "/.config/SCP Secret Laboratory/CustomAnnouncements/RoundEnd.txt";
-				PlayerJoinFilePath = "/home/" + Environment.UserName + "/.config/SCP Secret Laboratory/CustomAnnouncements/PlayerJoin.txt";
-				WaitingForPlayersFilePath = "/home/" + Environment.UserName + "/.config/SCP Secret Laboratory/CustomAnnouncements/WaitingForPlayers.txt";
-			}
-
 			if (!Directory.Exists(ConfigFolerFilePath))
 			{
 				Directory.CreateDirectory(ConfigFolerFilePath);
@@ -200,15 +188,6 @@ namespace CustomAnnouncements
 				}
 			}
 			return null;
-		}
-
-		public static bool IsLinux
-		{
-			get
-			{
-				int p = (int)Environment.OSVersion.Platform;
-				return (p == 4) || (p == 6) || (p == 128);
-			}
 		}
 
 		public static string StringArrayToString(string[] array, int startPos)
