@@ -181,7 +181,7 @@ namespace CustomAnnouncements
 				{
 					word = word.Replace(" .", "");
 				}
-				plugin.Info(word);
+
 				if (!IsVoiceLine(word) && !roundVariables.Contains(word.ToLower()))
 				{
 					return word;
@@ -346,9 +346,6 @@ namespace CustomAnnouncements
 					}
 				}
 			}
-			//foreach (string str in words)
-			//	plugin.Info("|" + str + "|");
-
 			return StringArrayToString(words, 0);
 		}
 
