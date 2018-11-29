@@ -42,7 +42,8 @@ namespace CustomAnnouncements
 			"$mtf_alive",
 			"$ci_alive",
 			"$tutorial_alive",
-			"$round_duration"
+			"$round_duration",
+			"$escape_class" // this one is not listed in the ReplaceVariables method due to it only applying to one event
 		};
 		public static string ConfigFolerFilePath = FileManager.GetAppFolder() + "CustomAnnouncements";
 		public static string PresetsFilePath = FileManager.GetAppFolder() + "CustomAnnouncements" + Path.DirectorySeparatorChar + "Presets.txt";
@@ -52,6 +53,7 @@ namespace CustomAnnouncements
 		public static string RoundEndFilePath = FileManager.GetAppFolder() + "CustomAnnouncements" + Path.DirectorySeparatorChar + "RoundEnd.txt";
 		public static string PlayerJoinFilePath = FileManager.GetAppFolder() + "CustomAnnouncements" + Path.DirectorySeparatorChar + "PlayerJoin.txt";
 		public static string WaitingForPlayersFilePath = FileManager.GetAppFolder() + "CustomAnnouncements" + Path.DirectorySeparatorChar + "WaitingForPlayers.txt";
+		public static string PlayerEscapeFilePath = FileManager.GetAppFolder() + "CustomAnnouncements" + Path.DirectorySeparatorChar + "PlayerEscape.txt";
 		public static bool roundStarted = false;
 
 		public override void OnDisable() { }
@@ -90,6 +92,10 @@ namespace CustomAnnouncements
 			{
 				using (new StreamWriter(File.Create(WaitingForPlayersFilePath))) { }
 			}
+			if (!File.Exists(PlayerEscapeFilePath))
+			{
+				using (new StreamWriter(File.Create(PlayerEscapeFilePath))) { }
+			}
 		}
 		
         public override void Register()
@@ -112,6 +118,7 @@ namespace CustomAnnouncements
 			this.AddConfig(new Smod2.Config.ConfigSetting("ca_roundend_whitelist", new string[] { "owner", "admin" }, Smod2.Config.SettingType.LIST, true, "Defines what ranks are allowed to use the roundend command."));
 			this.AddConfig(new Smod2.Config.ConfigSetting("ca_player_whitelist", new string[] { "owner", "admin" }, Smod2.Config.SettingType.LIST, true, "Defines what ranks are allowed to use the player command."));
 			this.AddConfig(new Smod2.Config.ConfigSetting("ca_waitingforplayers_whitelist", new string[] { "owner", "admin" }, Smod2.Config.SettingType.LIST, true, "Defines what ranks are allowed to use the waitingforplayers command."));
+			this.AddConfig(new Smod2.Config.ConfigSetting("ca_playerescape_whitelist", new string[] { "owner", "admin" }, Smod2.Config.SettingType.LIST, true, "Defines what ranks are allowed to use the playerescape command."));
 
 			// Commands
 			this.AddCommands(new string[] { "customannouncements", "ca" }, new CommandsOutput());
@@ -126,6 +133,7 @@ namespace CustomAnnouncements
 			this.AddCommands(new string[] { "roundend", "re" }, new RoundEndCommand(this));
 			this.AddCommands(new string[] { "playerannouncement", "pa" }, new PlayerAnnouncementCommand(this));
 			this.AddCommands(new string[] { "waitingforplayers", "wp" }, new WaitingForPlayersCommand(this));
+			this.AddCommands(new string[] { "playerescape", "pe" }, new PlayerEscapeCommand(this));
 		}
 
 		public static int CountRoles(Role role)
@@ -419,6 +427,25 @@ namespace CustomAnnouncements
 			}
 			playerOut = plyer;
 			return playerOut;
+		}
+
+		public static float CalculateDuration(string tts)
+		{
+			float num = 0f;
+			string[] array = tts.Split(new char[]{' '});
+			string[] array2 = array;
+			foreach (string text in array2)
+			{
+				NineTailedFoxAnnouncer.VoiceLine[] array4 = ann.voiceLines;
+				foreach (NineTailedFoxAnnouncer.VoiceLine voiceLine in array4)
+				{
+					if (text.ToUpper() == voiceLine.apiName.ToUpper())
+					{
+						num += voiceLine.length;
+					}
+				}
+			}
+			return num;
 		}
 	}
 }

@@ -1,7 +1,5 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
 using Smod2;
-using Smod2.API;
 using Smod2.EventHandlers;
 using Smod2.Events;
 using Smod2.EventSystem.Events;
@@ -9,9 +7,10 @@ using System.Threading;
 
 namespace CustomAnnouncements
 {
-	class RoundEventHandler : IEventHandlerRoundStart, IEventHandlerRoundEnd, IEventHandlerTeamRespawn, IEventHandlerPlayerJoin, IEventHandlerWaitingForPlayers
+	class RoundEventHandler : IEventHandlerRoundStart, IEventHandlerRoundEnd, IEventHandlerCheckEscape, IEventHandlerTeamRespawn, IEventHandlerPlayerJoin, IEventHandlerWaitingForPlayers
 	{
 		private Plugin plugin;
+		public static bool isPlaying = false;
 
 		public RoundEventHandler(Plugin plugin)
 		{
@@ -79,6 +78,21 @@ namespace CustomAnnouncements
 			{
 				Thread WaitingForPlayersHandler = new Thread(new ThreadStart(() => new WaitingForPlayersHandler(plugin, CustomAnnouncements.ReplaceVariables(CustomAnnouncements.SpacePeriods(CustomAnnouncements.StringArrayToString(message, 0))))));
 				WaitingForPlayersHandler.Start();
+			}
+		}
+
+		public void OnCheckEscape(PlayerCheckEscapeEvent ev)
+		{
+			string[] message = File.ReadAllLines(CustomAnnouncements.PlayerEscapeFilePath);
+			if (message.Length > 0)
+			{
+				if (!isPlaying)
+				{
+					string str = CustomAnnouncements.StringArrayToString(message, 0).Replace("$escape_class", RoleConversions.RoleConversionDict[ev.Player.TeamRole.Role]);
+					plugin.pluginManager.Server.Map.AnnounceCustomMessage(CustomAnnouncements.ReplaceVariables(CustomAnnouncements.SpacePeriods(str)));
+					Thread WaitingForPlayersHandler = new Thread(new ThreadStart(() => new PlayerEscapeHandler(str)));
+					WaitingForPlayersHandler.Start();
+				}
 			}
 		}
 	}

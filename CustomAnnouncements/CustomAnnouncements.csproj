@@ -52,8 +52,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AnnouncementHandlers\PlayerEscapeHandler.cs" />
     <Compile Include="AnnouncementHandlers\WaitingForPlayersHandler.cs" />
     <Compile Include="Announcements\ChaosSpawnCommand.cs" />
+    <Compile Include="Announcements\PlayerEscapeCommand.cs" />
     <Compile Include="Announcements\RoundStartCommand.cs" />
     <Compile Include="Announcements\WaitingForPlayersCommand.cs" />
     <Compile Include="CommandsOutput.cs" />
@@ -70,6 +72,7 @@
     <Compile Include="Announcements\TimerCommand.cs" />
     <Compile Include="AnnouncementHandlers\TimerHandler.cs" />
     <Compile Include="Announcement.cs" />
+    <Compile Include="RoleConversions.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

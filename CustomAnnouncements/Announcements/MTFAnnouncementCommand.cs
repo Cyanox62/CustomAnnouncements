@@ -1,7 +1,6 @@
 ﻿using System;
 using Smod2;
 using Smod2.Commands;
-using Smod2.API;
 
 namespace CustomAnnouncements
 {
