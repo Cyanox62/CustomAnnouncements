@@ -6,7 +6,7 @@ A plugin that allows admins to make custom CASSIE announcements.
 
 **[Smod2](https://github.com/Grover-c13/Smod2) must be installed for this to work.**
 
-Place the "CustomAnnouncements.dll" file in your sm_plugins folder.
+Place the "CustomAnnouncements.dll" file in your sm_plugins folder. Users must be whitelisted to run commands through the remote admin console for the commands to work. You can do this by adding your rank to the `server_command_whitelist` config option in your servers config file.
 
 # Features
 
