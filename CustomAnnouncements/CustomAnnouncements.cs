@@ -290,6 +290,8 @@ namespace CustomAnnouncements
 		public static string ReplaceVariables(string input)
 		{
 			RoundStats stats = PluginManager.Manager.Server.Round.Stats;
+			int minutes = (int)(PluginManager.Manager.Server.Round.Duration / 60), duration = PluginManager.Manager.Server.Round.Duration;
+
 			input = input.Replace("$scp_alive", stats.SCPAlive.ToString());
 			input = input.Replace("$scp_start", stats.SCPStart.ToString());
 			input = input.Replace("$scp_dead", stats.SCPDead.ToString());
@@ -305,7 +307,7 @@ namespace CustomAnnouncements
 			input = input.Replace("$mtf_alive", stats.NTFAlive.ToString());
 			input = input.Replace("$ci_alive", stats.CiAlive.ToString());
 			input = input.Replace("$tutorial_alive", CountRoles(Role.TUTORIAL).ToString());
-			input = input.Replace("$round_duration", ((int)(RoundSummary.roundTime / 60)).ToString());
+			input = input.Replace("$round_duration", (duration < 60) ? duration + ((duration == 1) ? " second" : " seconds") : minutes + ((minutes == 1) ? " minute" : " minutes") + " and " + (duration - (minutes * 60)) + ((duration - (minutes * 60) == 1) ? " second" : " seconds"));
 
 			string[] words = input.Split(' ');
 
