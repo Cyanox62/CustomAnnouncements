@@ -90,6 +90,7 @@ namespace CustomAnnouncements
 				{
 					string str = CustomAnnouncements.StringArrayToString(message, 0).Replace("$escape_class", RoleConversions.RoleConversionDict[ev.Player.TeamRole.Role]);
 					plugin.pluginManager.Server.Map.AnnounceCustomMessage(CustomAnnouncements.ReplaceVariables(CustomAnnouncements.SpacePeriods(str)));
+					plugin.Info("Running player escape announcement...");
 					Thread WaitingForPlayersHandler = new Thread(new ThreadStart(() => new PlayerEscapeHandler(str)));
 					WaitingForPlayersHandler.Start();
 				}

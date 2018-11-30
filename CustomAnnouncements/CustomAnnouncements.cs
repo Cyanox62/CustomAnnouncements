@@ -25,7 +25,7 @@ namespace CustomAnnouncements
 	{
 		private static Plugin plugin;
 		public static NineTailedFoxAnnouncer ann;
-		public static List<String> roundVariables = new List<string>()
+		public static List<string> roundVariables = new List<string>()
 		{
 			"$scp_alive",
 			"$scp_start",
