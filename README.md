@@ -30,6 +30,8 @@ All settings are saved in `%APPDATA%/SCP Secret Laboratory/CustomAnnouncements`.
 | RS / ROUNDSTART | SET / CLEAR / VIEW | TEXT | | Sets an announcement to be played when the round starts. |
 | RE / ROUNDEND | SET / CLEAR / VIEW | TEXT | | Sets an announcement to be played when the round ends. |
 | WP / WAITINGFORPLAYERS | SET / CLEAR / VIEW | TEXT | | Sets an announcement to be played when the server begins waiting for players. Announcement will be played when the first player connects to ensure it isn't played before any players load in. |
+| PE / PLAYERESCAPE | SET / CLEAR / VIEW | TEXT | | Sets an announcement to be played when a player escapes. If several players escape in a short time period, only the first escape will be played to prevent clogging up the queue. |
+| AW / AUTOWARHEAD | SET / CLEAR / VIEW | TEXT | | Sets an announcement to be played when the warhead is activated via Smod's `auto_warhead_start` config option. |
 
 | Config        | Value Type | Default | Description |
 | :-------------: | :---------: | :---------: |:------ |
@@ -45,3 +47,5 @@ All settings are saved in `%APPDATA%/SCP Secret Laboratory/CustomAnnouncements`.
 | ca_roundend_whitelist | List | owner, admin | Determines which ranks are allowed to use the `RE / ROUNDEND` command. |
 | ca_player_whitelist | List | owner, admin | Determines which ranks are allowed to use the `PA / PLAYERANNOUNCEMENT` command. |
 | ca_waitingforplayers_whitelist | List | owner, admin | Determines which ranks are allowed to use the `WP / WAITINGFORPLAYERS` command. |
+| ca_playerescape_whitelist | List | owner, admin | Determines which ranks are allowed to use the `PE / PLAYERESCAPE` command. |
+| ca_autowarhead_whitelist | List | owner, admin | Determines which ranks are allowed to use the `AW / AUTOWARHEAD` command. |
