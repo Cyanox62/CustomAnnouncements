@@ -16,7 +16,7 @@ namespace CustomAnnouncements
 	name = "CustomAnnouncements",
 	description = "Makes custom CASSIE announcements",
 	id = "cyan.custom.announcements",
-	version = "1.4",
+	version = "1.5",
 	SmodMajor = 3,
 	SmodMinor = 0,
 	SmodRevision = 0
