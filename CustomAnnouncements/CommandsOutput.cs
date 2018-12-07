@@ -31,7 +31,8 @@ namespace CustomAnnouncements
 				"(RS / ROUNDSTART) (SET / CLEAR / VIEW) (TEXT)",
 				"(RE / ROUNDEND) (SET / CLEAR / VIEW) (TEXT)",
 				"(WP / WAITINGFORPLAYERS) (SET / CLEAR / VIEW) (TEXT)",
-				"(PE / PLAYERESCAPE) (SET / CLEAR / VIEW) (TEXT)"
+				"(PE / PLAYERESCAPE) (SET / CLEAR / VIEW) (TEXT)",
+				"(AW / AUTOWARHEAD) (SET / CLEAR / VIEW) (TEXT)"
 			};
 		}
 	}

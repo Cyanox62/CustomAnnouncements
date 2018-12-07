@@ -54,6 +54,7 @@ namespace CustomAnnouncements
 		public static string PlayerJoinFilePath = FileManager.GetAppFolder() + "CustomAnnouncements" + Path.DirectorySeparatorChar + "PlayerJoin.txt";
 		public static string WaitingForPlayersFilePath = FileManager.GetAppFolder() + "CustomAnnouncements" + Path.DirectorySeparatorChar + "WaitingForPlayers.txt";
 		public static string PlayerEscapeFilePath = FileManager.GetAppFolder() + "CustomAnnouncements" + Path.DirectorySeparatorChar + "PlayerEscape.txt";
+		public static string WarheadAutoStartFilePath = FileManager.GetAppFolder() + "CustomAnnouncements" + Path.DirectorySeparatorChar + "WarheadAutoStart.txt";
 		public static bool roundStarted = false;
 
 		public override void OnDisable() { }
@@ -96,6 +97,10 @@ namespace CustomAnnouncements
 			{
 				using (new StreamWriter(File.Create(PlayerEscapeFilePath))) { }
 			}
+			if (!File.Exists(WarheadAutoStartFilePath))
+			{
+				using (new StreamWriter(File.Create(WarheadAutoStartFilePath))) { }
+			}
 		}
 		
         public override void Register()
@@ -119,6 +124,7 @@ namespace CustomAnnouncements
 			this.AddConfig(new Smod2.Config.ConfigSetting("ca_player_whitelist", new string[] { "owner", "admin" }, Smod2.Config.SettingType.LIST, true, "Defines what ranks are allowed to use the player command."));
 			this.AddConfig(new Smod2.Config.ConfigSetting("ca_waitingforplayers_whitelist", new string[] { "owner", "admin" }, Smod2.Config.SettingType.LIST, true, "Defines what ranks are allowed to use the waitingforplayers command."));
 			this.AddConfig(new Smod2.Config.ConfigSetting("ca_playerescape_whitelist", new string[] { "owner", "admin" }, Smod2.Config.SettingType.LIST, true, "Defines what ranks are allowed to use the playerescape command."));
+			this.AddConfig(new Smod2.Config.ConfigSetting("ca_autowarhead_whitelist", new string[] { "owner", "admin" }, Smod2.Config.SettingType.LIST, true, "Defines what ranks are allowed to use the autowarhead command."));
 
 			// Commands
 			this.AddCommands(new string[] { "customannouncements", "ca" }, new CommandsOutput());
@@ -134,6 +140,7 @@ namespace CustomAnnouncements
 			this.AddCommands(new string[] { "playerannouncement", "pa" }, new PlayerAnnouncementCommand(this));
 			this.AddCommands(new string[] { "waitingforplayers", "wp" }, new WaitingForPlayersCommand(this));
 			this.AddCommands(new string[] { "playerescape", "pe" }, new PlayerEscapeCommand(this));
+			this.AddCommands(new string[] { "autowarhead", "aw" }, new AutoWarheadCommand(this));
 		}
 
 		public static int CountRoles(Role role)

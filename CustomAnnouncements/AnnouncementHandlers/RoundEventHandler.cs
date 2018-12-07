@@ -7,7 +7,7 @@ using System.Threading;
 
 namespace CustomAnnouncements
 {
-	class RoundEventHandler : IEventHandlerRoundStart, IEventHandlerRoundEnd, IEventHandlerCheckEscape, IEventHandlerTeamRespawn, IEventHandlerPlayerJoin, IEventHandlerWaitingForPlayers
+	class RoundEventHandler : IEventHandlerRoundStart, IEventHandlerRoundEnd, IEventHandlerWarheadStartCountdown, IEventHandlerCheckEscape, IEventHandlerTeamRespawn, IEventHandlerPlayerJoin, IEventHandlerWaitingForPlayers
 	{
 		private Plugin plugin;
 		public static bool isPlaying = false;
@@ -93,6 +93,19 @@ namespace CustomAnnouncements
 					plugin.Info("Running player escape announcement...");
 					Thread WaitingForPlayersHandler = new Thread(new ThreadStart(() => new PlayerEscapeHandler(str)));
 					WaitingForPlayersHandler.Start();
+				}
+			}
+		}
+
+		public void OnStartCountdown(WarheadStartEvent ev)
+		{
+			if (ev.Activator == null)
+			{
+				string[] message = File.ReadAllLines(CustomAnnouncements.WarheadAutoStartFilePath);
+				if (message.Length > 0)
+				{
+					plugin.pluginManager.Server.Map.AnnounceCustomMessage(CustomAnnouncements.ReplaceVariables(CustomAnnouncements.SpacePeriods(CustomAnnouncements.StringArrayToString(message, 0))));
+					plugin.Info("Running auto warhead announcement...");
 				}
 			}
 		}

@@ -54,6 +54,7 @@
   <ItemGroup>
     <Compile Include="AnnouncementHandlers\PlayerEscapeHandler.cs" />
     <Compile Include="AnnouncementHandlers\WaitingForPlayersHandler.cs" />
+    <Compile Include="Announcements\AutoWarheadCommand.cs" />
     <Compile Include="Announcements\ChaosSpawnCommand.cs" />
     <Compile Include="Announcements\PlayerEscapeCommand.cs" />
     <Compile Include="Announcements\RoundStartCommand.cs" />
