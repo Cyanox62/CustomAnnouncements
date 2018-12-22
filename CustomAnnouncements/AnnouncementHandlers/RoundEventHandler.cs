@@ -52,8 +52,8 @@ namespace CustomAnnouncements
 				string[] message = File.ReadAllLines(CustomAnnouncements.ChaosSpawnFilePath);
 				if (message.Length > 0)
 				{
-					string text = CustomAnnouncements.ReplaceVariables(CustomAnnouncements.SpacePeriods(CustomAnnouncements.StringArrayToString(message, 0)));
-					plugin.pluginManager.Server.Map.AnnounceCustomMessage(text);
+					Thread ChaosSpawnHandler = new Thread(new ThreadStart(() => new ChaosSpawnHandler(plugin, message)));
+					ChaosSpawnHandler.Start();
 					plugin.Info("Running Chaos Insurgency spawn announcement...");
 				}
 			}

@@ -53,6 +53,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AnnouncementHandlers\ChaosSpawnHandler.cs" />
     <Compile Include="AnnouncementHandlers\PlayerEscapeHandler.cs" />
     <Compile Include="AnnouncementHandlers\WaitingForPlayersHandler.cs" />
     <Compile Include="Announcements\AutoWarheadCommand.cs" />
