@@ -7,7 +7,7 @@ namespace CustomAnnouncements
 	{
 		public static Dictionary<Role, string> RoleConversionDict = new Dictionary<Role, string>()
 		{
-			{ Role.CHAOS_INSUGENCY, "chaosinsurgency" },
+			{ Role.CHAOS_INSURGENCY, "chaosinsurgency" },
 			{ Role.CLASSD, "classd" },
 			{ Role.FACILITY_GUARD, "facility guard" },
 			{ Role.NTF_CADET, "ninetailedfox" },

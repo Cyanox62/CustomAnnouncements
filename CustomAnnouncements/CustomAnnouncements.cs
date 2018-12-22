@@ -134,7 +134,7 @@ namespace CustomAnnouncements
 			this.AddCommands(new string[] { "scpannouncement", "scpa" }, new SCPEliminationCommand(this));
 			this.AddCommands(new string[] { "preset", "pr" }, new PresetCommand(this));
 			this.AddCommands(new string[] { "timer", "ti" }, new TimerCommand(this));
-			this.AddCommands(new string[] { "chaosspawn", "cs" }, new ChaosSpawnCommand(this));
+			this.AddCommands(new string[] { "chaosspawn", "chs" }, new ChaosSpawnCommand(this));
 			this.AddCommands(new string[] { "roundstart", "rs" }, new RoundStartCommand(this));
 			this.AddCommands(new string[] { "roundend", "re" }, new RoundEndCommand(this));
 			this.AddCommands(new string[] { "playerannouncement", "pa" }, new PlayerAnnouncementCommand(this));
