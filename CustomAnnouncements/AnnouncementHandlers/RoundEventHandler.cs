@@ -73,6 +73,8 @@ namespace CustomAnnouncements
 
 		public void OnWaitingForPlayers(WaitingForPlayersEvent ev)
 		{
+			foreach (Announcement an in CustomAnnouncements.anList) an.LoadWhitelist();
+
 			string[] message = File.ReadAllLines(CustomAnnouncements.WaitingForPlayersFilePath);
 			if (message.Length > 0)
 			{

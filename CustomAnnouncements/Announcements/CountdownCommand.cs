@@ -5,17 +5,15 @@ using Smod2.API;
 
 namespace CustomAnnouncements
 {
-	// This is the only command not using the announcements class because of how unique it is
-
 	class CountdownCommand : ICommandHandler
 	{
+		private Announcement an;
 		private Plugin plugin;
-		private string[] whitelist;
 
 		public CountdownCommand(Plugin plugin)
 		{
 			this.plugin = plugin;
-			whitelist = CustomAnnouncements.SetWhitelist("ca_countdown_whitelist");
+			an = new Announcement(GetUsage(), "ca_countdown_whitelist");
 		}
 
 		private string[] GetCountdown(int start, int end)
@@ -36,16 +34,6 @@ namespace CustomAnnouncements
 			}
 			else
 			{
-				/*string[] num = new string[((end - start + 1) * 2) - 1];
-				for (int i = start; i <= end; i++)
-				{
-					num[count] = ann.ConvertNumber(i).ToString();
-					if (i < 100)
-						if (i != start)
-							num[count + 1] = ".";
-					count += 2;
-				}
-				return num;*/
 				return null;
 			}
 		}
@@ -63,19 +51,13 @@ namespace CustomAnnouncements
 		public string[] OnCall(ICommandSender sender, string[] args)
 		{
 			CustomAnnouncements.ann = UnityEngine.Object.FindObjectOfType<NineTailedFoxAnnouncer>();
-			if (sender is Player)
-			{
-				Player player = (Player)sender;
-				if (!CustomAnnouncements.IsPlayerWhitelisted(player, whitelist))
-				{
-					return new string[] { "You are not allowed to run this command." };
-				}
-			}
+			if (!an.CanRunCommand(sender))
+				return new string[] { "You are not allowed to run this command." };
 
 			if (args.Length > 1)
 			{
 				int start, end = 0;
-				if (Int32.TryParse(args[0], out int a))
+				if (int.TryParse(args[0], out int a))
 				{
 					start = a;
 				}
@@ -84,7 +66,7 @@ namespace CustomAnnouncements
 					return new string[] { "Not a valid number!" };
 				}
 
-				if (Int32.TryParse(args[1], out int b))
+				if (int.TryParse(args[1], out int b))
 				{
 					end = b;
 				}
@@ -100,21 +82,12 @@ namespace CustomAnnouncements
 					if (args.Length > 2)
 					{
 						string saveText = CustomAnnouncements.HandleNumbers(CustomAnnouncements.SpacePeriods(CustomAnnouncements.StringArrayToString(args, 2)));
-						for (int i = 2; i < args.Length; i++)
-						{
-							string text = CustomAnnouncements.GetNonValidText(saveText.Split(' '));
-							if (text != null)
-							{
-								return new string[] { "Error: phrase \"" + text + "\" is not in text to speech." };
-							}
-						}
-						plugin.pluginManager.Server.Map.AnnounceCustomMessage(string.Join(" ", statement) + " . . " + CustomAnnouncements.ReplaceVariables(saveText));
+						return an.PlayCustomAnnouncement(string.Join(" ", statement) + " . . " + CustomAnnouncements.ReplaceVariables(saveText), "Countdown started.");
 					}
 					else
 					{
-						plugin.pluginManager.Server.Map.AnnounceCustomMessage(string.Join(" ", statement));
+						return an.PlayCustomAnnouncement(string.Join(" ", statement), "Countdown started.");
 					}
-					return new string[] { "Countdown started." };
 				}
 				else
 				{

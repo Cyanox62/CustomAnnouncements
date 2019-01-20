@@ -25,6 +25,7 @@ namespace CustomAnnouncements
 	{
 		private static Plugin plugin;
 		public static NineTailedFoxAnnouncer ann;
+		public static List<Announcement> anList = new List<Announcement>();
 		public static List<string> roundVariables = new List<string>()
 		{
 			"$scp_alive",
@@ -108,39 +109,39 @@ namespace CustomAnnouncements
 			plugin = this;
 
 			// Event handlers
-			this.AddEventHandlers(new RoundEventHandler(this));
+			AddEventHandlers(new RoundEventHandler(this));
 
 			// Config settings
-			this.AddConfig(new Smod2.Config.ConfigSetting("ca_all_whitelist", new string[] {}, Smod2.Config.SettingType.LIST, true, "Defines what ranks are allowed to use all commands. This will override all other whitelists"));
-			this.AddConfig(new Smod2.Config.ConfigSetting("ca_countdown_whitelist", new string[] { "owner", "admin" }, Smod2.Config.SettingType.LIST, true, "Defines what ranks are allowed to use the countdown command."));
-			this.AddConfig(new Smod2.Config.ConfigSetting("ca_text_whitelist", new string[] { "owner", "admin" }, Smod2.Config.SettingType.LIST, true, "Defines what ranks are allowed to use the text command."));
-			this.AddConfig(new Smod2.Config.ConfigSetting("ca_mtf_whitelist", new string[] { "owner", "admin" }, Smod2.Config.SettingType.LIST, true, "Defines what ranks are allowed to use the mtf command."));
-			this.AddConfig(new Smod2.Config.ConfigSetting("ca_scp_whitelist", new string[] { "owner", "admin" }, Smod2.Config.SettingType.LIST, true, "Defines what ranks are allowed to use the scp command."));
-			this.AddConfig(new Smod2.Config.ConfigSetting("ca_preset_whitelist", new string[] { "owner", "admin" }, Smod2.Config.SettingType.LIST, true, "Defines what ranks are allowed to use the preset command."));
-			this.AddConfig(new Smod2.Config.ConfigSetting("ca_timer_whitelist", new string[] { "owner", "admin" }, Smod2.Config.SettingType.LIST, true, "Defines what ranks are allowed to use the timer command."));
-			this.AddConfig(new Smod2.Config.ConfigSetting("ca_chaosspawn_whitelist", new string[] { "owner", "admin" }, Smod2.Config.SettingType.LIST, true, "Defines what ranks are allowed to use the chaosspawn command."));
-			this.AddConfig(new Smod2.Config.ConfigSetting("ca_roundstart_whitelist", new string[] { "owner", "admin" }, Smod2.Config.SettingType.LIST, true, "Defines what ranks are allowed to use the roundstart command."));
-			this.AddConfig(new Smod2.Config.ConfigSetting("ca_roundend_whitelist", new string[] { "owner", "admin" }, Smod2.Config.SettingType.LIST, true, "Defines what ranks are allowed to use the roundend command."));
-			this.AddConfig(new Smod2.Config.ConfigSetting("ca_player_whitelist", new string[] { "owner", "admin" }, Smod2.Config.SettingType.LIST, true, "Defines what ranks are allowed to use the player command."));
-			this.AddConfig(new Smod2.Config.ConfigSetting("ca_waitingforplayers_whitelist", new string[] { "owner", "admin" }, Smod2.Config.SettingType.LIST, true, "Defines what ranks are allowed to use the waitingforplayers command."));
-			this.AddConfig(new Smod2.Config.ConfigSetting("ca_playerescape_whitelist", new string[] { "owner", "admin" }, Smod2.Config.SettingType.LIST, true, "Defines what ranks are allowed to use the playerescape command."));
-			this.AddConfig(new Smod2.Config.ConfigSetting("ca_autowarhead_whitelist", new string[] { "owner", "admin" }, Smod2.Config.SettingType.LIST, true, "Defines what ranks are allowed to use the autowarhead command."));
+			AddConfig(new Smod2.Config.ConfigSetting("ca_all_whitelist", new string[] {}, Smod2.Config.SettingType.LIST, true, "Defines what ranks are allowed to use all commands. This will override all other whitelists."));
+			AddConfig(new Smod2.Config.ConfigSetting("ca_countdown_whitelist", new string[] { "owner", "admin" }, Smod2.Config.SettingType.LIST, true, "Defines what ranks are allowed to use the countdown command."));
+			AddConfig(new Smod2.Config.ConfigSetting("ca_text_whitelist", new string[] { "owner", "admin" }, Smod2.Config.SettingType.LIST, true, "Defines what ranks are allowed to use the text command."));
+			AddConfig(new Smod2.Config.ConfigSetting("ca_mtf_whitelist", new string[] { "owner", "admin" }, Smod2.Config.SettingType.LIST, true, "Defines what ranks are allowed to use the mtf command."));
+			AddConfig(new Smod2.Config.ConfigSetting("ca_scp_whitelist", new string[] { "owner", "admin" }, Smod2.Config.SettingType.LIST, true, "Defines what ranks are allowed to use the scp command."));
+			AddConfig(new Smod2.Config.ConfigSetting("ca_preset_whitelist", new string[] { "owner", "admin" }, Smod2.Config.SettingType.LIST, true, "Defines what ranks are allowed to use the preset command."));
+			AddConfig(new Smod2.Config.ConfigSetting("ca_timer_whitelist", new string[] { "owner", "admin" }, Smod2.Config.SettingType.LIST, true, "Defines what ranks are allowed to use the timer command."));
+			AddConfig(new Smod2.Config.ConfigSetting("ca_chaosspawn_whitelist", new string[] { "owner", "admin" }, Smod2.Config.SettingType.LIST, true, "Defines what ranks are allowed to use the chaosspawn command."));
+			AddConfig(new Smod2.Config.ConfigSetting("ca_roundstart_whitelist", new string[] { "owner", "admin" }, Smod2.Config.SettingType.LIST, true, "Defines what ranks are allowed to use the roundstart command."));
+			AddConfig(new Smod2.Config.ConfigSetting("ca_roundend_whitelist", new string[] { "owner", "admin" }, Smod2.Config.SettingType.LIST, true, "Defines what ranks are allowed to use the roundend command."));
+			AddConfig(new Smod2.Config.ConfigSetting("ca_player_whitelist", new string[] { "owner", "admin" }, Smod2.Config.SettingType.LIST, true, "Defines what ranks are allowed to use the player command."));
+			AddConfig(new Smod2.Config.ConfigSetting("ca_waitingforplayers_whitelist", new string[] { "owner", "admin" }, Smod2.Config.SettingType.LIST, true, "Defines what ranks are allowed to use the waitingforplayers command."));
+			AddConfig(new Smod2.Config.ConfigSetting("ca_playerescape_whitelist", new string[] { "owner", "admin" }, Smod2.Config.SettingType.LIST, true, "Defines what ranks are allowed to use the playerescape command."));
+			AddConfig(new Smod2.Config.ConfigSetting("ca_autowarhead_whitelist", new string[] { "owner", "admin" }, Smod2.Config.SettingType.LIST, true, "Defines what ranks are allowed to use the autowarhead command."));
 
 			// Commands
-			this.AddCommands(new string[] { "customannouncements", "ca" }, new CommandsOutput());
-			this.AddCommands(new string[] { "countdown", "cd" }, new CountdownCommand(this));
-			this.AddCommands(new string[] { "textannouncement", "ta" }, new CustomTextCommand(this));
-			this.AddCommands(new string[] { "mtfannouncement", "mtfa" }, new MTFAnnouncementCommand(this));
-			this.AddCommands(new string[] { "scpannouncement", "scpa" }, new SCPEliminationCommand(this));
-			this.AddCommands(new string[] { "preset", "pr" }, new PresetCommand(this));
-			this.AddCommands(new string[] { "timer", "ti" }, new TimerCommand(this));
-			this.AddCommands(new string[] { "chaosspawn", "chs" }, new ChaosSpawnCommand(this));
-			this.AddCommands(new string[] { "roundstart", "rs" }, new RoundStartCommand(this));
-			this.AddCommands(new string[] { "roundend", "re" }, new RoundEndCommand(this));
-			this.AddCommands(new string[] { "playerannouncement", "pa" }, new PlayerAnnouncementCommand(this));
-			this.AddCommands(new string[] { "waitingforplayers", "wp" }, new WaitingForPlayersCommand(this));
-			this.AddCommands(new string[] { "playerescape", "pe" }, new PlayerEscapeCommand(this));
-			this.AddCommands(new string[] { "autowarhead", "aw" }, new AutoWarheadCommand(this));
+			AddCommands(new string[] { "customannouncements", "ca" }, new CommandsOutput());
+			AddCommands(new string[] { "countdown", "cd" }, new CountdownCommand(this));
+			AddCommands(new string[] { "textannouncement", "ta" }, new CustomTextCommand(this));
+			AddCommands(new string[] { "mtfannouncement", "mtfa" }, new MTFAnnouncementCommand(this));
+			AddCommands(new string[] { "scpannouncement", "scpa" }, new SCPEliminationCommand(this));
+			AddCommands(new string[] { "preset", "pr" }, new PresetCommand(this));
+			AddCommands(new string[] { "timer", "ti" }, new TimerCommand(this));
+			AddCommands(new string[] { "chaosspawn", "chs" }, new ChaosSpawnCommand(this));
+			AddCommands(new string[] { "roundstart", "rs" }, new RoundStartCommand(this));
+			AddCommands(new string[] { "roundend", "re" }, new RoundEndCommand(this));
+			AddCommands(new string[] { "playerannouncement", "pa" }, new PlayerAnnouncementCommand(this));
+			AddCommands(new string[] { "waitingforplayers", "wp" }, new WaitingForPlayersCommand(this));
+			AddCommands(new string[] { "playerescape", "pe" }, new PlayerEscapeCommand(this));
+			AddCommands(new string[] { "autowarhead", "aw" }, new AutoWarheadCommand(this));
 		}
 
 		public static int CountRoles(Role role)
@@ -156,6 +157,7 @@ namespace CustomAnnouncements
 		{
 			foreach (string rank in whitelist)
 			{
+				plugin.Info(rank + "=" + player.GetRankName().ToLower());
 				if (player.GetRankName().ToLower() == rank.ToLower())
 				{
 					return true;
@@ -172,8 +174,6 @@ namespace CustomAnnouncements
 				whitelist = allWhitelist;
 			else
 				whitelist = plugin.GetConfigList(whitelistName);
-			for (int i = 0; i < whitelist.Length; i++)
-				whitelist[i] = whitelist[i].Replace(" ", "");
 			return whitelist;
 		}
 
@@ -192,11 +192,12 @@ namespace CustomAnnouncements
 			foreach (string str in text)
 			{
 				string word = str;
+				if (word == string.Empty) continue;
 				if (word.IndexOf(".") != -1)
 				{
 					word = word.Replace(" .", "");
 				}
-
+				plugin.Info(word);
 				if (!IsVoiceLine(word) && !roundVariables.Contains(word.ToLower()))
 				{
 					return word;
@@ -354,7 +355,7 @@ namespace CustomAnnouncements
 			string[] words = input.Split(' ');
 			for (int i = 0; i < words.Length; i++)
 			{
-				if (Int32.TryParse(words[i], out int a))
+				if (int.TryParse(words[i], out int a))
 				{
 					if (a > 20)
 					{

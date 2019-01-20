@@ -6,17 +6,24 @@ using Smod2.Commands;
 
 namespace CustomAnnouncements
 {
-	class Announcement
+	public class Announcement
 	{
 		private string GetUsage;
 		private string FilePath;
-		private string[] WhitelistConfig;
+		private string WhitelistConfig;
+		private string[] WhitelistRanks;
 
 		public Announcement(string GetUsage, string WhitelistConfig, string FilePath = "")
 		{
 			this.GetUsage = GetUsage;
 			this.FilePath = FilePath;
-			this.WhitelistConfig = CustomAnnouncements.SetWhitelist(WhitelistConfig);
+			this.WhitelistConfig = WhitelistConfig;
+			CustomAnnouncements.anList.Add(this);
+		}
+
+		public void LoadWhitelist()
+		{
+			WhitelistRanks = CustomAnnouncements.SetWhitelist(WhitelistConfig);
 		}
 
 		public bool CanRunCommand(ICommandSender sender)
@@ -24,7 +31,7 @@ namespace CustomAnnouncements
 			if (sender is Player)
 			{
 				Player player = (Player)sender;
-				if (!CustomAnnouncements.IsPlayerWhitelisted(player, WhitelistConfig))
+				if (!CustomAnnouncements.IsPlayerWhitelisted(player, WhitelistRanks))
 				{
 					return false;
 				}
