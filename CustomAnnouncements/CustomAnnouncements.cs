@@ -197,7 +197,7 @@ namespace CustomAnnouncements
 				{
 					word = word.Replace(" .", "");
 				}
-				plugin.Info(word);
+
 				if (!IsVoiceLine(word) && !roundVariables.Contains(word.ToLower()))
 				{
 					return word;
