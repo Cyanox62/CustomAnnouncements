@@ -2,6 +2,8 @@
 
 A plugin that allows admins to make custom CASSIE announcements.
 
+**I am no longer supporting this project, if you would like to contribute feel free to send a PR.**
+
 # Installation
 
 **[Smod2](https://github.com/Grover-c13/Smod2) must be installed for this to work.**
